@@ -341,14 +341,22 @@
 
             return (
                 <div className="fixed inset-0 z-0 overflow-hidden">
+                    {/* Background Image with Heavy Blur and Dimming */}
                     <div 
                         className="absolute inset-0 bg-cover bg-center transition-all duration-1000 transform scale-110"
                         style={{ 
                             backgroundImage: `url("${BACKGROUNDS[gifIndex]}")`,
-                            filter: 'blur(4px) brightness(0.6)'
+                            // BLUR: 8px (Makes it very soft)
+                            // BRIGHTNESS: 0.3 (Makes it 70% darker)
+                            // GRAYSCALE: 0.4 (Removes some color intensity)
+                            filter: 'blur(8px) brightness(0.3) grayscale(0.4)' 
                         }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black/80 z-10"></div>
+                    
+                    {/* Dark Overlay Gradient for extra readability */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/70 to-black/90 z-10"></div>
+                    
+                    {/* Texture Pattern */}
                     <div className="absolute inset-0 opacity-10 z-10" style={{backgroundImage: "url('https://www.transparenttextures.com/patterns/cubes.png')"}}></div>
                 </div>
             );

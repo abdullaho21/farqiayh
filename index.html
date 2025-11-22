@@ -248,24 +248,14 @@
 
         // Get Honorable Mentions as a list of {game, voter}
         const getHonorableMentionsList = () => {
-            // We check both stages for 'honorable' entries and map them to the voter
-            const allVotes = [...STAGE_1_VOTES, ...STAGE_2_VOTES];
-            const mentions = [];
-            const seen = new Set();
-
-            allVotes.forEach(vote => {
-                if (vote.honorable) {
-                    const game = normalizeName(vote.honorable);
-                    const voter = vote.name;
-                    // Create a unique key to avoid exact duplicates if same person voted twice
-                    const key = `${game}-${voter}`;
-                    if (game && !seen.has(key)) {
-                        seen.add(key);
-                        mentions.push({ game, voter });
-                    }
-                }
-            });
-            return mentions;
+            // Specific hardcoded list per user request
+            return [
+                { game: "Hearthstone / Balatro", voter: "PXL" },
+                { game: "Trepang2", voter: "NbTuN" },
+                { game: "Bioshock Infinite", voter: "Feras" },
+                { game: "Prince of Persia: The Lost Crown", voter: "Silver" },
+                { game: "Psychonauts", voter: "Majid" }
+            ];
         };
 
         const processData = (dataSet, isFinalStage = false) => {

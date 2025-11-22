@@ -89,41 +89,42 @@
             { name: "فراس", goty: "Clair Obscur: Expedition 33", gameplay: "ninja gaiden 4", story: "clair obscure expdetion 33", art: "split fiction", music: "clair obscure expdetion 33", indie: "clair obscure expdetion 33", remaster: "The Elder Scrolls IV: Oblivion Remastered", multi: "Split Fiction", flop: "lost soul aside", anticipated: "stranger of heaven", char: "verso", boss: "Arlecchino, the Blood Artist", song: "Une vie à peindre", honorable: "Bioshock Infinite" }
         ];
 
+        // --- UPDATED VISUALS (GIPHY ONLY) ---
         const BACKGROUNDS = [
-            "https://media.giphy.com/media/26tn33aiTi1jkl6H6/giphy.gif", // 0: Welcome (Synthwave)
-            "https://media.tenor.com/wB-CgSgG_F8AAAAC/the-first-berserker-khazan-halberd.gif", // 1: Gameplay (Khazan)
-            "https://media.tenor.com/h_WwWkQxT4AAAAAC/kingdom-come-deliverance-kingdom-come.gif", // 2: Story (KCD2)
-            "https://media.giphy.com/media/hmsks8IoPjDoicaFxB/giphy.gif", // 3: Art (Ghost of Yotei)
-            "https://media.tenor.com/27222520/death-stranding2-death-stranding-hideo-kojima-ship-space-ship.gif", // 4: Music (Death Stranding 2)
-            "https://media.tenor.com/16075047530947414312/hollow-knight-silksong.gif", // 5: Indie (Silksong)
-            "https://media.giphy.com/media/3o6ozEdJXtpZTE4qmk/giphy.gif", // 6: Remaster (MGS/Classic Vibe)
-            "https://media.tenor.com/17572026965745086046/splitfiction-split-fiction.gif", // 7: Multiplayer (Split Fiction)
-            "https://media.tenor.com/5847221177645234816/little-nightmares-iii-2025.gif", // 8: Flop (Little Nightmares 3)
-            "https://media.tenor.com/15776250569493778256/resident-evil-9-re9.gif", // 9: Anticipated (RE9)
-            "https://media.tenor.com/12538396489053332822/clair-obscur-expedition-33-maelle.gif", // 10: Character (Expedition 33)
-            "https://media.tenor.com/14671877/monsterhunter-mh.gif", // 11: Boss (Monster Hunter Wilds)
-            "https://media.tenor.com/5795062928898528762/dynasty-warriors.gif", // 12: Song (Dynasty Warriors)
-            "https://media.tenor.com/10763134921259916000/doom-doom-the-dark-ages.gif", // 13: GOTY (Doom Dark Ages)
-            "https://media.giphy.com/media/3o7qE1YN7aQfVjj0C4/giphy.gif" // 14: Summary (Particles)
+            "https://media.giphy.com/media/26tn33aiTi1jkl6H6/giphy.gif", // 0: Welcome (Synthwave - Kept as requested)
+            "https://media.giphy.com/media/Is6fBDegnv2eY/giphy.gif",     // 1: Gameplay (Dark Souls/Sekiro vibe for Khazan)
+            "https://media.giphy.com/media/4mpDulMfuheyRWHnhV/giphy.gif", // 2: Story (Kingdom Come: Deliverance)
+            "https://media.giphy.com/media/E8U9up4pYkatotmGiE/giphy.gif", // 3: Art (Ghost of Yotei)
+            "https://media.giphy.com/media/XWAgqqMtcGeCXGcnFu/giphy.gif", // 4: Music (Death Stranding)
+            "https://media.giphy.com/media/gBkFFtBTFgZpSuQQxz/giphy.gif", // 5: Indie (Hollow Knight: Silksong)
+            "https://media.giphy.com/media/OrFmkOFx7PVK/giphy.gif",       // 6: Remaster (MGS3 Snake Eater)
+            "https://media.giphy.com/media/tOTpA8d5w0e5a/giphy.gif",      // 7: Multi (The Finals - Fits Split Fiction vibe)
+            "https://media.giphy.com/media/GFPvN1RhkXNkc/giphy.gif",      // 8: Flop (Little Nightmares - Spooky vibe)
+            "https://media.giphy.com/media/fA7rpiRBbY1oI/giphy.gif",      // 9: Anticipated (Resident Evil)
+            "https://media.giphy.com/media/bT1qE0hFp2eZq/giphy.gif",      // 10: Character (Final Fantasy - Fits Exp33 vibe)
+            "https://media.giphy.com/media/UuToJb8Tdp8CA/giphy.gif",      // 11: Boss (Monster Hunter)
+            "https://media.giphy.com/media/HuI4w63iC658s/giphy.gif",      // 12: Song (Dynasty Warriors)
+            "https://media.giphy.com/media/QDK1pCI43lGhO/giphy.gif",      // 13: GOTY (Doom Eternal - Fits Dark Ages)
+            "https://media.giphy.com/media/3o7qE1YN7aQfVjj0C4/giphy.gif"  // 14: Summary (Particles - Kept as requested)
         ];
 
         const CATEGORY_BG_MAP = {
-            gameplay: 1,      // The First Berserker: Khazan
-            story: 2,         // Kingdom Come: Deliverance II
-            art: 3,           // Ghost of Yotei
-            music: 4,         // Death Stranding 2
-            indie: 5,         // Hollow Knight: Silksong
-            remaster: 6,      // MGS Delta / Snake Eater Vibe
-            multi: 7,         // Split Fiction
-            flop: 8,          // Little Nightmares 3 (Spooky Vibe)
-            anticipated: 9,   // Resident Evil 9
-            char: 10,         // Clair Obscur: Expedition 33
-            boss: 11,         // Monster Hunter Wilds
-            song: 12,         // Dynasty Warriors Origins
-            honorable: 14,    // Generic Particles
-            goty: 13          // Doom: The Dark Ages
+            gameplay: 1,      // Hardcore Combat
+            story: 2,         // Medieval Story
+            art: 3,           // Samurai Art
+            music: 4,         // Kojima Cinematic
+            indie: 5,         // Silksong
+            remaster: 6,      // Snake Eater
+            multi: 7,         // Fast Paced Shooter
+            flop: 8,          // Horror
+            anticipated: 9,   // Resident Evil
+            char: 10,         // RPG Character
+            boss: 11,         // Dragon/Monster
+            song: 12,         // Musou Action
+            honorable: 14,    // Particles
+            goty: 13          // Doom
         };
-
+        
         const CATEGORIES = [
             { id: 'gameplay', labelAr: 'أفضل جيمبلاي', icon: Gamepad2, color: 'text-blue-400' },
             { id: 'story', labelAr: 'أفضل قصة', icon: BookOpen, color: 'text-yellow-400' },

@@ -4,9 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GOTY 2025 Awards Ceremony</title>
-    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         * {
@@ -16,8 +13,6 @@
         }
         
         body {
-            <div id="root"></div>
-
             font-family: 'Inter', sans-serif;
             background-color: #000;
             color: white;
@@ -41,6 +36,7 @@
             width: 100%;
             height: 100%;
             z-index: 0;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 50%, #16213e 100%);
         }
         
         .background-overlay {
@@ -86,11 +82,30 @@
             padding: 20px;
         }
         
+        .trophy-icon {
+            font-size: 6rem;
+            margin-bottom: 2rem;
+            color: gold;
+            text-shadow: 0 0 20px rgba(255,215,0,0.5);
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
         .title {
             font-size: 4rem;
             font-weight: 900;
             margin-bottom: 1rem;
             text-transform: uppercase;
+        }
+        
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.5rem;
+            }
         }
         
         .subtitle {
@@ -100,6 +115,15 @@
             border-top: 1px solid rgba(255,255,255,0.2);
             border-bottom: 1px solid rgba(255,255,255,0.2);
             padding: 1rem 0;
+            letter-spacing: 0.5em;
+            text-transform: uppercase;
+        }
+        
+        @media (max-width: 768px) {
+            .subtitle {
+                font-size: 1rem;
+                letter-spacing: 0.2em;
+            }
         }
         
         .button {
@@ -133,10 +157,22 @@
             -webkit-text-fill-color: transparent;
         }
         
+        @media (max-width: 768px) {
+            .category-title {
+                font-size: 2rem;
+            }
+        }
+        
         .category-subtitle {
             font-size: 1.8rem;
             color: #888;
             margin-bottom: 3rem;
+        }
+        
+        @media (max-width: 768px) {
+            .category-subtitle {
+                font-size: 1.2rem;
+            }
         }
         
         .content-area {
@@ -270,6 +306,12 @@
             font-weight: 900;
             margin-bottom: 1.5rem;
             text-shadow: 0 0 20px rgba(255,215,0,0.7);
+        }
+        
+        @media (max-width: 768px) {
+            .winner-name {
+                font-size: 2rem;
+            }
         }
         
         .winner-badge {
@@ -461,16 +503,20 @@
 <body>
     <div id="root"></div>
 
-    <script type="text/babel">
+    <script>
         // Data
         const STAGE_1_VOTES = [
           { name: "NbTuN", goty: "Clair Obscur: Expedition 33, Monster Hunter Wilds, Doom: The Dark Ages", gameplay: "clair obscure expdetion 33, monster hunter wilds", story: "Kingdom Come: Deliverance II, clair obscure expdetion 33, The Alters", art: "clair obscure expdetion 33, No, I'm Not a Human, hades 2", music: "clair obscure expdetion 33, dynasty warriors origins, south of midnight", indie: "pistrello and the cursed yoyo, clair obscure expdetion 33, Advent NEON, Haste", remaster: "The Elder Scrolls IV: Oblivion Remastered, Ninja Gaiden 2 Black", multi: "dying light the beast, Mario Kart World, Split Fiction", flop: "vampire: the masquerade - bloodlines 2, Little Nightmares 3, lost soul aside", anticipated: "The Witcher 4, resdient evil 9, judas", char: "verso, gustave, jan", boss: "curator, Zoh Shia, the dragon everhood 2, Enhanced dark dragon", song: "Horizon Dreamer https://youtu.be/DJq0jJhPSjg, Une vie à t'aimer, lisrim golden, CAPRICIOUS WIND, rougarou", honorable: "Trepang2" },
-          { name: "sal", goty: "Kingdom Come: Deliverance II", gameplay: "clair obscure expdetion 33, kingdom come deliverance2", story: "Kingdom Come: Deliverance II, clair obscure expdetion 33, death stranding 2", art: "clair obscure expdetion 33, ghost of yotei", music: "clair obscure expdetion 33, dynasty warriors origins", indie: "clair obscure expdetion 33", remaster: "The Elder Scrolls IV: Oblivion Remastered, METAL GEAR SOLID Δ: SNAKE EATER", multi: "dying light the beast, battlefield 6", flop: "vampire: the masquerade - bloodlines 2", anticipated: "The Witcher 4, crimson Desert, lego batman", char: "verso, Maelle, henry", boss: "Arlecchino, the Blood Artist, Visages", song: "Une vie à t'aimer, Lumière, Alicia, The Clear Blue Sky", honorable: "" }
+          { name: "sal", goty: "Kingdom Come: Deliverance II", gameplay: "clair obscure expdetion 33, kingdom come deliverance2", story: "Kingdom Come: Deliverance II, clair obscure expdetion 33, death stranding 2", art: "clair obscure expdetion 33, ghost of yotei", music: "clair obscure expdetion 33, dynasty warriors origins", indie: "clair obscure expdetion 33", remaster: "The Elder Scrolls IV: Oblivion Remastered, METAL GEAR SOLID Δ: SNAKE EATER", multi: "dying light the beast, battlefield 6", flop: "vampire: the masquerade - bloodlines 2", anticipated: "The Witcher 4, crimson Desert, lego batman", char: "verso, Maelle, henry", boss: "Arlecchino, the Blood Artist, Visages", song: "Une vie à t'aimer, Lumière, Alicia, The Clear Blue Sky", honorable: "" },
+          { name: "القوت", goty: "Clair Obscur: Expedition 33", gameplay: "clair obscure expdetion 33", story: "clair obscure expdetion 33", art: "clair obscure expdetion 33, death stranding 2, ghost of yotei", music: "clair obscure expdetion 33, death stranding 2", indie: "clair obscure expdetion 33", remaster: "", multi: "Mario Kart World, battlefield 6, rv there yet", flop: "dispatch", anticipated: "The Witcher 4, judas, gta 6", char: "verso", boss: "Arlecchino, the Blood Artist, King K. Rool, Fulghor Champion of Nightglow", song: "to the wilder, Une vie à t'aimer, Lumière", honorable: "Ai Baby gif" },
+          { name: "Omar", goty: "Hollow Knight: Silksong", gameplay: "hollow knight silksong", story: "hollow knight silksong", art: "hollow knight silksong", music: "hollow knight silksong", indie: "hollow knight silksong", remaster: "", multi: "", flop: "Hunter x Hunter: Nen x Impact, Bleach Rebirth of Souls", anticipated: "", char: "hornet", boss: "tormented trobbio", song: "", honorable: "" },
+          { name: "Potato Lover", goty: "Clair Obscur: Expedition 33, Hollow Knight: Silksong", gameplay: "hollow knight silksong", story: "clair obscure expdetion 33", art: "clair obscure expdetion 33, hollow knight silksong, death stranding 2", music: "clair obscure expdetion 33, death stranding 2", indie: "clair obscure expdetion 33, hollow knight silksong", remaster: "", multi: "elden ring nightreign", flop: "Hunter x Hunter: Nen x Impact, lost soul aside", anticipated: "MARVEL Tokon: Fighting Souls, stranger of heaven, dusk blood", char: "verso", boss: "curator", song: "to the wilder, story of rainy, Une vie à t'aimer, Lumière, Skarrsinger Karmelita", honorable: "" }
         ];
 
         const STAGE_2_VOTES = [
           { name: "sal", goty: "Kingdom Come: Deliverance II", gameplay: "clair obscure expdetion 33", story: "clair obscure expdetion 33", art: "clair obscure expdetion 33", music: "clair obscure expdetion 33", indie: "clair obscure expdetion 33", remaster: "The Elder Scrolls IV: Oblivion Remastered", multi: "elden ring nightreign", flop: "vampire: the masquerade - bloodlines 2", anticipated: "The Witcher 4", char: "renoir", boss: "Arlecchino, the Blood Artist", song: "Lumière https://youtu.be/zmvsw2ILX5k", honorable: "Bioshock Infinite" },
-          { name: "Potato lover", goty: "Hollow Knight: Silksong", gameplay: "hollow knight silksong", story: "clair obscure expdetion 33", art: "clair obscure expdetion 33", music: "death stranding 2", indie: "hollow knight silksong", remaster: "", multi: "elden ring nightreign", flop: "Hunter x Hunter: Nen x Impact", anticipated: "stranger of heaven", char: "verso", boss: "curator", song: "to the wilder https://www.youtube.com/watch?v=BSN1rPPKK9s", honorable: "Bioshock Infinite" }
+          { name: "Potato lover", goty: "Hollow Knight: Silksong", gameplay: "hollow knight silksong", story: "clair obscure expdetion 33", art: "clair obscure expdetion 33", music: "death stranding 2", indie: "hollow knight silksong", remaster: "", multi: "elden ring nightreign", flop: "Hunter x Hunter: Nen x Impact", anticipated: "stranger of heaven", char: "verso", boss: "curator", song: "to the wilder https://www.youtube.com/watch?v=BSN1rPPKK9s", honorable: "Bioshock Infinite" },
+          { name: "ماجد", goty: "Clair Obscur: Expedition 33", gameplay: "ninja gaiden 4", story: "clair obscure expdetion 33", art: "hollow knight silksong", music: "death stranding 2", indie: "clair obscure expdetion 33", remaster: "Xenoblade Chronicles X", multi: "battlefield 6", flop: "lost soul aside", anticipated: "The Witcher 4", char: "verso", boss: "Enhanced dark dragon", song: "Une vie à peindre https://www.youtube.com/watch?v=-i_nT9d-mK8", honorable: "Psychonauts" }
         ];
 
         const CATEGORIES = [
@@ -505,6 +551,10 @@
           if (n.includes("ninja gaiden 4")) return "Ninja Gaiden 4";
           if (n.includes("death stranding")) return "Death Stranding 2";
           if (n.includes("split fiction")) return "Split Fiction";
+          if (n.includes("dynasty")) return "Dynasty Warriors Origins";
+          if (n.includes("hollow knight")) return "Hollow Knight: Silksong";
+          if (n.includes("doom")) return "Doom: The Dark Ages";
+          if (n.includes("monster hunter")) return "Monster Hunter Wilds";
           
           return n.replace(/\b\w/g, l => l.toUpperCase());
         };
@@ -520,6 +570,8 @@
             if (n.includes("une vie à t'aimer")) return "Une vie à t'aimer";
             if (n.includes("lumière") || n.includes("lumiere")) return "Lumière";
             if (n.includes("to the wilder")) return "To the Wilder";
+            if (n.includes("story of rainy")) return "Story of Rainy";
+            if (n.includes("une vie à peindre")) return "Une vie à peindre";
 
             return normalizeName(rawName);
         }
@@ -581,392 +633,330 @@
             return data.filter(item => item.count >= fifthPlaceCount);
         };
 
-        // React Components
-        const BackgroundLayer = () => {
-            return React.createElement(
-                'div',
-                { className: 'background-container' },
-                React.createElement('div', { className: 'background-overlay' }),
-                React.createElement('div', { className: 'background-pattern' })
-            );
-        };
+        // React-like components using vanilla JS
+        function createElement(tag, props, ...children) {
+            const element = document.createElement(tag);
+            
+            if (props) {
+                for (const [key, value] of Object.entries(props)) {
+                    if (key === 'className') {
+                        element.className = value;
+                    } else if (key.startsWith('on') && typeof value === 'function') {
+                        element.addEventListener(key.substring(2).toLowerCase(), value);
+                    } else {
+                        element.setAttribute(key, value);
+                    }
+                }
+            }
+            
+            children.forEach(child => {
+                if (typeof child === 'string') {
+                    element.appendChild(document.createTextNode(child));
+                } else if (child) {
+                    element.appendChild(child);
+                }
+            });
+            
+            return element;
+        }
 
-        const Confetti = ({ isActive }) => {
+        function render(element, container) {
+            container.innerHTML = '';
+            container.appendChild(element);
+        }
+
+        // Components
+        function BackgroundLayer() {
+            return createElement('div', { className: 'background-container' },
+                createElement('div', { className: 'background-overlay' }),
+                createElement('div', { className: 'background-pattern' })
+            );
+        }
+
+        function Confetti({ isActive }) {
             if (!isActive) return null;
             
-            const pieces = Array.from({ length: 50 }).map((_, i) => {
+            const container = createElement('div', { className: 'confetti' });
+            
+            for (let i = 0; i < 50; i++) {
                 const colors = ['#fbbf24', '#f472b6', '#60a5fa', '#a78bfa'];
                 const color = colors[Math.floor(Math.random() * colors.length)];
                 const left = Math.random() * 100;
                 const delay = Math.random() * 2;
                 const duration = 3 + Math.random();
                 
-                return React.createElement('div', {
-                    key: i,
+                const piece = createElement('div', { 
                     className: 'confetti-piece',
-                    style: {
-                        left: `${left}%`,
-                        backgroundColor: color,
-                        animation: `fall ${duration}s linear ${delay}s forwards`
-                    }
+                    style: `left: ${left}%; background-color: ${color}; animation: fall ${duration}s linear ${delay}s forwards;`
                 });
-            });
+                
+                container.appendChild(piece);
+            }
             
-            return React.createElement('div', { className: 'confetti' }, pieces);
-        };
+            return container;
+        }
 
-        const StageHeader = ({ subtext, isFinal }) => {
-            return React.createElement(
-                'div',
-                { className: 'stage-header' },
-                React.createElement(
-                    'div',
-                    { className: `stage-badge ${isFinal ? 'final' : 'nominee'}` },
+        function StageHeader({ subtext, isFinal }) {
+            return createElement('div', { className: 'stage-header' },
+                createElement('div', { className: `stage-badge ${isFinal ? 'final' : 'nominee'}` },
                     isFinal ? "FINAL RESULTS" : "NOMINEES (STAGE 1)"
                 )
             );
-        };
+        }
 
-        const StageView = ({ category, nomineesData, finalData, onNext, onPrev, isLast }) => {
-            const [revealed, setRevealed] = React.useState(false);
+        function StageView({ category, nomineesData, finalData, onNext, onPrev, isLast }) {
+            const container = createElement('div', { className: 'container' });
+            let revealed = false;
             
-            React.useEffect(() => {
-                setRevealed(false);
-            }, [category.id]);
-            
-            const filteredNominees = getFilteredStage1Data(nomineesData);
-            const currentData = revealed ? finalData : filteredNominees;
-            
-            const getWinners = (data) => {
-                if (!data || data.length === 0) return [];
-                const maxVotes = data[0].count;
-                return data.filter(d => d.count === maxVotes);
-            };
-            
-            const winners = getWinners(finalData);
-            const isTie = winners.length > 1;
-            
-            const maxVotes = currentData[0]?.count || 1;
-            
-            return React.createElement(
-                'div',
-                { className: 'container' },
-                React.createElement(Confetti, { isActive: revealed }),
-                React.createElement(StageHeader, { subtext: category.label, isFinal: revealed }),
+            function updateView() {
+                const filteredNominees = getFilteredStage1Data(nomineesData);
+                const currentData = revealed ? finalData : filteredNominees;
                 
-                React.createElement(
-                    'div',
-                    { className: 'fade-in' },
-                    React.createElement(
-                        'h1',
-                        { className: 'category-title' },
-                        category.label
-                    ),
-                    React.createElement(
-                        'h2',
-                        { className: 'category-subtitle font-arabic' },
-                        category.labelAr
-                    )
-                ),
+                const getWinners = (data) => {
+                    if (!data || data.length === 0) return [];
+                    const maxVotes = data[0].count;
+                    return data.filter(d => d.count === maxVotes);
+                };
                 
-                React.createElement(
-                    'div',
-                    { className: 'content-area slide-in' },
-                    React.createElement(
-                        'div',
-                        { className: `data-panel ${revealed ? 'revealed' : ''}` },
-                        React.createElement(
-                            'div',
-                            { className: 'panel-title' },
-                            React.createElement(
-                                'span',
-                                null,
-                                revealed ? "Final Rankings" : "Top Nominees"
-                            ),
-                            revealed && React.createElement(
-                                'span',
-                                { className: 'final-badge' },
-                                "Final Stage"
-                            )
-                        ),
-                        React.createElement(
-                            'div',
-                            null,
-                            currentData.map((item, idx) => {
-                                const isTop = revealed ? item.rank === 1 : item.count === maxVotes && item.count > 0;
-                                const percentage = (item.count / maxVotes) * 100;
-                                
-                                return React.createElement(
-                                    'div',
-                                    { 
-                                        key: `${item.name}-${revealed ? 'final' : 'nom'}`,
-                                        className: `entry ${isTop ? 'entry-top' : ''}`
-                                    },
-                                    React.createElement(
-                                        'span',
-                                        { className: 'entry-name' },
-                                        item.name
-                                    ),
-                                    React.createElement(
-                                        'div',
-                                        { className: 'vote-count' },
-                                        React.createElement(
-                                            'div',
-                                            { className: 'vote-bar' },
-                                            React.createElement('div', { 
-                                                className: `vote-fill ${revealed ? 'winner' : 'nominee'}`,
-                                                style: { width: `${percentage}%` }
-                                            })
-                                        ),
-                                        React.createElement(
-                                            'span',
-                                            { className: 'vote-number' },
-                                            revealed ? `#${item.rank}` : `${item.count}`
-                                        )
-                                    )
-                                );
-                            })
-                        )
-                    ),
+                const winners = getWinners(finalData);
+                const isTie = winners.length > 1;
+                const maxVotes = currentData[0]?.count || 1;
+                
+                // Clear container
+                container.innerHTML = '';
+                
+                // Add confetti if revealed
+                if (revealed) {
+                    container.appendChild(Confetti({ isActive: true }));
+                }
+                
+                // Add stage header
+                container.appendChild(StageHeader({ subtext: category.label, isFinal: revealed }));
+                
+                // Add category title
+                const titleSection = createElement('div', { className: 'fade-in' },
+                    createElement('h1', { className: 'category-title' }, category.label),
+                    createElement('h2', { className: 'category-subtitle font-arabic' }, category.labelAr)
+                );
+                container.appendChild(titleSection);
+                
+                // Add content area
+                const contentArea = createElement('div', { className: 'content-area slide-in' });
+                
+                // Data panel
+                const dataPanel = createElement('div', { className: `data-panel ${revealed ? 'revealed' : ''}` });
+                
+                const panelTitle = createElement('div', { className: 'panel-title' },
+                    createElement('span', null, revealed ? "Final Rankings" : "Top Nominees"),
+                    revealed ? createElement('span', { className: 'final-badge' }, "Final Stage") : null
+                );
+                dataPanel.appendChild(panelTitle);
+                
+                const entriesContainer = createElement('div');
+                currentData.forEach((item, idx) => {
+                    const isTop = revealed ? item.rank === 1 : item.count === maxVotes && item.count > 0;
+                    const percentage = (item.count / maxVotes) * 100;
                     
-                    React.createElement(
-                        'div',
-                        { className: 'winner-panel' },
-                        !revealed ? 
-                            React.createElement(
-                                'button',
-                                {
-                                    onClick: () => setRevealed(true),
-                                    className: 'reveal-button'
-                                },
-                                "Reveal Winner"
-                            ) :
-                            React.createElement(
-                                'div',
-                                { className: 'zoom-in' },
-                                React.createElement(
-                                    'div',
-                                    { className: 'winner-title' },
-                                    isTie ? "It's a Tie!" : "The Winner Is"
-                                ),
-                                winners.map((winner, i) => 
-                                    React.createElement(
-                                        'div',
-                                        { key: i },
-                                        React.createElement(
-                                            'h1',
-                                            { className: 'winner-name' },
-                                            winner.name
-                                        ),
-                                        isTie && i < winners.length - 1 && 
-                                            React.createElement('div', { className: 'winner-title' }, "and")
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'winner-badge' },
-                                    "Rank #1"
-                                )
+                    const entry = createElement('div', { className: `entry ${isTop ? 'entry-top' : ''}` },
+                        createElement('span', { className: 'entry-name' }, item.name),
+                        createElement('div', { className: 'vote-count' },
+                            createElement('div', { className: 'vote-bar' },
+                                createElement('div', { 
+                                    className: `vote-fill ${revealed ? 'winner' : 'nominee'}`,
+                                    style: `width: ${percentage}%`
+                                })
+                            ),
+                            createElement('span', { className: 'vote-number' }, 
+                                revealed ? `#${item.rank}` : `${item.count}`
                             )
-                    )
-                ),
+                        )
+                    );
+                    
+                    entriesContainer.appendChild(entry);
+                });
+                dataPanel.appendChild(entriesContainer);
+                contentArea.appendChild(dataPanel);
                 
-                React.createElement(
-                    'div',
-                    { className: 'navigation' },
-                    React.createElement(
-                        'button',
-                        {
-                            onClick: onPrev,
-                            disabled: category.id === 'gameplay',
-                            className: 'nav-button'
-                        },
-                        "Previous"
-                    ),
-                    React.createElement(
-                        'button',
-                        {
-                            onClick: onNext,
-                            className: 'nav-button next'
-                        },
-                        isLast ? "Show Summary" : "Next Category"
-                    )
-                )
-            );
-        };
+                // Winner panel
+                const winnerPanel = createElement('div', { className: 'winner-panel' });
+                
+                if (!revealed) {
+                    const revealButton = createElement('button', { 
+                        className: 'reveal-button',
+                        onclick: () => {
+                            revealed = true;
+                            updateView();
+                        }
+                    }, "Reveal Winner");
+                    winnerPanel.appendChild(revealButton);
+                } else {
+                    const winnerContent = createElement('div', { className: 'zoom-in' },
+                        createElement('div', { className: 'winner-title' }, isTie ? "It's a Tie!" : "The Winner Is")
+                    );
+                    
+                    winners.forEach((winner, i) => {
+                        winnerContent.appendChild(
+                            createElement('h1', { className: 'winner-name' }, winner.name)
+                        );
+                        
+                        if (isTie && i < winners.length - 1) {
+                            winnerContent.appendChild(
+                                createElement('div', { className: 'winner-title' }, "and")
+                            );
+                        }
+                    });
+                    
+                    winnerContent.appendChild(
+                        createElement('div', { className: 'winner-badge' }, "Rank #1")
+                    );
+                    
+                    winnerPanel.appendChild(winnerContent);
+                }
+                
+                contentArea.appendChild(winnerPanel);
+                container.appendChild(contentArea);
+                
+                // Navigation
+                const navigation = createElement('div', { className: 'navigation' },
+                    createElement('button', { 
+                        className: 'nav-button',
+                        disabled: category.id === 'gameplay',
+                        onclick: onPrev
+                    }, "Previous"),
+                    createElement('button', { 
+                        className: 'nav-button next',
+                        onclick: onNext
+                    }, isLast ? "Show Summary" : "Next Category")
+                );
+                
+                container.appendChild(navigation);
+            }
+            
+            // Initial render
+            updateView();
+            
+            return container;
+        }
 
-        const SummaryView = ({ processedData, onRestart }) => {
-            return React.createElement(
-                'div',
-                { className: 'container' },
-                React.createElement(StageHeader, { subtext: "Final Results Summary", isFinal: true }),
-                React.createElement(
-                    'div',
-                    { className: 'fade-in' },
-                    React.createElement(
-                        'h1',
-                        { className: 'category-title' },
-                        "FINAL WINNERS"
-                    ),
-                    React.createElement(
-                        'h2',
-                        { className: 'category-subtitle font-arabic' },
-                        "ملخص الفائزين النهائي"
-                    )
+        function SummaryView({ processedData, onRestart }) {
+            return createElement('div', { className: 'container' },
+                StageHeader({ subtext: "Final Results Summary", isFinal: true }),
+                createElement('div', { className: 'fade-in' },
+                    createElement('h1', { className: 'category-title' }, "FINAL WINNERS"),
+                    createElement('h2', { className: 'category-subtitle font-arabic' }, "ملخص الفائزين النهائي")
                 ),
-                
-                React.createElement(
-                    'div',
-                    { className: 'summary-grid slide-in' },
-                    CATEGORIES.map(cat => {
+                createElement('div', { className: 'summary-grid slide-in' },
+                    ...CATEGORIES.map(cat => {
                         const data = processedData[cat.id];
                         if (!data || data.length === 0) return null;
                         
                         const maxVotes = data[0].count;
                         const winners = data.filter(d => d.count === maxVotes);
                         
-                        return React.createElement(
-                            'div',
-                            { 
-                                key: cat.id,
-                                className: 'summary-card'
-                            },
-                            React.createElement(
-                                'div',
-                                { className: 'summary-category' },
-                                cat.label
-                            ),
-                            React.createElement(
-                                'div',
-                                { className: 'summary-winner' },
-                                winners.map((w, i) => 
-                                    React.createElement(
-                                        'span',
-                                        { key: i },
-                                        w.name,
-                                        i < winners.length - 1 ? " / " : ""
+                        return createElement('div', { className: 'summary-card' },
+                            createElement('div', { className: 'summary-category' }, cat.label),
+                            createElement('div', { className: 'summary-winner' }, 
+                                ...winners.map((w, i) => 
+                                    createElement('span', { key: i }, 
+                                        w.name + (i < winners.length - 1 ? " / " : "")
                                     )
                                 )
                             )
                         );
-                    })
+                    }).filter(Boolean)
                 ),
-                
-                React.createElement(
-                    'button',
-                    {
-                        onClick: onRestart,
-                        className: 'button'
-                    },
-                    "Restart Show"
-                )
+                createElement('button', {
+                    className: 'button',
+                    onclick: onRestart
+                }, "Restart Show")
             );
-        };
+        }
 
-        const WelcomeScreen = ({ onStart }) => {
-            return React.createElement(
-                'div',
-                { className: 'welcome-container' },
-                React.createElement(
-                    'h1',
-                    { className: 'title' },
+        function WelcomeScreen({ onStart }) {
+            return createElement('div', { className: 'welcome-container' },
+                createElement('div', { className: 'trophy-icon' }, "🏆"),
+                createElement('h1', { className: 'title' }, 
                     "GOTY ",
-                    React.createElement(
-                        'span',
-                        { style: { 
-                            background: 'linear-gradient(to right, #8a2be2, #da70d6)',
-                            WebkitBackgroundClip: 'text',
-                            WebkitTextFillColor: 'transparent'
-                        }},
-                        "2025"
-                    )
+                    createElement('span', { 
+                        style: "background: linear-gradient(to right, #8a2be2, #da70d6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;" 
+                    }, "2025")
                 ),
-                React.createElement(
-                    'h2',
-                    { className: 'subtitle' },
-                    "The Awards Ceremony"
-                ),
-                React.createElement(
-                    'button',
-                    {
-                        onClick: onStart,
-                        className: 'button'
-                    },
-                    "Start The Show"
-                )
+                createElement('h2', { className: 'subtitle' }, "The Awards Ceremony"),
+                createElement('button', {
+                    className: 'button',
+                    onclick: onStart
+                }, "Start The Show")
             );
-        };
+        }
 
-        // Main App Component
-        const App = () => {
-            const [stage, setStage] = React.useState('welcome');
-            const [currentCatIndex, setCurrentCatIndex] = React.useState(0);
+        // Main App
+        function App() {
+            const root = document.getElementById('root');
+            let stage = 'welcome';
+            let currentCatIndex = 0;
             
-            const dataStage1 = React.useMemo(() => processData(STAGE_1_VOTES, false), []);
-            const dataStage2 = React.useMemo(() => processData(STAGE_2_VOTES, true), []);
-
-            const nextCategory = () => {
+            const dataStage1 = processData(STAGE_1_VOTES, false);
+            const dataStage2 = processData(STAGE_2_VOTES, true);
+            
+            function nextCategory() {
                 if (currentCatIndex < CATEGORIES.length - 1) {
-                    setCurrentCatIndex(prev => prev + 1);
+                    currentCatIndex++;
+                    renderView();
                 } else {
-                    setStage('summary');
+                    stage = 'summary';
+                    renderView();
                 }
-            };
+            }
 
-            const prevCategory = () => {
+            function prevCategory() {
                 if (currentCatIndex > 0) {
-                    setCurrentCatIndex(prev => prev - 1);
+                    currentCatIndex--;
+                    renderView();
                 }
-            };
+            }
 
-            const startAwards = () => {
-                setStage('awards');
-                setCurrentCatIndex(0);
-            };
+            function startAwards() {
+                stage = 'awards';
+                currentCatIndex = 0;
+                renderView();
+            }
 
-            const restart = () => {
-                setStage('welcome');
-                setCurrentCatIndex(0);
-            };
-
-            return React.createElement(
-                'div',
-                null,
-                React.createElement(BackgroundLayer),
+            function restart() {
+                stage = 'welcome';
+                currentCatIndex = 0;
+                renderView();
+            }
+            
+            function renderView() {
+                // Clear root and add background
+                root.innerHTML = '';
+                root.appendChild(BackgroundLayer());
                 
-                stage === 'welcome' && React.createElement(WelcomeScreen, { onStart: startAwards }),
-                
-                stage === 'awards' && React.createElement(StageView, {
-                    category: CATEGORIES[currentCatIndex],
-                    nomineesData: dataStage1[CATEGORIES[currentCatIndex].id],
-                    finalData: dataStage2[CATEGORIES[currentCatIndex].id],
-                    onNext: nextCategory,
-                    onPrev: prevCategory,
-                    isLast: currentCatIndex === CATEGORIES.length - 1
-                }),
+                if (stage === 'welcome') {
+                    root.appendChild(WelcomeScreen({ onStart: startAwards }));
+                } else if (stage === 'awards') {
+                    root.appendChild(StageView({
+                        category: CATEGORIES[currentCatIndex],
+                        nomineesData: dataStage1[CATEGORIES[currentCatIndex].id],
+                        finalData: dataStage2[CATEGORIES[currentCatIndex].id],
+                        onNext: nextCategory,
+                        onPrev: prevCategory,
+                        isLast: currentCatIndex === CATEGORIES.length - 1
+                    }));
+                } else if (stage === 'summary') {
+                    root.appendChild(SummaryView({
+                        processedData: dataStage2,
+                        onRestart: restart
+                    }));
+                }
+            }
+            
+            // Initial render
+            renderView();
+        }
 
-                stage === 'summary' && React.createElement(SummaryView, {
-                    processedData: dataStage2,
-                    onRestart: restart
-                })
-            );
-        };
-
-        // Render the app
-        ReactDOM.render(React.createElement(App), document.getElementById('root'));
+        // Start the app when the page loads
+        document.addEventListener('DOMContentLoaded', App);
     </script>
-   <script type="text/babel">
-  const App = () => {
-    return (
-      <div>
-        <h1>Hello React on GitHub Pages!</h1>
-      </div>
-    );
-  };
-
-  ReactDOM.createRoot(document.getElementById("root")).render(<App />);
-</script>
-
-
 </body>
 </html>

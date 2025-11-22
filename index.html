@@ -153,26 +153,36 @@
 
         const FINAL_CANDIDATES = {
             gameplay: ["Clair Obscur: Expedition 33", "Hollow Knight: Silksong", "Ninja Gaiden 4", "The First Berserker: Khazan"],
-            story: ["Kingdom Come: Deliverance II", "Clair Obscur: Expedition 33", "Hollow Knight: Silksong", "The Alters"],
-            art: ["Clair Obscur: Expedition 33", "Hollow Knight: Silksong", "Ghost of Yotei", "Split Fiction"],
-            music: ["Clair Obscur: Expedition 33", "Death Stranding 2", "Dynasty Warriors Origins"],
-            indie: ["Clair Obscur: Expedition 33", "Hollow Knight: Silksong", "Haste"],
+            story: ["Kingdom Come: Deliverance II", "Clair Obscur: Expedition 33", "Hollow Knight: Silksong", "The Alters", "Death Stranding 2"],
+            art: ["Clair Obscur: Expedition 33", "Hollow Knight: Silksong", "Ghost of Yotei", "Split Fiction", "Death Stranding 2"],
+            music: ["Clair Obscur: Expedition 33", "Death Stranding 2", "Dynasty Warriors Origins", "Hollow Knight: Silksong"],
+            indie: ["Clair Obscur: Expedition 33", "Hollow Knight: Silksong", "Haste", "Hades 2"],
             remaster: ["MGS Delta: Snake Eater", "The Elder Scrolls IV: Oblivion Remastered", "Ninja Gaiden 2 Black", "Trails in the Sky 1st Chapter", "Xenoblade Chronicles X"],
             multi: ["Sonic Racing: CrossWorlds", "Dying Light The Beast", "Gentelman Dispute", "Mario Kart World", "ARC Raiders", "Split Fiction", "Mage Arena", "Battlefield 6", "Rv There Yet", "Peak", "Elden Ring: Nightreign", "R.E.P.O.", "Elden Ring Nightrain"],
             flop: ["Lost Soul Aside", "Vampire: The Masquerade - Bloodlines 2", "Little Nightmares 3", "Hunter x Hunter: Nen x Impact"],
             anticipated: ["The Witcher 4", "Resident Evil 9", "Stranger of Heaven"],
-            char: ["Renoir", "Verso", "Gustave", "Maelle"],
-            boss: ["Simon", "Curator", "Enhanced Dark Dragon", "Fulghor Champion of Nightglow", "Arlecchino, the Blood Artist"],
-            song: ["Une vie à t'aimer", "Lumière", "To the Wilder", "Story of Rainy", "Une vie à peindre", "Alicia", "Lisrim Golden", "The Clear Blue Sky", "Skarrsinger Karmelita", "CAPRICIOUS WIND", "Ailne"],
+            char: ["Renoir", "Verso", "Gustave", "Maelle", "Henry", "Jan"],
+            boss: ["Simon", "Curator", "Enhanced Dark Dragon", "Fulghor Champion of Nightglow", "Arlecchino, the Blood Artist", "Zoh Shia"],
+            song: ["Une vie à t'aimer", "Lumière", "To the Wilder", "Story of Rainy", "Une vie à peindre", "Alicia", "Lisrim Golden", "The Clear Blue Sky", "Skarrsinger Karmelita", "CAPRICIOUS WIND", "Ailne", "Horizon Dreamer"],
             goty: ["Kingdom Come: Deliverance II", "Clair Obscur: Expedition 33", "Hollow Knight: Silksong", "Doom: The Dark Ages", "Monster Hunter Wilds"],
             honorable: []
         };
 
         // --- HELPER FUNCTIONS ---
-        const normalizeName = (name) => {
+       const normalizeName = (name) => {
             if (!name) return null;
             let n = name.toLowerCase().trim();
             
+            // --- BOSSES ---
+            if (n.includes("simon")) return "Simon";
+            if (n.includes("fulghor")) return "Fulghor Champion of Nightglow";
+            if (n.includes("arlecchino") || n.includes("blood artist")) return "Arlecchino, the Blood Artist";
+            if (n.includes("curator")) return "Curator";
+            if (n.includes("enhanced dark dragon") || n.includes("dark dragon")) return "Enhanced Dark Dragon";
+            if (n.includes("zoh shia")) return "Zoh Shia";
+            if (n.includes("visages")) return "Visages";
+
+            // --- GAMES ---
             if (n.includes("dispatch")) return "Dispatch";
             if (n.includes("khazan") || n.includes("khzan")) return "The First Berserker: Khazan";
             if (n.includes("haste")) return "Haste";
@@ -180,69 +190,72 @@
             if (n.includes("trails")) return "Trails in the Sky 1st Chapter";
             if (n.includes("sonic racing")) return "Sonic Racing: CrossWorlds";
             if (n.includes("dying light")) return "Dying Light The Beast";
-            if (n.includes("gentelman")) return "Gentelman Dispute";
             if (n.includes("mario kart")) return "Mario Kart World";
-            if (n.includes("arc raiders")) return "ARC Raiders";
             if (n.includes("battlefield")) return "Battlefield 6";
-            if (n.includes("rv there yet")) return "Rv There Yet";
-            if (n.includes("peak")) return "Peak";
-            if (n.includes("mage arena")) return "Mage Arena";
-            if (n.includes("r.e.p.o")) return "R.E.P.O.";
-            if (n.includes("nightrain")) return "Elden Ring Nightrain";
-            if (n.includes("nightreign")) return "Elden Ring: Nightreign";
+            if (n.includes("nightrain") || n.includes("nightreign")) return "Elden Ring: Nightreign";
             if (n.includes("little nightmares")) return "Little Nightmares 3";
-            if (n.includes("the alters")) return "The Alters";
+            if (n.includes("alters") || n.includes("the alters")) return "The Alters"; // Added
             if (n.includes("dynasty")) return "Dynasty Warriors Origins";
-            if (n.includes("clair")) return "Clair Obscur: Expedition 33";
+            if (n.includes("clair") || n.includes("expedition")) return "Clair Obscur: Expedition 33";
             if (n.includes("silksong")) return "Hollow Knight: Silksong";
-            if (n.includes("kingdom come")) return "Kingdom Come: Deliverance II";
+            if (n.includes("kingdom come") || n.includes("deliverance")) return "Kingdom Come: Deliverance II";
             if (n.includes("oblivion")) return "The Elder Scrolls IV: Oblivion Remastered";
-            if (n.includes("bloodlines 2")) return "Vampire: The Masquerade - Bloodlines 2";
+            if (n.includes("bloodlines") || n.includes("vampire")) return "Vampire: The Masquerade - Bloodlines 2"; // Fixed
             if (n.includes("witcher 4")) return "The Witcher 4";
             if (n.includes("resident evil 9") || n.includes("resdient")) return "Resident Evil 9";
             if (n.includes("ninja gaiden 4")) return "Ninja Gaiden 4";
             if (n.includes("death stranding")) return "Death Stranding 2";
-            if (n.includes("prince of persia")) return "Prince of Persia: The Lost Crown";
             if (n.includes("split fiction")) return "Split Fiction";
-            if (n.includes("lost soul aside")) return "Lost Soul Aside";
+            if (n.includes("lost soul aside")) return "Lost Soul Aside"; // Fixed
             if (n.includes("stranger of heaven")) return "Stranger of Heaven";
             if (n.includes("hunter x hunter")) return "Hunter x Hunter: Nen x Impact";
-            if (n.includes("snake eater") || n.includes("metal gear")) return "MGS Delta: Snake Eater";
+            if (n.includes("snake eater") || n.includes("metal gear") || n.includes("mgs")) return "MGS Delta: Snake Eater";
             if (n.includes("monster hunter")) return "Monster Hunter Wilds";
             if (n.includes("ghost of yotei")) return "Ghost of Yotei";
+            if (n.includes("hades")) return "Hades 2";
+
+            // --- CHARACTERS ---
             if (n.includes("renoir")) return "Renoir";
             if (n.includes("verso")) return "Verso";
             if (n.includes("gustave")) return "Gustave";
             if (n.includes("maelle")) return "Maelle";
-            if (n.includes("simon")) return "Simon";
-            if (n.includes("curator")) return "Curator";
-            if (n.includes("enhanced dark dragon")) return "Enhanced Dark Dragon";
-            if (n.includes("fulghor")) return "Fulghor Champion of Nightglow";
-            if (n.includes("arlecchino")) return "Arlecchino, the Blood Artist";
+            if (n.includes("henry")) return "Henry";
+            if (n.includes("jan")) return "Jan";
 
             return n.replace(/\b\w/g, l => l.toUpperCase());
         };
 
         const extractSongName = (text) => {
             if (!text) return null;
-            let rawName = text;
-            if (text.includes("http")) {
-                rawName = text.split("http")[0];
-            }
-            
-            const n = rawName.toLowerCase().trim();
+            const n = text.toLowerCase().trim();
+
+            // Check for keywords anywhere in the string (ignoring URL junk)
             if (n.includes("une vie à t'aimer")) return "Une vie à t'aimer";
             if (n.includes("lumière") || n.includes("lumiere")) return "Lumière";
             if (n.includes("to the wilder")) return "To the Wilder";
             if (n.includes("story of rainy")) return "Story of Rainy";
             if (n.includes("une vie à peindre")) return "Une vie à peindre";
             if (n.includes("alicia")) return "Alicia";
-            if (n.includes("lirism") || n.includes("lisrim")) return "Lisrim Golden";
+            if (n.includes("lisrim") || n.includes("golden")) return "Lisrim Golden";
             if (n.includes("clear blue sky")) return "The Clear Blue Sky";
             if (n.includes("skarrsinger")) return "Skarrsinger Karmelita";
             if (n.includes("capricious wind")) return "CAPRICIOUS WIND";
             if (n.includes("ailne") || n.includes("aline")) return "Ailne";
+            if (n.includes("horizon dreamer")) return "Horizon Dreamer";
+            if (n.includes("caligo")) return "Caligo";
+            if (n.includes("miasma")) return "Miasma Of Night";
+            if (n.includes("gestral")) return "Gestral Village Golgra";
+            if (n.includes("open your heart")) return "Open Your Heart";
+            if (n.includes("last dive")) return "Last Dive";
+            if (n.includes("phantom")) return "Phantom";
+            if (n.includes("cherie tree")) return "Cherie Tree";
+            if (n.includes("rougarou")) return "Rougarou";
 
+            // Fallback: try to clean URL if no match found
+            let rawName = text;
+            if (text.includes("http")) {
+                rawName = text.split("http")[0];
+            }
             return normalizeName(rawName);
         };
 

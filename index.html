@@ -1,876 +1,911 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GOTY 2025 Awards Ceremony</title>
-    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="https://unpkg.com/lucide-react@0.263.1/dist/umd/lucide-react.development.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-    <style>
-        @keyframes fall {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-        }
-        .animate-fall {
-            animation-name: fall;
-            animation-timing-function: linear;
-            animation-iteration-count: infinite;
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .font-arabic {
-            font-family: 'Cairo', sans-serif;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GOTY Awards — Single File React</title>
+
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+  <!-- React + ReactDOM + Babel (for single-file JSX) -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    /* ---------- Basic reset & variables ---------- */
+    :root{
+      --bg-900:#0f172a;
+      --bg-800:#1e293b;
+      --muted:#9ca3af;
+      --gold:#fbbf24;
+      --purple:#7c3aed;
+      --card-bg: rgba(0,0,0,0.55);
+      --glass-border: rgba(255,255,255,0.08);
+      --glass-border-2: rgba(255,255,255,0.12);
+      --radius:20px;
+    }
+    *{box-sizing:border-box}
+    html,body,#root{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(180deg,var(--bg-800), var(--bg-900));
+      color:#fff;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+    a{color:inherit;text-decoration:none}
+
+    /* ---------- layout ---------- */
+    .app {
+      min-height:100vh;
+      position:relative;
+      overflow:hidden;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+    }
+    .container {
+      width:100%;
+      max-width:1200px;
+      padding:28px;
+      position:relative;
+      z-index:30;
+    }
+
+    /* ---------- background layer ---------- */
+    .bg-layer {
+      position:fixed;
+      inset:0;
+      z-index:0;
+      overflow:hidden;
+    }
+    .bg-gif {
+      position:absolute;
+      inset:0;
+      background-size:cover;
+      background-position:center;
+      transform:scale(1.08);
+      filter: blur(4px) brightness(.62);
+      transition:all .8s ease;
+    }
+    .bg-overlay {
+      position:absolute; inset:0;
+      background: linear-gradient(180deg, rgba(0,0,0,.8), rgba(0,0,0,.6) 50%, rgba(0,0,0,.8));
+      z-index:5;
+    }
+    .bg-pattern {
+      position:absolute; inset:0;
+      background-image:url('https://www.transparenttextures.com/patterns/cubes.png');
+      opacity:.08; z-index:6;
+    }
+
+    /* ---------- header / welcome ---------- */
+    .welcome {
+      min-height:80vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:48px 16px;
+    }
+    .title {
+      font-size: clamp(28px, 6vw, 80px);
+      font-weight:900;
+      margin:0;
+      line-height:1;
+    }
+    .subtitle {
+      color:var(--muted);
+      margin-top:12px;
+      letter-spacing:.4em;
+      text-transform:uppercase;
+      font-weight:600;
+    }
+    .start-btn {
+      margin-top:28px;
+      padding:18px 36px;
+      border-radius:14px;
+      background:#ffffff;
+      color:#000;
+      font-weight:900;
+      cursor:pointer;
+      border:none;
+      box-shadow: 0 8px 40px rgba(124,58,237,0.14);
+      transition: all .22s ease;
+    }
+    .start-btn:hover { transform: translateY(-3px); background:var(--purple); color:#fff; }
+
+    /* ---------- stage header ---------- */
+    .stage-header {
+      position:fixed; top:12px; left:0; right:0;
+      display:flex; justify-content:center; z-index:40; pointer-events:none;
+    }
+    .stage-header .panel {
+      display:flex; flex-direction:column; align-items:center;
+    }
+    .badge {
+      padding:.25rem .75rem;
+      border-radius:999px;
+      font-size:.72rem;
+      font-weight:800;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      background:rgba(255,255,255,.06);
+      border:1px solid var(--glass-border);
+      color:#fff;
+    }
+    .stage-sub { color:var(--muted); margin-top:6px; font-size:.78rem; }
+
+    /* ---------- main view ---------- */
+    .stage {
+      margin-top:80px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:28px;
+      align-items:start;
+      padding-bottom:60px;
+    }
+    @media(min-width:900px){
+      .stage { grid-template-columns: 1fr; }
+    }
+
+    .hero {
+      text-align:center;
+      margin-bottom:8px;
+    }
+    .icon-circle {
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:16px; border-radius:999px; background:rgba(255,255,255,.03);
+      margin-bottom:12px;
+      box-shadow: 0 6px 22px rgba(0,0,0,0.6);
+    }
+    .hero h2 { font-size: clamp(28px, 5vw, 44px); margin:0; letter-spacing:.08em; }
+    .hero h3 { color:var(--muted); margin:6px 0 0; }
+
+    /* ---------- content grid ---------- */
+    .content-grid {
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:28px;
+    }
+    @media(min-width:900px){
+      .content-grid { grid-template-columns: 1fr 420px; }
+    }
+
+    .panel-card {
+      background: var(--card-bg);
+      border-radius:18px;
+      padding:18px;
+      border:1px solid var(--glass-border);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.45);
+    }
+
+    .nominees-list {
+      max-height:54vh;
+      overflow:auto;
+      padding-right:8px;
+    }
+    .nominee-row {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:10px;
+      border-radius:10px;
+      transition:background .12s;
+    }
+    .nominee-row:hover { background: rgba(255,255,255,.02); }
+    .nominee-name { font-weight:700; }
+    .progress-wrap { display:flex; gap:10px; align-items:center; }
+    .bar {
+      height:10px; width:200px; background: rgba(255,255,255,.06); border-radius:999px; overflow:hidden;
+    }
+    .bar .fill { height:100%; background:var(--purple); transition: width .9s ease; }
+    .bar.top .fill { background:var(--gold); box-shadow: 0 0 8px rgba(250,204,21,0.4); }
+
+    .reveal-panel {
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:300px;
+      text-align:center;
+    }
+    .reveal-btn {
+      padding:16px 28px;
+      border-radius:14px;
+      border:none;
+      background:#fff;
+      color:#000;
+      font-weight:900;
+      cursor:pointer;
+    }
+    .reveal-btn:hover { background:var(--gold); transform:scale(1.02); }
+
+    .winner {
+      font-weight:900;
+      color:var(--gold);
+      text-shadow: 0 0 18px rgba(250,204,21,0.25);
+    }
+
+    .nav {
+      display:flex; gap:12px; margin-top:20px; align-items:center;
+    }
+    .nav button {
+      padding:10px 14px; border-radius:10px; border:none; cursor:pointer;
+    }
+    .nav .prev { background: rgba(255,255,255,.04); color:#fff; }
+    .nav .next { background: var(--purple); color:#fff; font-weight:800; }
+
+    /* ---------- summary ---------- */
+    .summary-grid {
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap:16px;
+    }
+    .summary-card {
+      background: var(--card-bg);
+      border-radius:14px; padding:18px; border:1px solid var(--glass-border);
+    }
+
+    /* ---------- confetti ---------- */
+    .confetti { position:fixed; inset:0; pointer-events:none; z-index:60; }
+    .particle {
+      position:absolute; width:8px; height:8px; border-radius:50%; animation:fall linear forwards;
+    }
+    @keyframes fall {
+      0% { transform: translateY(-10vh) rotate(0deg); opacity:1; }
+      100% { transform: translateY(110vh) rotate(720deg); opacity:0; }
+    }
+
+    /* ---------- misc ---------- */
+    .muted { color:var(--muted) }
+    .mono { font-family: monospace; font-size:.9rem; color:var(--muted) }
+
+    /* scrollbar minor */
+    .nominees-list::-webkit-scrollbar { width:8px }
+    .nominees-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,.06); border-radius:8px }
+  </style>
 </head>
-<body class="bg-black">
-    <div id="root"></div>
 
-    <script type="text/babel">
-        const { useState, useEffect, useMemo } = React;
-        const {
-            Trophy, ArrowRight, ArrowLeft, Music, Gamepad2, Paintbrush, BookOpen, 
-            Users, Ghost, Clock, Skull, Sparkles, Star, Mic2, Play, Volume2, Hash
-        } = lucideReact;
+<body>
+  <div id="root"></div>
 
-        // --- DATA & CONFIGURATION ---
+  <script type="text/babel">
+  (() => {
+    const { useState, useEffect, useMemo } = React;
 
-        // STAGE 1 DATA (Nomination Phase)
-        const STAGE_1_VOTES = [
-          { name: "NbTuN", goty: "Clair Obscur: Expedition 33, Monster Hunter Wilds, Doom: The Dark Ages", gameplay: "clair obscure expdetion 33, monster hunter wilds", story: "Kingdom Come: Deliverance II, clair obscure expdetion 33, The Alters", art: "clair obscure expdetion 33, No, I'm Not a Human, hades 2", music: "clair obscure expdetion 33, dynasty warriors origins, south of midnight", indie: "pistrello and the cursed yoyo, clair obscure expdetion 33, Advent NEON, Haste", remaster: "The Elder Scrolls IV: Oblivion Remastered, Ninja Gaiden 2 Black", multi: "dying light the beast, Mario Kart World, Split Fiction", flop: "vampire: the masquerade - bloodlines 2, Little Nightmares 3, lost soul aside", anticipated: "The Witcher 4, resdient evil 9, judas", char: "verso, gustave, jan", boss: "curator, Zoh Shia, the dragon everhood 2, Enhanced dark dragon", song: "Horizon Dreamer https://youtu.be/DJq0jJhPSjg, Une vie à t'aimer, lisrim golden, CAPRICIOUS WIND, rougarou", honorable: "Trepang2" },
-          { name: "sal", goty: "Kingdom Come: Deliverance II", gameplay: "clair obscure expdetion 33, kingdom come deliverance2", story: "Kingdom Come: Deliverance II, clair obscure expdetion 33, death stranding 2", art: "clair obscure expdetion 33, ghost of yotei", music: "clair obscure expdetion 33, dynasty warriors origins", indie: "clair obscure expdetion 33", remaster: "The Elder Scrolls IV: Oblivion Remastered, METAL GEAR SOLID Δ: SNAKE EATER", multi: "dying light the beast, battlefield 6", flop: "vampire: the masquerade - bloodlines 2", anticipated: "The Witcher 4, crimson Desert, lego batman", char: "verso, Maelle, henry", boss: "Arlecchino, the Blood Artist, Visages", song: "Une vie à t'aimer, Lumière, Alicia, The Clear Blue Sky", honorable: "" },
-          { name: "القوت", goty: "Clair Obscur: Expedition 33", gameplay: "clair obscure expdetion 33", story: "clair obscure expdetion 33", art: "clair obscure expdetion 33, death stranding 2, ghost of yotei", music: "clair obscure expdetion 33, death stranding 2", indie: "clair obscure expdetion 33", remaster: "", multi: "Mario Kart World, battlefield 6, rv there yet", flop: "dispatch", anticipated: "The Witcher 4, judas, gta 6", char: "verso", boss: "Arlecchino, the Blood Artist, King K. Rool, Fulghor Champion of Nightglow", song: "to the wilder, Une vie à t'aimer, Lumière", honorable: "Ai Baby gif" },
-          { name: "Omar", goty: "Hollow Knight: Silksong", gameplay: "hollow knight silksong", story: "hollow knight silksong", art: "hollow knight silksong", music: "hollow knight silksong", indie: "hollow knight silksong", remaster: "", multi: "", flop: "Hunter x Hunter: Nen x Impact, Bleach Rebirth of Souls", anticipated: "", char: "hornet", boss: "tormented trobbio", song: "", honorable: "" },
-          { name: "Potato Lover", goty: "Clair Obscur: Expedition 33, Hollow Knight: Silksong", gameplay: "hollow knight silksong", story: "clair obscure expdetion 33", art: "clair obscure expdetion 33, hollow knight silksong, death stranding 2", music: "clair obscure expdetion 33, death stranding 2", indie: "clair obscure expdetion 33, hollow knight silksong", remaster: "", multi: "elden ring nightreign", flop: "Hunter x Hunter: Nen x Impact, lost soul aside", anticipated: "MARVEL Tokon: Fighting Souls, stranger of heaven, dusk blood", char: "verso", boss: "curator", song: "to the wilder, story of rainy, Une vie à t'aimer, Lumière, Skarrsinger Karmelita", honorable: "" },
-          { name: "ماجد", goty: "Clair Obscur: Expedition 33", gameplay: "ninja gaiden 4", story: "clair obscure expdetion 33", art: "clair obscure expdetion 33, hollow knight silksong, death stranding 2", music: "clair obscure expdetion 33, death stranding 2", indie: "clair obscure expdetion 33, hollow knight silksong", remaster: "The Elder Scrolls IV: Oblivion Remastered, Xenoblade chronicles x definitive edition", multi: "battlefield 6", flop: "vampire: the masquerade - bloodlines 2", anticipated: "The Witcher 4, judas", char: "verso", boss: "simon, Zoh Shia, Enhanced dark dragon", song: "to the wilder, Lumière, phantom", honorable: "Psychonauts" },
-          { name: "اللواء جيري", goty: "Clair Obscur: Expedition 33", gameplay: "Doom: The Dark Ages, ninja gaiden 4, Khazan", story: "clair obscure expdetion 33", art: "clair obscure expdetion 33, ghost of yotei, Split Fiction", music: "clair obscure expdetion 33", indie: "clair obscure expdetion 33", remaster: "اي حاجة غير نينجا قايدن وميتل خرا", multi: "Split Fiction", flop: "lost soul aside", anticipated: "onimusha way of the sword, stranger of heaven, resdient evil 9", char: "renoir, verso, Maelle", boss: "simon, curator, maluka, Ryu Hayabusa", song: "Une vie à t'aimer, aline ost and renoir final boss phase 2", honorable: "" },
-          { name: "PXL", goty: "Clair Obscur: Expedition 33, Monster Hunter Wilds", gameplay: "clair obscure expdetion 33", story: "clair obscure expdetion 33", art: "hollow knight silksong, ghost of yotei, Split Fiction", music: "clair obscure expdetion 33, hollow knight silksong", indie: "clair obscure expdetion 33, Haste", remaster: "METAL GEAR SOLID Δ: SNAKE EATER", multi: "Split Fiction, mage arena, Elden Ring Nightrain", flop: "Hunter x Hunter: Nen x Impact, Bleach Rebirth of Souls", anticipated: "phantom blade zero, The Witcher 4", char: "gustave, Jeff The Shark (MR), Revenant (ER), Duchess (ER)", boss: "Fulghor Champion of Nightglow, The wylder remembrance ending cutscene", song: "story of rainy, Une vie à t'aimer, Caligo, Miasma Of Night", honorable: "Balatro, Hearthstone" },
-          { name: "silver", goty: "Clair Obscur: Expedition 33, ninja gaiden 4", gameplay: "clair obscure expdetion 33, ninja gaiden 4", story: "clair obscure expdetion 33, south of midnight", art: "clair obscure expdetion 33, Shinobi: Art of Vengeance, Bye Sweet Carole", music: "clair obscure expdetion 33, south of midnight, hades 2", indie: "clair obscure expdetion 33, Haste", remaster: "", multi: "dying light the beast, battlefield 6, rv there yet", flop: "vampire: the masquerade - bloodlines 2, lost soul aside, Split Fiction", anticipated: "stranger of heaven, The Witcher 4, crimson Desert", char: "renoir, verso, Maelle", boss: "Visages, Sirene, curator, Enhanced dark dragon", song: "story of rainy, Une vie à t'aimer, Lumière, lisrim golden, cherie tree", honorable: "prince of persia the lost crown" },
-          { name: "معوذي", goty: "Clair Obscur: Expedition 33", gameplay: "hollow knight silksong, ninja gaiden 4, The First Berserker: Khazan", story: "Kingdom Come: Deliverance II, clair obscure expdetion 33, The Alters", art: "hollow knight silksong, death stranding 2, sword of the sea", music: "clair obscure expdetion 33, dynasty warriors origins, death stranding 2", indie: "clair obscure expdetion 33, hollow knight silksong, hades 2", remaster: "The Elder Scrolls IV: Oblivion Remastered, METAL GEAR SOLID Δ: SNAKE EATER", multi: "rv there yet, peak, R.E.P.O.", flop: "vampire: the masquerade - bloodlines 2, Little Nightmares 3, lost soul aside", anticipated: "stranger of heaven, Marvel's Wolverine, dusk blood", char: "verso, henry, jan", boss: "Arlecchino, the Blood Artist, curator, Fulghor Champion of Nightglow, Enhanced dark dragon", song: "Gestral Village Golgra, The Clear Blue Sky, CAPRICIOUS WIND, Open Your Heart, Last Dive", honorable: "Bioshock Infinite" },
-          { name: "K-Tap", goty: "Hollow Knight: Silksong", gameplay: "hollow knight silksong", story: "clair obscure expdetion 33", art: "clair obscure expdetion 33, ghost of yotei, Dispatch", music: "", indie: "Dispatch", remaster: "METAL GEAR SOLID Δ: SNAKE EATER", multi: "ARC Raiders, peak", flop: "", anticipated: "Marvel's Wolverine, resdient evil 9, gta 6", char: "hornet, Robert robertson the third", boss: "", song: "", honorable: "Hollow kbight" },
-          { name: "عزوز", goty: "Doom: The Dark Ages", gameplay: "dying light the beast", story: "clair obscure expdetion 33", art: "clair obscure expdetion 33", music: "", indie: "clair obscure expdetion 33", remaster: "METAL GEAR SOLID Δ: SNAKE EATER", multi: "Sonic Racing: CrossWorlds", flop: "elden ring nightreign, Fortnite", anticipated: "The Witcher 4", char: "", boss: "", song: "", honorable: "" },
-          { name: "yuki", goty: "Clair Obscur: Expedition 33, Hollow Knight: Silksong", gameplay: "clair obscure expdetion 33, hollow knight silksong", story: "clair obscure expdetion 33, hollow knight silksong", art: "clair obscure expdetion 33, hollow knight silksong, Split Fiction", music: "clair obscure expdetion 33", indie: "hollow knight silksong", remaster: "trails in the sky 1st chapter", multi: "dying light the beast, Split Fiction", flop: "lost soul aside", anticipated: "The Witcher 4, resdient evil 9, tides of annihilation", char: "renoir, verso, gustave", boss: "renoir secoend fight, simon, scar singer", song: "Une vie à t'aimer, Lumière, Skarrsinger Karmelita", honorable: "" },
-          { name: "فراس", goty: "Kingdom Come: Deliverance II, Clair Obscur: Expedition 33, Hollow Knight: Silksong", gameplay: "ninja gaiden 4, The First Berserker: Khazan", story: "Kingdom Come: Deliverance II, clair obscure expdetion 33, The Alters", art: "hollow knight silksong, death stranding 2, sword of the sea", music: "clair obscure expdetion 33, dynasty warriors origins, death stranding 2", indie: "clair obscure expdetion 33, hollow knight silksong, hades 2", remaster: "The Elder Scrolls IV: Oblivion Remastered, METAL GEAR SOLID Δ: SNAKE EATER", multi: "Split Fiction", flop: "vampire: the masquerade - bloodlines 2, Little Nightmares 3, lost soul aside", anticipated: "stranger of heaven, Marvel's Wolverine, dusk blood", char: "verso, henry, jan", boss: "Arlecchino, the Blood Artist, curator, Fulghor Champion of Nightglow, Enhanced dark dragon", song: "Gestral Village Golgra, The Clear Blue Sky, CAPRICIOUS WIND, Open Your Heart, Last Dive", honorable: "Bioshock Infinite" }
-        ];
+    /* --------------------------
+       Paste your DATA & LOGIC
+       (kept faithful to your original)
+       -------------------------- */
 
-        // STAGE 2 DATA (Final Vote Phase)
-        const STAGE_2_VOTES = [
-          { name: "sal", goty: "Kingdom Come: Deliverance II", gameplay: "clair obscure expdetion 33", story: "clair obscure expdetion 33", art: "clair obscure expdetion 33", music: "clair obscure expdetion 33", indie: "clair obscure expdetion 33", remaster: "The Elder Scrolls IV: Oblivion Remastered", multi: "elden ring nightreign", flop: "vampire: the masquerade - bloodlines 2", anticipated: "The Witcher 4", char: "renoir", boss: "Arlecchino, the Blood Artist", song: "Lumière https://youtu.be/zmvsw2ILX5k", honorable: "Bioshock Infinite" },
-          { name: "Potato lover", goty: "Hollow Knight: Silksong", gameplay: "hollow knight silksong", story: "clair obscure expdetion 33", art: "clair obscure expdetion 33", music: "death stranding 2", indie: "hollow knight silksong", remaster: "", multi: "elden ring nightreign", flop: "Hunter x Hunter: Nen x Impact", anticipated: "stranger of heaven", char: "verso", boss: "curator", song: "to the wilder https://www.youtube.com/watch?v=BSN1rPPKK9s", honorable: "Bioshock Infinite" },
-          { name: "ماجد", goty: "Clair Obscur: Expedition 33", gameplay: "ninja gaiden 4", story: "clair obscure expdetion 33", art: "hollow knight silksong", music: "death stranding 2", indie: "clair obscure expdetion 33", remaster: "Xenoblade Chronicles X", multi: "battlefield 6", flop: "lost soul aside", anticipated: "The Witcher 4", char: "verso", boss: "Enhanced dark dragon", song: "Une vie à peindre https://www.youtube.com/watch?v=-i_nT9d-mK8", honorable: "Psychonauts" },
-          { name: "yuki", goty: "Clair Obscur: Expedition 33", gameplay: "hollow knight silksong", story: "clair obscure expdetion 33", art: "split fiction", music: "clair obscure expdetion 33", indie: "clair obscure expdetion 33", remaster: "trails in the sky 1st chapter", multi: "Split Fiction", flop: "lost soul aside", anticipated: "resdient evil 9", char: "verso", boss: "curator", song: "Une vie à t'aimer https://www.youtube.com/watch?v=3kMbTzomh94", honorable: "prince of persia the lost crown" },
-          { name: "NbTuN", goty: "Clair Obscur: Expedition 33", gameplay: "clair obscure expdetion 33", story: "clair obscure expdetion 33", art: "clair obscure expdetion 33", music: "dynasty warriors origins", indie: "clair obscure expdetion 33", remaster: "The Elder Scrolls IV: Oblivion Remastered", multi: "Split Fiction", flop: "lost soul aside", anticipated: "The Witcher 4", char: "verso", boss: "Enhanced dark dragon", song: "Une vie à peindre https://www.youtube.com/watch?v=-i_nT9d-mK8", honorable: "Trepang2" },
-          { name: "silver", goty: "Clair Obscur: Expedition 33", gameplay: "clair obscure expdetion 33", story: "clair obscure expdetion 33", art: "clair obscure expdetion 33", music: "clair obscure expdetion 33", indie: "clair obscure expdetion 33", remaster: "", multi: "dying light the beast", flop: "lost soul aside", anticipated: "stranger of heaven", char: "verso", boss: "curator", song: "Une vie à peindre https://www.youtube.com/watch?v=-i_nT9d-mK8", honorable: "prince of persia the lost crown" },
-          { name: "اللواء جيري", goty: "Clair Obscur: Expedition 33", gameplay: "ninja gaiden 4", story: "clair obscure expdetion 33", art: "split fiction", music: "clair obscure expdetion 33", indie: "clair obscure expdetion 33", remaster: "trails in the sky 1st chapter", multi: "Split Fiction", flop: "lost soul aside", anticipated: "stranger of heaven", char: "verso", boss: "curator", song: "Une vie à t'aimer", honorable: "Bioshock Infinite" },
-          { name: "فراس", goty: "Clair Obscur: Expedition 33", gameplay: "ninja gaiden 4", story: "clair obscure expdetion 33", art: "split fiction", music: "clair obscure expdetion 33", indie: "clair obscure expdetion 33", remaster: "The Elder Scrolls IV: Oblivion Remastered", multi: "Split Fiction", flop: "lost soul aside", anticipated: "stranger of heaven", char: "verso", boss: "Arlecchino, the Blood Artist", song: "Une vie à peindre", honorable: "Bioshock Infinite" }
-        ];
+    // STAGE 1 DATA (Nomination Phase)
+    const STAGE_1_VOTES = [
+      { name: "NbTuN", goty: "Clair Obscur: Expedition 33, Monster Hunter Wilds, Doom: The Dark Ages", gameplay: "clair obscure expdetion 33, monster hunter wilds", story: "Kingdom Come: Deliverance II, clair obscure expdetion 33, The Alters", art: "clair obscure expdetion 33, No, I'm Not a Human, hades 2", music: "clair obscure expdetion 33, dynasty warriors origins, south of midnight", indie: "pistrello and the cursed yoyo, clair obscure expdetion 33, Advent NEON, Haste", remaster: "The Elder Scrolls IV: Oblivion Remastered, Ninja Gaiden 2 Black", multi: "dying light the beast, Mario Kart World, Split Fiction", flop: "vampire: the masquerade - bloodlines 2, Little Nightmares 3, lost soul aside", anticipated: "The Witcher 4, resdient evil 9, judas", char: "verso, gustave, jan", boss: "curator, Zoh Shia, the dragon everhood 2, Enhanced dark dragon", song: "Horizon Dreamer https://youtu.be/DJq0jJhPSjg, Une vie à t'aimer, lisrim golden, CAPRICIOUS WIND, rougarou", honorable: "Trepang2" },
+      { name: "sal", goty: "Kingdom Come: Deliverance II", gameplay: "clair obscure expdetion 33, kingdom come deliverance2", story: "Kingdom Come: Deliverance II, clair obscure expdetion 33, death stranding 2", art: "clair obscure expdetion 33, ghost of yotei", music: "clair obscure expdetion 33, dynasty warriors origins", indie: "clair obscure expdetion 33", remaster: "The Elder Scrolls IV: Oblivion Remastered, METAL GEAR SOLID Δ: SNAKE EATER", multi: "dying light the beast, battlefield 6", flop: "vampire: the masquerade - bloodlines 2", anticipated: "The Witcher 4, crimson Desert, lego batman", char: "verso, Maelle, henry", boss: "Arlecchino, the Blood Artist, Visages", song: "Une vie à t'aimer, Lumière, Alicia, The Clear Blue Sky", honorable: "" },
+      { name: "القوت", goty: "Clair Obscur: Expedition 33", gameplay: "clair obscure expdetion 33", story: "clair obscure expdetion 33", art: "clair obscure expdetion 33, death stranding 2, ghost of yotei", music: "clair obscure expdetion 33, death stranding 2", indie: "clair obscure expdetion 33", remaster: "", multi: "Mario Kart World, battlefield 6, rv there yet", flop: "dispatch", anticipated: "The Witcher 4, judas, gta 6", char: "verso", boss: "Arlecchino, the Blood Artist, King K. Rool, Fulghor Champion of Nightglow", song: "to the wilder, Une vie à t'aimer, Lumière", honorable: "Ai Baby gif" },
+      { name: "Omar", goty: "Hollow Knight: Silksong", gameplay: "hollow knight silksong", story: "hollow knight silksong", art: "hollow knight silksong", music: "hollow knight silksong", indie: "hollow knight silksong", remaster: "", multi: "", flop: "Hunter x Hunter: Nen x Impact, Bleach Rebirth of Souls", anticipated: "", char: "hornet", boss: "tormented trobbio", song: "", honorable: "" },
+      { name: "Potato Lover", goty: "Clair Obscur: Expedition 33, Hollow Knight: Silksong", gameplay: "hollow knight silksong", story: "clair obscure expdetion 33", art: "clair obscure expdetion 33, hollow knight silksong, death stranding 2", music: "clair obscure expdetion 33, death stranding 2", indie: "clair obscure expdetion 33, hollow knight silksong", remaster: "", multi: "elden ring nightreign", flop: "Hunter x Hunter: Nen x Impact, lost soul aside", anticipated: "MARVEL Tokon: Fighting Souls, stranger of heaven, dusk blood", char: "verso", boss: "curator", song: "to the wilder, story of rainy, Une vie à t'aimer, Lumière, Skarrsinger Karmelita", honorable: "" },
+      { name: "ماجد", goty: "Clair Obscur: Expedition 33", gameplay: "ninja gaiden 4", story: "clair obscure expdetion 33", art: "clair obscure expdetion 33, hollow knight silksong, death stranding 2", music: "clair obscure expdetion 33, death stranding 2", indie: "clair obscure expdetion 33, hollow knight silksong", remaster: "The Elder Scrolls IV: Oblivion Remastered, Xenoblade chronicles x definitive edition", multi: "battlefield 6", flop: "vampire: the masquerade - bloodlines 2", anticipated: "The Witcher 4, judas", char: "verso", boss: "simon, Zoh Shia, Enhanced dark dragon", song: "to the wilder, Lumière, phantom", honorable: "Psychonauts" },
+      { name: "اللواء جيري", goty: "Clair Obscur: Expedition 33", gameplay: "Doom: The Dark Ages, ninja gaiden 4, Khazan", story: "clair obscure expdetion 33", art: "clair obscure expdetion 33, ghost of yotei, Split Fiction", music: "clair obscure expdetion 33", indie: "clair obscure expdetion 33", remaster: "اي حاجة غير نينجا قايدن وميتل خرا", multi: "Split Fiction", flop: "lost soul aside", anticipated: "onimusha way of the sword, stranger of heaven, resdient evil 9", char: "renoir, verso, Maelle", boss: "simon, curator, maluka, Ryu Hayabusa", song: "Une vie à t'aimer, aline ost and renoir final boss phase 2", honorable: "" },
+      { name: "PXL", goty: "Clair Obscur: Expedition 33, Monster Hunter Wilds", gameplay: "clair obscure expdetion 33", story: "clair obscure expdetion 33", art: "hollow knight silksong, ghost of yotei, Split Fiction", music: "clair obscure expdetion 33, hollow knight silksong", indie: "clair obscure expdetion 33, Haste", remaster: "METAL GEAR SOLID Δ: SNAKE EATER", multi: "Split Fiction, mage arena, Elden Ring Nightrain", flop: "Hunter x Hunter: Nen x Impact, Bleach Rebirth of Souls", anticipated: "phantom blade zero, The Witcher 4", char: "gustave, Jeff The Shark (MR), Revenant (ER), Duchess (ER)", boss: "Fulghor Champion of Nightglow, The wylder remembrance ending cutscene", song: "story of rainy, Une vie à t'aimer, Caligo, Miasma Of Night", honorable: "Balatro, Hearthstone" },
+      { name: "silver", goty: "Clair Obscur: Expedition 33, ninja gaiden 4", gameplay: "clair obscure expdetion 33, ninja gaiden 4", story: "clair obscure expdetion 33, south of midnight", art: "clair obscure expdetion 33, Shinobi: Art of Vengeance, Bye Sweet Carole", music: "clair obscure expdetion 33, south of midnight, hades 2", indie: "clair obscure expdetion 33, Haste", remaster: "", multi: "dying light the beast, battlefield 6, rv there yet", flop: "vampire: the masquerade - bloodlines 2, lost soul aside, Split Fiction", anticipated: "stranger of heaven, The Witcher 4, crimson Desert", char: "renoir, verso, Maelle", boss: "Visages, Sirene, curator, Enhanced dark dragon", song: "story of rainy, Une vie à t'aimer, Lumière, lisrim golden, cherie tree", honorable: "prince of persia the lost crown" },
+      { name: "معوذي", goty: "Clair Obscur: Expedition 33", gameplay: "hollow knight silksong, ninja gaiden 4, The First Berserker: Khazan", story: "Kingdom Come: Deliverance II, clair obscure expdetion 33, The Alters", art: "hollow knight silksong, death stranding 2, sword of the sea", music: "clair obscure expdetion 33, dynasty warriors origins, death stranding 2", indie: "clair obscure expdetion 33, hollow knight silksong, hades 2", remaster: "The Elder Scrolls IV: Oblivion Remastered, METAL GEAR SOLID Δ: SNAKE EATER", multi: "rv there yet, peak, R.E.P.O.", flop: "vampire: the masquerade - bloodlines 2, Little Nightmares 3, lost soul aside", anticipated: "stranger of heaven, Marvel's Wolverine, dusk blood", char: "verso, henry, jan", boss: "Arlecchino, the Blood Artist, curator, Fulghor Champion of Nightglow, Enhanced dark dragon", song: "Gestral Village Golgra, The Clear Blue Sky, CAPRICIOUS WIND, Open Your Heart, Last Dive", honorable: "Bioshock Infinite" },
+      { name: "K-Tap", goty: "Hollow Knight: Silksong", gameplay: "hollow knight silksong", story: "clair obscure expdetion 33", art: "clair obscure expdetion 33, ghost of yotei, Dispatch", music: "", indie: "Dispatch", remaster: "METAL GEAR SOLID Δ: SNAKE EATER", multi: "ARC Raiders, peak", flop: "", anticipated: "Marvel's Wolverine, resdient evil 9, gta 6", char: "hornet, Robert robertson the third", boss: "", song: "", honorable: "Hollow kbight" },
+      { name: "عزوز", goty: "Doom: The Dark Ages", gameplay: "dying light the beast", story: "clair obscure expdetion 33", art: "clair obscure expdetion 33", music: "", indie: "clair obscure expdetion 33", remaster: "METAL GEAR SOLID Δ: SNAKE EATER", multi: "Sonic Racing: CrossWorlds", flop: "elden ring nightreign, Fortnite", anticipated: "The Witcher 4", char: "", boss: "", song: "", honorable: "" },
+      { name: "yuki", goty: "Clair Obscur: Expedition 33, Hollow Knight: Silksong", gameplay: "clair obscure expdetion 33, hollow knight silksong", story: "clair obscure expdetion 33, hollow knight silksong", art: "clair obscure expdetion 33, hollow knight silksong, Split Fiction", music: "clair obscure expdetion 33", indie: "hollow knight silksong", remaster: "trails in the sky 1st chapter", multi: "dying light the beast, Split Fiction", flop: "lost soul aside", anticipated: "The Witcher 4, resdient evil 9, tides of annihilation", char: "renoir, verso, gustave", boss: "renoir secoend fight, simon, scar singer", song: "Une vie à t'aimer, Lumière, Skarrsinger Karmelita", honorable: "" },
+      { name: "فراس", goty: "Kingdom Come: Deliverance II, Clair Obscur: Expedition 33, Hollow Knight: Silksong", gameplay: "ninja gaiden 4, The First Berserker: Khazan", story: "Kingdom Come: Deliverance II, clair obscure expdetion 33, The Alters", art: "hollow knight silksong, death stranding 2, sword of the sea", music: "clair obscure expdetion 33, dynasty warriors origins, death stranding 2", indie: "clair obscure expdetion 33, hollow knight silksong, hades 2", remaster: "The Elder Scrolls IV: Oblivion Remastered, METAL GEAR SOLID Δ: SNAKE EATER", multi: "Split Fiction", flop: "vampire: the masquerade - bloodlines 2, Little Nightmares 3, lost soul aside", anticipated: "stranger of heaven, Marvel's Wolverine, dusk blood", char: "verso, henry, jan", boss: "Arlecchino, the Blood Artist, curator, Fulghor Champion of Nightglow, Enhanced dark dragon", song: "Gestral Village Golgra, The Clear Blue Sky, CAPRICIOUS WIND, Open Your Heart, Last Dive", honorable: "Bioshock Infinite" }
+    ];
 
-        // --- BACKGROUNDS ---
-        const BACKGROUNDS = [
-            "https://media.giphy.com/media/26tn33aiTi1jkl6H6/giphy.gif", // 0: Synthwave Grid (General/Welcome)
-            "https://media.giphy.com/media/U3qYN8S0j3bpK/giphy.gif",     // 1: Space Stars (Space/SciFi)
-            "https://media.giphy.com/media/3o7qE1YN7aQfVjj0C4/giphy.gif", // 2: Particles (Magic/Fantasy)
-            "https://media.giphy.com/media/xTiTnirRhvU53qg8X6/giphy.gif", // 3: Glitch/Cyber (Action)
-            "https://media.giphy.com/media/10SvWCbt1ytWCc/giphy.gif",     // 4: Matrix Rain (Tech)
-            "https://media.giphy.com/media/l0HlO4p8j4cp8S0nzO/giphy.gif", // 5: Abstract Lights
-            "https://media.giphy.com/media/3o7btZ3Tptl8jGx5U4/giphy.gif", // 6: Neon City
-            "https://media.giphy.com/media/l2Je66zG6mAAZxgqI/giphy.gif", // 7: Retro Sunset
-            "https://media.giphy.com/media/26tn33aiTi1jkl6H6/giphy.gif" // 8: Custom User GIF for Gameplay (using same as 0 as fallback)
-        ];
+    // STAGE 2 DATA (Final Vote Phase)
+    const STAGE_2_VOTES = [
+      { name: "sal", goty: "Kingdom Come: Deliverance II", gameplay: "clair obscure expdetion 33", story: "clair obscure expdetion 33", art: "clair obscure expdetion 33", music: "clair obscure expdetion 33", indie: "clair obscure expdetion 33", remaster: "The Elder Scrolls IV: Oblivion Remastered", multi: "elden ring nightreign", flop: "vampire: the masquerade - bloodlines 2", anticipated: "The Witcher 4", char: "renoir", boss: "Arlecchino, the Blood Artist", song: "Lumière https://youtu.be/zmvsw2ILX5k", honorable: "Bioshock Infinite" },
+      { name: "Potato lover", goty: "Hollow Knight: Silksong", gameplay: "hollow knight silksong", story: "clair obscure expdetion 33", art: "clair obscure expdetion 33", music: "death stranding 2", indie: "hollow knight silksong", remaster: "", multi: "elden ring nightreign", flop: "Hunter x Hunter: Nen x Impact", anticipated: "stranger of heaven", char: "verso", boss: "curator", song: "to the wilder https://www.youtube.com/watch?v=BSN1rPPKK9s", honorable: "Bioshock Infinite" },
+      { name: "ماجد", goty: "Clair Obscur: Expedition 33", gameplay: "ninja gaiden 4", story: "clair obscure expdetion 33", art: "hollow knight silksong", music: "death stranding 2", indie: "clair obscure expdetion 33", remaster: "Xenoblade Chronicles X", multi: "battlefield 6", flop: "lost soul aside", anticipated: "The Witcher 4", char: "verso", boss: "Enhanced dark dragon", song: "Une vie à peindre https://www.youtube.com/watch?v=-i_nT9d-mK8", honorable: "Psychonauts" },
+      { name: "yuki", goty: "Clair Obscur: Expedition 33", gameplay: "hollow knight silksong", story: "clair obscure expdetion 33", art: "split fiction", music: "clair obscure expdetion 33", indie: "clair obscure expdetion 33", remaster: "trails in the sky 1st chapter", multi: "Split Fiction", flop: "lost soul aside", anticipated: "resdient evil 9", char: "verso", boss: "curator", song: "Une vie à t'aimer https://www.youtube.com/watch?v=3kMbTzomh94", honorable: "prince of persia the lost crown" },
+      { name: "NbTuN", goty: "Clair Obscur: Expedition 33", gameplay: "clair obscure expdetion 33", story: "clair obscure expdetion 33", art: "clair obscure expdetion 33", music: "dynasty warriors origins", indie: "clair obscure expdetion 33", remaster: "The Elder Scrolls IV: Oblivion Remastered", multi: "Split Fiction", flop: "lost soul aside", anticipated: "The Witcher 4", char: "verso", boss: "Enhanced dark dragon", song: "Une vie à peindre https://www.youtube.com/watch?v=-i_nT9d-mK8", honorable: "Trepang2" },
+      { name: "silver", goty: "Clair Obscur: Expedition 33", gameplay: "clair obscure expdetion 33", story: "clair obscure expdetion 33", art: "clair obscure expdetion 33", music: "clair obscure expdetion 33", indie: "clair obscure expdetion 33", remaster: "", multi: "dying light the beast", flop: "lost soul aside", anticipated: "stranger of heaven", char: "verso", boss: "curator", song: "Une vie à peindre https://www.youtube.com/watch?v=-i_nT9d-mK8", honorable: "prince of persia the lost crown" },
+      { name: "اللواء جيري", goty: "Clair Obscur: Expedition 33", gameplay: "ninja gaiden 4", story: "clair obscure expdetion 33", art: "split fiction", music: "clair obscure expdetion 33", indie: "clair obscure expdetion 33", remaster: "trails in the sky 1st chapter", multi: "Split Fiction", flop: "lost soul aside", anticipated: "stranger of heaven", char: "verso", boss: "curator", song: "Une vie à t'aimer", honorable: "Bioshock Infinite" },
+      { name: "فراس", goty: "Clair Obscur: Expedition 33", gameplay: "ninja gaiden 4", story: "clair obscure expdetion 33", art: "split fiction", music: "clair obscure expdetion 33", indie: "clair obscure expdetion 33", remaster: "The Elder Scrolls IV: Oblivion Remastered", multi: "Split Fiction", flop: "lost soul aside", anticipated: "stranger of heaven", char: "verso", boss: "Arlecchino, the Blood Artist", song: "Une vie à peindre", honorable: "Bioshock Infinite" }
+    ];
 
-        // Map categories to specific background indices
-        const CATEGORY_BG_MAP = {
-            gameplay: 8,
-            story: 5,
-            art: 6,
-            music: 0,
-            indie: 7,
-            remaster: 4,
-            multi: 3,
-            flop: 1,
-            anticipated: 2,
-            char: 5,
-            boss: 3,
-            song: 0,
-            honorable: 7,
-            goty: 6
-        };
+    // BACKGROUNDS
+    const BACKGROUNDS = [
+      "https://media.giphy.com/media/26tn33aiTi1jkl6H6/giphy.gif",
+      "https://media.giphy.com/media/U3qYN8S0j3bpK/giphy.gif",
+      "https://media.giphy.com/media/3o7qE1YN7aQfVjj0C4/giphy.gif",
+      "https://media.giphy.com/media/xTiTnirRhvU53qg8X6/giphy.gif",
+      "https://media.giphy.com/media/10SvWCbt1ytWCc/giphy.gif",
+      "https://media.giphy.com/media/l0HlO4p8j4cp8S0nzO/giphy.gif",
+      "https://media.giphy.com/media/3o7btZ3Tptl8jGx5U4/giphy.gif",
+      "https://media.giphy.com/media/l2Je66zG6mAAZxgqI/giphy.gif",
+      "NG4 Trailer GIF for FireWorksVG.gif"
+    ];
 
-        const CATEGORIES = [
-          { id: 'gameplay', label: 'Best Gameplay', labelAr: 'افضل جيمبلاي', icon: Gamepad2, color: 'text-blue-400' },
-          { id: 'story', label: 'Best Story', labelAr: 'أفضل قصة', icon: BookOpen, color: 'text-yellow-400' },
-          { id: 'art', label: 'Best Art Direction', labelAr: 'افضل توجه فني', icon: Paintbrush, color: 'text-pink-400' },
-          { id: 'music', label: 'Best Album', labelAr: 'افضل البوم', icon: Music, color: 'text-purple-400' },
-          { id: 'indie', label: 'Best Indie', labelAr: 'أفضل لعبة مستقلة', icon: Ghost, color: 'text-green-400' },
-          { id: 'remaster', label: 'Best Remaster/Remake', labelAr: 'افضل النسخه المحسنه', icon: Sparkles, color: 'text-cyan-400' },
-          { id: 'multi', label: 'Best Multiplayer', labelAr: 'افضل لعبه جماعيه', icon: Users, color: 'text-orange-400' },
-          { id: 'flop', label: 'Flop of the Year', labelAr: 'مقلب سنه', icon: Skull, color: 'text-red-600' },
-          { id: 'anticipated', label: 'Most Anticipated', labelAr: 'اكثر لعبه منتظره', icon: Clock, color: 'text-indigo-400' },
-          { id: 'char', label: 'Best Character', labelAr: 'افضل شخصيه', icon: Star, color: 'text-yellow-200' },
-          { id: 'boss', label: 'Best Boss Fight', labelAr: 'افضل مواجهات', icon: Star, color: 'text-red-400' },
-          { id: 'song', label: 'Best Song', labelAr: 'افضل اغنيه', icon: Mic2, color: 'text-teal-300' },
-          { id: 'honorable', label: 'Honorable Mentions', labelAr: 'العاب تستحق الذكر', icon: Trophy, color: 'text-gray-300' },
-          { id: 'goty', label: 'Game of the Year', labelAr: 'افضل لعبه في السنه', icon: Trophy, color: 'text-amber-500' },
-        ];
+    const CATEGORY_BG_MAP = {
+      gameplay: 8,
+      story: 5,
+      art: 6,
+      music: 0,
+      indie: 7,
+      remaster: 4,
+      multi: 3,
+      flop: 1,
+      anticipated: 2,
+      char: 5,
+      boss: 3,
+      song: 0,
+      honorable: 7,
+      goty: 6
+    };
 
-        // --- FINAL CANDIDATES (Based on Screenshots) ---
-        const FINAL_CANDIDATES = {
-            gameplay: [
-                "Clair Obscur: Expedition 33",
-                "Hollow Knight: Silksong",
-                "Ninja Gaiden 4",
-                "The First Berserker: Khazan"
-            ],
-            story: [
-                "Kingdom Come: Deliverance II",
-                "Clair Obscur: Expedition 33",
-                "Hollow Knight: Silksong",
-                "The Alters"
-            ],
-            art: [
-                "Clair Obscur: Expedition 33",
-                "Hollow Knight: Silksong",
-                "Ghost of Yotei",
-                "Split Fiction"
-            ],
-            music: [
-                "Clair Obscur: Expedition 33",
-                "Death Stranding 2",
-                "Dynasty Warriors Origins"
-            ],
-            indie: [
-                "Clair Obscur: Expedition 33",
-                "Hollow Knight: Silksong",
-                "Haste"
-            ],
-            remaster: [
-                "MGS Delta: Snake Eater",
-                "The Elder Scrolls IV: Oblivion Remastered",
-                "Ninja Gaiden 2 Black",
-                "Trails in the Sky 1st Chapter",
-                "Xenoblade Chronicles X"
-            ],
-            multi: [
-                "Sonic Racing: CrossWorlds",
-                "Dying Light The Beast",
-                "Gentelman Dispute",
-                "Mario Kart World",
-                "ARC Raiders",
-                "Split Fiction",
-                "Mage Arena",
-                "Battlefield 6",
-                "Rv There Yet",
-                "Peak",
-                "Elden Ring: Nightreign",
-                "R.E.P.O.",
-                "Elden Ring Nightrain"
-            ],
-            flop: [
-                "Lost Soul Aside",
-                "Vampire: The Masquerade - Bloodlines 2",
-                "Little Nightmares 3",
-                "Hunter x Hunter: Nen x Impact"
-            ],
-            anticipated: [
-                "The Witcher 4",
-                "Resident Evil 9",
-                "Stranger of Heaven"
-            ],
-            char: [
-                "Renoir",
-                "Verso",
-                "Gustave",
-                "Maelle"
-            ],
-            boss: [
-                "Simon",
-                "Curator",
-                "Enhanced Dark Dragon",
-                "Fulghor Champion of Nightglow",
-                "Arlecchino, the Blood Artist"
-            ],
-            song: [
-                "Une vie à t'aimer",
-                "Lumière",
-                "To the Wilder",
-                "Story of Rainy",
-                "Une vie à peindre",
-                "Alicia",
-                "Lisrim Golden",
-                "The Clear Blue Sky",
-                "Skarrsinger Karmelita",
-                "CAPRICIOUS WIND",
-                "Ailne" 
-            ],
-            goty: [
-                "Kingdom Come: Deliverance II",
-                "Clair Obscur: Expedition 33",
-                "Hollow Knight: Silksong",
-                "Doom: The Dark Ages",
-                "Monster Hunter Wilds"
-            ],
-            honorable: [] 
-        };
+    // Use Font Awesome classes for icons
+    const CATEGORIES = [
+      { id: 'gameplay', label: 'Best Gameplay', labelAr: 'افضل جيمبلاي', icon: 'fa-solid fa-gamepad' },
+      { id: 'story', label: 'Best Story', labelAr: 'أفضل قصة', icon: 'fa-solid fa-book-open' },
+      { id: 'art', label: 'Best Art Direction', labelAr: 'افضل توجه فني', icon: 'fa-solid fa-paintbrush' },
+      { id: 'music', label: 'Best Album', labelAr: 'افضل البوم', icon: 'fa-solid fa-music' },
+      { id: 'indie', label: 'Best Indie', labelAr: 'أفضل لعبة مستقلة', icon: 'fa-solid fa-ghost' },
+      { id: 'remaster', label: 'Best Remaster/Remake', labelAr: 'افضل النسخه المحسنه', icon: 'fa-solid fa-magic' },
+      { id: 'multi', label: 'Best Multiplayer', labelAr: 'افضل لعبه جماعيه', icon: 'fa-solid fa-users' },
+      { id: 'flop', label: 'Flop of the Year', labelAr: 'مقلب سنه', icon: 'fa-solid fa-skull' },
+      { id: 'anticipated', label: 'Most Anticipated', labelAr: 'اكثر لعبه منتظره', icon: 'fa-solid fa-clock' },
+      { id: 'char', label: 'Best Character', labelAr: 'افضل شخصيه', icon: 'fa-solid fa-star' },
+      { id: 'boss', label: 'Best Boss Fight', labelAr: 'افضل مواجهات', icon: 'fa-solid fa-dragon' }, // use dragon if available; fallback to star
+      { id: 'song', label: 'Best Song', labelAr: 'افضل اغنيه', icon: 'fa-solid fa-microphone' },
+      { id: 'honorable', label: 'Honorable Mentions', labelAr: 'العاب تستحق الذكر', icon: 'fa-solid fa-trophy' },
+      { id: 'goty', label: 'Game of the Year', labelAr: 'افضل لعبه في السنه', icon: 'fa-solid fa-trophy' }
+    ];
 
-        // --- HELPER FUNCTIONS ---
+    const FINAL_CANDIDATES = {
+      gameplay: [
+        "Clair Obscur: Expedition 33",
+        "Hollow Knight: Silksong",
+        "Ninja Gaiden 4",
+        "The First Berserker: Khazan"
+      ],
+      story: [
+        "Kingdom Come: Deliverance II",
+        "Clair Obscur: Expedition 33",
+        "Hollow Knight: Silksong",
+        "The Alters"
+      ],
+      art: [
+        "Clair Obscur: Expedition 33",
+        "Hollow Knight: Silksong",
+        "Ghost of Yotei",
+        "Split Fiction"
+      ],
+      music: [
+        "Clair Obscur: Expedition 33",
+        "Death Stranding 2",
+        "Dynasty Warriors Origins"
+      ],
+      indie: [
+        "Clair Obscur: Expedition 33",
+        "Hollow Knight: Silksong",
+        "Haste"
+      ],
+      remaster: [
+        "MGS Delta: Snake Eater",
+        "The Elder Scrolls IV: Oblivion Remastered",
+        "Ninja Gaiden 2 Black",
+        "Trails in the Sky 1st Chapter",
+        "Xenoblade Chronicles X"
+      ],
+      multi: [
+        "Sonic Racing: CrossWorlds",
+        "Dying Light The Beast",
+        "Gentelman Dispute",
+        "Mario Kart World",
+        "ARC Raiders",
+        "Split Fiction",
+        "Mage Arena",
+        "Battlefield 6",
+        "Rv There Yet",
+        "Peak",
+        "Elden Ring: Nightreign",
+        "R.E.P.O.",
+        "Elden Ring Nightrain"
+      ],
+      flop: [
+        "Lost Soul Aside",
+        "Vampire: The Masquerade - Bloodlines 2",
+        "Little Nightmares 3",
+        "Hunter x Hunter: Nen x Impact"
+      ],
+      anticipated: [
+        "The Witcher 4",
+        "Resident Evil 9",
+        "Stranger of Heaven"
+      ],
+      char: [
+        "Renoir",
+        "Verso",
+        "Gustave",
+        "Maelle"
+      ],
+      boss: [
+        "Simon",
+        "Curator",
+        "Enhanced Dark Dragon",
+        "Fulghor Champion of Nightglow",
+        "Arlecchino, the Blood Artist"
+      ],
+      song: [
+        "Une vie à t'aimer",
+        "Lumière",
+        "To the Wilder",
+        "Story of Rainy",
+        "Une vie à peindre",
+        "Alicia",
+        "Lisrim Golden",
+        "The Clear Blue Sky",
+        "Skarrsinger Karmelita",
+        "CAPRICIOUS WIND",
+        "Ailne"
+      ],
+      goty: [
+        "Kingdom Come: Deliverance II",
+        "Clair Obscur: Expedition 33",
+        "Hollow Knight: Silksong",
+        "Doom: The Dark Ages",
+        "Monster Hunter Wilds"
+      ],
+      honorable: []
+    };
 
-        const normalizeName = (name) => {
-          if (!name) return null;
-          let n = name.toLowerCase().trim();
-          
-          if (n.includes("dispatch")) return "Dispatch";
-          if (n.includes("khazan") || n.includes("khzan")) return "The First Berserker: Khazan";
-          if (n.includes("haste")) return "Haste";
-          if (n.includes("xenoblade")) return "Xenoblade Chronicles X";
-          if (n.includes("trails")) return "Trails in the Sky 1st Chapter";
-          
-          // Multiplayer Normalizations
-          if (n.includes("sonic racing")) return "Sonic Racing: CrossWorlds";
-          if (n.includes("dying light")) return "Dying Light The Beast";
-          if (n.includes("gentelman")) return "Gentelman Dispute";
-          if (n.includes("mario kart")) return "Mario Kart World";
-          if (n.includes("arc raiders")) return "ARC Raiders";
-          if (n.includes("battlefield")) return "Battlefield 6";
-          if (n.includes("rv there yet")) return "Rv There Yet";
-          if (n.includes("peak")) return "Peak";
-          if (n.includes("mage arena")) return "Mage Arena";
-          if (n.includes("r.e.p.o")) return "R.E.P.O.";
-          if (n.includes("nightrain")) return "Elden Ring Nightrain";
-          if (n.includes("nightreign")) return "Elden Ring: Nightreign";
+    /* --------------------------
+       Helper functions (preserved)
+       -------------------------- */
+    const normalizeName = (name) => {
+      if (!name) return null;
+      let n = String(name).toLowerCase().trim();
 
-          if (n.includes("little nightmares")) return "Little Nightmares 3";
-          if (n.includes("the alters")) return "The Alters";
-          if (n.includes("dynasty")) return "Dynasty Warriors Origins";
-          
-          if (n.includes("clair")) return "Clair Obscur: Expedition 33";
-          if (n.includes("silksong")) return "Hollow Knight: Silksong";
-          if (n.includes("kingdom come")) return "Kingdom Come: Deliverance II";
-          if (n.includes("oblivion")) return "The Elder Scrolls IV: Oblivion Remastered";
-          if (n.includes("bloodlines 2")) return "Vampire: The Masquerade - Bloodlines 2";
-          if (n.includes("witcher 4")) return "The Witcher 4";
-          if (n.includes("resident evil 9") || n.includes("resdient")) return "Resident Evil 9";
-          if (n.includes("ninja gaiden 4")) return "Ninja Gaiden 4";
-          if (n.includes("death stranding")) return "Death Stranding 2";
-          if (n.includes("prince of persia")) return "Prince of Persia: The Lost Crown";
-          if (n.includes("split fiction")) return "Split Fiction";
-          if (n.includes("lost soul aside")) return "Lost Soul Aside";
-          if (n.includes("stranger of heaven")) return "Stranger of Heaven";
-          if (n.includes("hunter x hunter")) return "Hunter x Hunter: Nen x Impact";
-          if (n.includes("snake eater") || n.includes("metal gear")) return "MGS Delta: Snake Eater";
-          if (n.includes("monster hunter")) return "Monster Hunter Wilds";
-          if (n.includes("ghost of yotei")) return "Ghost of Yotei";
-          
-          if (n.includes("renoir")) return "Renoir";
-          if (n.includes("verso")) return "Verso";
-          if (n.includes("gustave")) return "Gustave";
-          if (n.includes("maelle")) return "Maelle";
+      if (n.includes("dispatch")) return "Dispatch";
+      if (n.includes("khazan") || n.includes("khzan")) return "The First Berserker: Khazan";
+      if (n.includes("haste")) return "Haste";
+      if (n.includes("xenoblade")) return "Xenoblade Chronicles X";
+      if (n.includes("trails")) return "Trails in the Sky 1st Chapter";
 
-          if (n.includes("simon")) return "Simon";
-          if (n.includes("curator")) return "Curator";
-          if (n.includes("enhanced dark dragon")) return "Enhanced Dark Dragon";
-          if (n.includes("fulghor")) return "Fulghor Champion of Nightglow";
-          if (n.includes("arlecchino")) return "Arlecchino, the Blood Artist";
+      if (n.includes("sonic racing")) return "Sonic Racing: CrossWorlds";
+      if (n.includes("dying light")) return "Dying Light The Beast";
+      if (n.includes("gentelman")) return "Gentelman Dispute";
+      if (n.includes("mario kart")) return "Mario Kart World";
+      if (n.includes("arc raiders")) return "ARC Raiders";
+      if (n.includes("battlefield")) return "Battlefield 6";
+      if (n.includes("rv there yet")) return "Rv There Yet";
+      if (n.includes("peak")) return "Peak";
+      if (n.includes("mage arena")) return "Mage Arena";
+      if (n.includes("r.e.p.o")) return "R.E.P.O.";
+      if (n.includes("nightrain")) return "Elden Ring Nightrain";
+      if (n.includes("nightreign")) return "Elden Ring: Nightreign";
 
-          return n.replace(/\b\w/g, l => l.toUpperCase());
-        };
+      if (n.includes("little nightmares")) return "Little Nightmares 3";
+      if (n.includes("the alters")) return "The Alters";
+      if (n.includes("dynasty")) return "Dynasty Warriors Origins";
 
-        const extractSongName = (text) => {
-            if (!text) return null;
-            let rawName = text;
-            if (text.includes("http")) {
-                rawName = text.split("http")[0];
-            }
-            
-            const n = rawName.toLowerCase().trim();
-            if (n.includes("une vie à t'aimer")) return "Une vie à t'aimer";
-            if (n.includes("lumière") || n.includes("lumiere")) return "Lumière";
-            if (n.includes("to the wilder")) return "To the Wilder";
-            if (n.includes("story of rainy")) return "Story of Rainy";
-            if (n.includes("une vie à peindre")) return "Une vie à peindre";
-            if (n.includes("alicia")) return "Alicia";
-            if (n.includes("lirism") || n.includes("lisrim")) return "Lisrim Golden";
-            if (n.includes("clear blue sky")) return "The Clear Blue Sky";
-            if (n.includes("skarrsinger")) return "Skarrsinger Karmelita";
-            if (n.includes("capricious wind")) return "CAPRICIOUS WIND";
-            if (n.includes("ailne") || n.includes("aline")) return "Ailne";
+      if (n.includes("clair")) return "Clair Obscur: Expedition 33";
+      if (n.includes("silksong")) return "Hollow Knight: Silksong";
+      if (n.includes("kingdom come")) return "Kingdom Come: Deliverance II";
+      if (n.includes("oblivion")) return "The Elder Scrolls IV: Oblivion Remastered";
+      if (n.includes("bloodlines 2")) return "Vampire: The Masquerade - Bloodlines 2";
+      if (n.includes("witcher 4")) return "The Witcher 4";
+      if (n.includes("resident evil 9") || n.includes("resdient")) return "Resident Evil 9";
+      if (n.includes("ninja gaiden 4")) return "Ninja Gaiden 4";
+      if (n.includes("death stranding")) return "Death Stranding 2";
+      if (n.includes("prince of persia")) return "Prince of Persia: The Lost Crown";
+      if (n.includes("split fiction")) return "Split Fiction";
+      if (n.includes("lost soul aside")) return "Lost Soul Aside";
+      if (n.includes("stranger of heaven")) return "Stranger of Heaven";
+      if (n.includes("hunter x hunter")) return "Hunter x Hunter: Nen x Impact";
+      if (n.includes("snake eater") || n.includes("metal gear")) return "MGS Delta: Snake Eater";
+      if (n.includes("monster hunter")) return "Monster Hunter Wilds";
+      if (n.includes("ghost of yotei")) return "Ghost of Yotei";
 
-            return normalizeName(rawName);
-        }
+      if (n.includes("renoir")) return "Renoir";
+      if (n.includes("verso")) return "Verso";
+      if (n.includes("gustave")) return "Gustave";
+      if (n.includes("maelle")) return "Maelle";
 
-        const processData = (dataSet, isFinalStage = false) => {
-          const results = {};
+      if (n.includes("simon")) return "Simon";
+      if (n.includes("curator")) return "Curator";
+      if (n.includes("enhanced dark dragon")) return "Enhanced Dark Dragon";
+      if (n.includes("fulghor")) return "Fulghor Champion of Nightglow";
+      if (n.includes("arlecchino")) return "Arlecchino, the Blood Artist";
 
-          CATEGORIES.forEach(cat => {
-            results[cat.id] = {};
-            
-            if (isFinalStage && FINAL_CANDIDATES[cat.id]) {
-                FINAL_CANDIDATES[cat.id].forEach(candidateName => {
-                    results[cat.id][candidateName] = 0;
-                });
-            }
+      return n.replace(/\b\w/g, l => l.toUpperCase());
+    };
+
+    const extractSongName = (text) => {
+      if (!text) return null;
+      let rawName = String(text);
+      if (rawName.includes("http")) rawName = rawName.split("http")[0];
+
+      const n = rawName.toLowerCase().trim();
+      if (n.includes("une vie à t'aimer")) return "Une vie à t'aimer";
+      if (n.includes("lumière") || n.includes("lumiere")) return "Lumière";
+      if (n.includes("to the wilder")) return "To the Wilder";
+      if (n.includes("story of rainy")) return "Story of Rainy";
+      if (n.includes("une vie à peindre")) return "Une vie à peindre";
+      if (n.includes("alicia")) return "Alicia";
+      if (n.includes("lirism") || n.includes("lisrim")) return "Lisrim Golden";
+      if (n.includes("clear blue sky")) return "The Clear Blue Sky";
+      if (n.includes("skarrsinger")) return "Skarrsinger Karmelita";
+      if (n.includes("capricious wind")) return "CAPRICIOUS WIND";
+      if (n.includes("ailne") || n.includes("aline")) return "Ailne";
+
+      return normalizeName(rawName);
+    };
+
+    const processData = (dataSet, isFinalStage = false) => {
+      const results = {};
+
+      CATEGORIES.forEach(cat => {
+        results[cat.id] = {};
+
+        if (isFinalStage && FINAL_CANDIDATES[cat.id]) {
+          FINAL_CANDIDATES[cat.id].forEach(candidateName => {
+            results[cat.id][candidateName] = 0;
           });
+        }
+      });
 
-          dataSet.forEach(vote => {
-            CATEGORIES.forEach(cat => {
-              const rawValue = vote[cat.id];
-              if (rawValue) {
-                const values = rawValue.split(/,|،/); 
-                values.forEach(v => {
-                    let normalized;
-                    if (cat.id === 'song') {
-                        normalized = extractSongName(v);
-                    } else {
-                        normalized = normalizeName(v);
-                    }
-                    
-                    if (normalized && normalized.length > 1) {
-                        if (isFinalStage && FINAL_CANDIDATES[cat.id]) {
-                            if (!FINAL_CANDIDATES[cat.id].includes(normalized)) {
-                                return; 
-                            }
-                        }
+      dataSet.forEach(vote => {
+        CATEGORIES.forEach(cat => {
+          const rawValue = vote[cat.id];
+          if (rawValue) {
+            const values = String(rawValue).split(/,|،/);
+            values.forEach(v => {
+              let normalized;
+              if (cat.id === 'song') {
+                normalized = extractSongName(v);
+              } else {
+                normalized = normalizeName(v);
+              }
 
-                        if (results[cat.id][normalized] === undefined) {
-                            if (!isFinalStage) {
-                                results[cat.id][normalized] = 0;
-                            }
-                        }
-                        
-                        if (results[cat.id][normalized] !== undefined) {
-                            results[cat.id][normalized]++;
-                        }
-                    }
-                });
+              if (normalized && normalized.length > 1) {
+                if (isFinalStage && FINAL_CANDIDATES[cat.id]) {
+                  if (!FINAL_CANDIDATES[cat.id].includes(normalized)) {
+                    return; // skip values not in whitelist for final stage
+                  }
+                }
+
+                if (results[cat.id][normalized] === undefined) {
+                  if (!isFinalStage) {
+                    results[cat.id][normalized] = 0;
+                  }
+                }
+
+                if (results[cat.id][normalized] !== undefined) {
+                  results[cat.id][normalized]++;
+                }
               }
             });
-          });
+          }
+        });
+      });
 
-          const sortedResults = {};
-          CATEGORIES.forEach(cat => {
-            let entries = Object.entries(results[cat.id]).map(([name, count]) => ({ name, count }));
-            
-            entries.sort((a, b) => b.count - a.count);
-            
-            let currentRank = 1;
-            for (let i = 0; i < entries.length; i++) {
-                if (i > 0 && entries[i].count < entries[i - 1].count) {
-                    currentRank = i + 1;
-                }
-                entries[i].rank = currentRank;
-            }
+      const sortedResults = {};
+      CATEGORIES.forEach(cat => {
+        let entries = Object.entries(results[cat.id]).map(([name, count]) => ({ name, count }));
+        entries.sort((a, b) => b.count - a.count);
 
-            if (isFinalStage && cat.id === 'multi') {
-                entries = entries.filter(entry => entry.rank !== 5);
-            }
-            
-            sortedResults[cat.id] = entries;
-          });
-
-          return sortedResults;
-        };
-
-        const getFilteredStage1Data = (data) => {
-            if (!data || data.length <= 5) return data;
-            const fifthPlaceCount = data[4].count;
-            return data.filter(item => item.count >= fifthPlaceCount);
-        };
-
-        // --- REACT COMPONENTS ---
-
-        const BackgroundLayer = ({ stage, currentCategory }) => {
-            const [gifIndex, setGifIndex] = useState(0);
-
-            useEffect(() => {
-                if (stage === 'welcome') {
-                    setGifIndex(0);
-                } else if (stage === 'summary') {
-                    setGifIndex(1);
-                } else if (stage === 'awards' && currentCategory) {
-                    const mappedIndex = CATEGORY_BG_MAP[currentCategory.id];
-                    setGifIndex(mappedIndex !== undefined ? mappedIndex : 0);
-                } else {
-                    setGifIndex(2);
-                }
-            }, [stage, currentCategory]);
-
-            return React.createElement(
-                'div',
-                { className: 'fixed inset-0 z-0 overflow-hidden' },
-                React.createElement(
-                    'div',
-                    { 
-                        className: 'absolute inset-0 bg-cover bg-center transition-all duration-1000 transform scale-110',
-                        style: { 
-                            backgroundImage: `url(${BACKGROUNDS[gifIndex]})`,
-                            filter: 'blur(4px) brightness(0.6)'
-                        }
-                    }
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black/80 z-10' }
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'absolute inset-0 bg-[url("https://www.transparenttextures.com/patterns/cubes.png")] opacity-10 z-10' }
-                )
-            );
-        };
-
-        const Confetti = ({ isActive }) => {
-          if (!isActive) return null;
-          const particles = Array.from({ length: 50 }).map((_, i) => ({
-            id: i,
-            x: Math.random() * 100,
-            delay: Math.random() * 2,
-            color: ['#fbbf24', '#f472b6', '#60a5fa', '#a78bfa'][Math.floor(Math.random() * 4)]
-          }));
-
-          return React.createElement(
-            'div',
-            { className: 'fixed inset-0 pointer-events-none z-50 overflow-hidden' },
-            particles.map(p => 
-                React.createElement(
-                    'div',
-                    {
-                        key: p.id,
-                        className: 'absolute w-3 h-3 rounded-full animate-fall',
-                        style: {
-                            left: `${p.x}%`,
-                            top: '-5%',
-                            backgroundColor: p.color,
-                            animationDuration: `${3 + Math.random()}s`,
-                            animationDelay: `${p.delay}s`
-                        }
-                    }
-                )
-            )
-          );
-        };
-
-        const StageHeader = ({ subtext, isFinal }) => React.createElement(
-            'div',
-            { className: 'fixed top-0 left-0 right-0 p-4 flex justify-center z-40 bg-gradient-to-b from-black/80 to-transparent pointer-events-none' },
-            React.createElement(
-                'div',
-                { className: 'flex flex-col items-center' },
-                React.createElement(
-                    'span',
-                    { 
-                        className: `px-4 py-1 backdrop-blur-md rounded-full text-xs font-bold tracking-[0.2em] text-white uppercase border transition-colors duration-500 ${isFinal ? 'bg-yellow-500/20 border-yellow-500/50 text-yellow-100' : 'bg-white/10 border-white/20'}` 
-                    },
-                    isFinal ? "FINAL RESULTS" : "NOMINEES (STAGE 1)"
-                ),
-                subtext && React.createElement(
-                    'span',
-                    { className: 'text-xs text-gray-400 mt-1' },
-                    subtext
-                )
-            )
-        );
-
-        const StageView = ({ category, nomineesData, finalData, onNext, onPrev, isLast }) => {
-          const [revealed, setRevealed] = useState(false);
-          
-          useEffect(() => {
-            setRevealed(false);
-          }, [category.id]);
-
-          const filteredNominees = useMemo(() => getFilteredStage1Data(nomineesData), [nomineesData]);
-          const currentData = revealed ? finalData : filteredNominees;
-          
-          const getWinners = (data) => {
-              if (!data || data.length === 0) return [];
-              const maxVotes = data[0].count;
-              return data.filter(d => d.count === maxVotes);
-          };
-
-          const winners = getWinners(finalData);
-          const isTie = winners.length > 1;
-          const Icon = category.icon;
-
-          return React.createElement(
-            'div',
-            { className: 'flex flex-col items-center justify-center min-h-screen w-full max-w-5xl mx-auto p-6 pt-20 relative z-20' },
-            React.createElement(Confetti, { isActive: revealed }),
-            React.createElement(StageHeader, { subtext: category.label, isFinal: revealed }),
-            
-            // Header
-            React.createElement(
-                'div',
-                { className: 'mb-8 text-center animate-in fade-in slide-in-from-top-4 duration-700' },
-                React.createElement(
-                    'div',
-                    { className: `inline-flex p-4 rounded-full bg-gray-800/50 backdrop-blur mb-4 ${category.color} shadow-[0_0_20px_rgba(0,0,0,0.5)]` },
-                    React.createElement(Icon, { size: 48 })
-                ),
-                React.createElement(
-                    'h2',
-                    { className: 'text-4xl md:text-6xl font-black uppercase tracking-wider text-transparent bg-clip-text bg-gradient-to-br from-white to-gray-300 mb-2 drop-shadow-lg' },
-                    category.label
-                ),
-                React.createElement(
-                    'h3',
-                    { className: 'text-2xl md:text-3xl font-bold text-gray-400 font-arabic drop-shadow-md' },
-                    category.labelAr
-                )
-            ),
-
-            // Main Content Area
-            React.createElement(
-                'div',
-                { className: 'w-full grid grid-cols-1 md:grid-cols-2 gap-8 mb-12' },
-                
-                // Data List
-                React.createElement(
-                    'div',
-                    { className: 'bg-black/60 border border-white/10 rounded-2xl p-6 backdrop-blur-xl shadow-2xl overflow-hidden relative transition-all duration-500' },
-                    React.createElement(
-                        'div',
-                        { className: `absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-purple-500 to-transparent opacity-50 transition-opacity ${revealed ? 'opacity-0' : 'opacity-100'}` }
-                    ),
-                    React.createElement(
-                        'div',
-                        { className: `absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-yellow-500 to-transparent opacity-50 transition-opacity ${revealed ? 'opacity-100' : 'opacity-0'}` }
-                    ),
-                    
-                    React.createElement(
-                        'div',
-                        { className: 'flex justify-between items-center mb-6 border-b border-white/10 pb-2' },
-                        React.createElement(
-                            'h4',
-                            { className: 'text-xl text-gray-200 uppercase tracking-widest font-bold' },
-                            revealed ? "Final Rankings" : "Top Nominees"
-                        ),
-                        revealed && React.createElement(
-                            'span',
-                            { className: 'text-xs text-yellow-400 font-bold uppercase px-2 py-1 bg-yellow-500/20 rounded border border-yellow-500/30' },
-                            "Final Stage"
-                        )
-                    ),
-                    
-                    React.createElement(
-                        'div',
-                        { className: 'space-y-4 max-h-[50vh] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-700' },
-                        currentData.map((item, idx) => {
-                           const maxVotes = currentData[0]?.count || 1; 
-                           const isTop = revealed ? item.rank === 1 : item.count === maxVotes && item.count > 0;
-                           
-                           return React.createElement(
-                            'div',
-                            { 
-                                key: `${item.name}-${revealed ? 'final' : 'nom'}`,
-                                className: 'flex items-center justify-between group animate-in fade-in slide-in-from-left-2 duration-500 hover:bg-white/5 p-2 rounded transition-colors'
-                            },
-                            React.createElement(
-                                'span',
-                                { className: `text-lg font-medium transition-colors ${isTop ? 'text-yellow-400' : 'text-gray-300 group-hover:text-white'}` },
-                                item.name
-                            ),
-                            React.createElement(
-                                'div',
-                                { className: 'flex items-center gap-3' },
-                                React.createElement(
-                                    'div',
-                                    { className: 'h-2 rounded-full bg-gray-700/50 w-24 md:w-32 overflow-hidden' },
-                                    React.createElement(
-                                        'div',
-                                        { 
-                                            className: `h-full rounded-full transition-all duration-1000 ease-out ${isTop ? 'bg-yellow-400 shadow-[0_0_10px_rgba(250,204,21,0.5)]' : 'bg-purple-600'}`,
-                                            style: { width: `${(item.count / (maxVotes || 1)) * 100}%` }
-                                        }
-                                    )
-                                ),
-                                React.createElement(
-                                    'span',
-                                    { className: `text-sm font-mono w-16 text-right ${revealed ? 'text-yellow-500 font-bold' : 'text-gray-400'}` },
-                                    revealed ? `#${item.rank}` : `${item.count}`
-                                )
-                            )
-                           )
-                        }),
-                        currentData.length === 0 && React.createElement(
-                            'div',
-                            { className: 'text-gray-500 italic' },
-                            "No data found for this stage."
-                        )
-                    )
-                ),
-
-                // Winner Reveal / Button
-                React.createElement(
-                    'div',
-                    { className: 'flex flex-col items-center justify-center min-h-[300px]' },
-                    !revealed ? React.createElement(
-                         'button',
-                         {
-                            onClick: () => setRevealed(true),
-                            className: 'group relative px-10 py-5 bg-white text-black font-black text-xl uppercase tracking-widest hover:bg-yellow-400 transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_40px_rgba(250,204,21,0.6)] rounded-lg overflow-hidden'
-                         },
-                         React.createElement(
-                            'span',
-                            { className: 'relative z-10' },
-                            "Reveal Winner"
-                         ),
-                         React.createElement(
-                            'div',
-                            { className: 'absolute inset-0 border-2 border-white group-hover:border-yellow-400 rounded-lg scale-105 opacity-0 group-hover:opacity-100 transition-all duration-300' }
-                         )
-                    ) : React.createElement(
-                        'div',
-                        { className: 'animate-in zoom-in duration-500 flex flex-col items-center text-center w-full' },
-                        React.createElement(
-                            'div',
-                            { className: 'mb-4 text-yellow-400 animate-bounce drop-shadow-[0_0_15px_rgba(250,204,21,0.8)]' },
-                            React.createElement(Trophy, { size: 80 })
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'text-2xl text-yellow-400 font-bold uppercase tracking-widest mb-4 font-serif italic' },
-                            isTie ? "It's a Tie!" : "The Winner Is"
-                        ),
-                        
-                        React.createElement(
-                            'div',
-                            { className: 'flex flex-col gap-4 items-center mb-6' },
-                            winners.map((winner, i) => React.createElement(
-                                'div',
-                                { key: i, className: 'relative' },
-                                React.createElement(
-                                    'div',
-                                    { className: 'absolute inset-0 bg-purple-500 blur-2xl opacity-30' }
-                                ),
-                                React.createElement(
-                                    'h1',
-                                    { className: 'relative text-4xl md:text-6xl font-black text-white drop-shadow-[0_0_25px_rgba(255,255,255,0.6)] leading-tight' },
-                                    winner.name
-                                ),
-                                isTie && i < winners.length -1 && React.createElement(
-                                    'div',
-                                    { className: 'text-gray-400 font-serif italic my-2' },
-                                    "and"
-                                )
-                            ))
-                        ),
-
-                        React.createElement(
-                            'div',
-                            { className: 'px-8 py-3 bg-gradient-to-r from-transparent via-yellow-500/20 to-transparent border-y border-yellow-500/30 text-yellow-200 font-mono text-xl' },
-                            "Rank #1"
-                        )
-                    )
-                )
-            ),
-
-            // Navigation
-            React.createElement(
-                'div',
-                { className: 'flex gap-4 mt-auto' },
-                React.createElement(
-                    'button',
-                    {
-                        onClick: onPrev,
-                        disabled: category.id === 'gameplay',
-                        className: 'px-6 py-3 rounded-lg bg-black/50 hover:bg-black/70 text-white disabled:opacity-30 disabled:cursor-not-allowed flex items-center gap-2 transition-colors border border-white/10 backdrop-blur-md'
-                    },
-                    React.createElement(ArrowLeft, { size: 20 }),
-                    "Previous"
-                ),
-                React.createElement(
-                    'button',
-                    {
-                        onClick: onNext,
-                        className: 'px-6 py-3 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-bold flex items-center gap-2 transition-all hover:shadow-[0_0_20px_rgba(147,51,234,0.5)]'
-                    },
-                    isLast ? "Show Summary" : "Next Category",
-                    React.createElement(ArrowRight, { size: 20 })
-                )
-            )
-          );
-        };
-
-        const SummaryView = ({ processedData, onRestart }) => {
-            return React.createElement(
-                'div',
-                { className: 'min-h-screen w-full max-w-6xl mx-auto p-8 py-12 relative z-20' },
-                React.createElement(StageHeader, { subtext: "Final Results Summary", isFinal: true }),
-                React.createElement(
-                    'div',
-                    { className: 'text-center mb-16 mt-12' },
-                    React.createElement(
-                        'h1',
-                        { className: 'text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 to-yellow-600 mb-4 drop-shadow-lg' },
-                        "FINAL WINNERS"
-                    ),
-                    React.createElement(
-                        'p',
-                        { className: 'text-2xl text-gray-300 font-arabic' },
-                        "ملخص الفائزين النهائي"
-                    )
-                ),
-
-                React.createElement(
-                    'div',
-                    { className: 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' },
-                    CATEGORIES.map(cat => {
-                        const data = processedData[cat.id];
-                        if (!data || data.length === 0) return null;
-                        
-                        const maxVotes = data[0].count;
-                        const winners = data.filter(d => d.count === maxVotes);
-                        const Icon = cat.icon;
-
-                        return React.createElement(
-                            'div',
-                            { 
-                                key: cat.id, 
-                                className: 'bg-black/60 border border-white/10 p-6 rounded-xl hover:border-purple-500/50 transition-colors group backdrop-blur-md'
-                            },
-                            React.createElement(
-                                'div',
-                                { className: 'flex items-center gap-3 mb-4' },
-                                React.createElement(Icon, { size: 24, className: cat.color }),
-                                React.createElement(
-                                    'span',
-                                    { className: 'text-sm text-gray-400 uppercase tracking-wider font-bold' },
-                                    cat.label
-                                )
-                            ),
-                            React.createElement(
-                                'div',
-                                { className: 'text-xl font-bold text-white group-hover:text-yellow-400 transition-colors' },
-                                winners.map((w, i) => React.createElement(
-                                    'span',
-                                    { key: i },
-                                    w.name,
-                                    i < winners.length - 1 ? React.createElement(
-                                        'span',
-                                        { className: 'text-gray-500' },
-                                        " / "
-                                    ) : ''
-                                ))
-                            )
-                        )
-                    })
-                ),
-                
-                React.createElement(
-                    'div',
-                    { className: 'flex justify-center mt-16' },
-                    React.createElement(
-                        'button',
-                        {
-                            onClick: onRestart,
-                            className: 'px-8 py-3 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition-colors flex items-center gap-2 shadow-[0_0_30px_rgba(255,255,255,0.4)]'
-                        },
-                        React.createElement(Play, { size: 20 }),
-                        "Restart Show"
-                    )
-                )
-            )
+        let currentRank = 1;
+        for (let i = 0; i < entries.length; i++) {
+          if (i > 0 && entries[i].count < entries[i - 1].count) {
+            currentRank = i + 1;
+          }
+          entries[i].rank = currentRank;
         }
 
-        const WelcomeScreen = ({ onStart }) => React.createElement(
-            'div',
-            { className: 'min-h-screen flex flex-col items-center justify-center relative overflow-hidden z-20' },
-            React.createElement(
-                'div',
-                { className: 'z-10 text-center p-8' },
-                React.createElement(
-                    'div',
-                    { className: 'mb-8 inline-block animate-bounce drop-shadow-[0_0_30px_rgba(250,204,21,0.6)]' },
-                    React.createElement(Trophy, { size: 100, className: 'text-yellow-500' })
-                ),
-                React.createElement(
-                    'h1',
-                    { className: 'text-7xl md:text-9xl font-black text-white mb-2 tracking-tighter drop-shadow-2xl' },
-                    "GOTY ",
-                    React.createElement(
-                        'span',
-                        { className: 'text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600' },
-                        "2025"
-                    )
-                ),
-                React.createElement(
-                    'h2',
-                    { className: 'text-2xl md:text-4xl text-gray-300 font-light mb-12 tracking-[0.5em] uppercase border-t border-b border-white/20 py-4 backdrop-blur-sm' },
-                    "The Awards Ceremony"
-                ),
-                
-                React.createElement(
-                    'button',
-                    {
-                        onClick: onStart,
-                        className: 'group relative px-12 py-6 bg-white text-black font-black text-2xl uppercase tracking-widest hover:bg-purple-600 hover:text-white transition-all duration-500 rounded-lg overflow-hidden shadow-[0_0_50px_rgba(255,255,255,0.4)] hover:shadow-[0_0_50px_rgba(147,51,234,0.6)]'
-                    },
-                    React.createElement(
-                        'span',
-                        { className: 'relative z-10 flex items-center gap-4' },
-                        "Start The Show",
-                        React.createElement(ArrowRight, { className: 'group-hover:translate-x-2 transition-transform' })
-                    )
-                )
-            )
-        );
+        if (isFinalStage && cat.id === 'multi') {
+          entries = entries.filter(entry => entry.rank !== 5);
+        }
 
-        const App = () => {
-          const [stage, setStage] = useState('welcome');
-          const [currentCatIndex, setCurrentCatIndex] = useState(0);
-          
-          const dataStage1 = useMemo(() => processData(STAGE_1_VOTES, false), []);
-          const dataStage2 = useMemo(() => processData(STAGE_2_VOTES, true), []);
+        sortedResults[cat.id] = entries;
+      });
 
-          const nextCategory = () => {
-            if (currentCatIndex < CATEGORIES.length - 1) {
-              setCurrentCatIndex(prev => prev + 1);
-            } else {
-              setStage('summary');
-            }
-          };
+      return sortedResults;
+    };
 
-          const prevCategory = () => {
-            if (currentCatIndex > 0) {
-              setCurrentCatIndex(prev => prev - 1);
-            }
-          };
+    const getFilteredStage1Data = (data) => {
+      if (!data || data.length <= 5) return data;
+      const fifthPlaceCount = data[4].count;
+      return data.filter(item => item.count >= fifthPlaceCount);
+    };
 
-          const startAwards = () => {
-            setStage('awards');
-            setCurrentCatIndex(0);
-          };
+    /* --------------------------
+       UI components
+       -------------------------- */
 
-          const restart = () => {
-            setStage('welcome');
-            setCurrentCatIndex(0);
-          }
+    function useBackgroundImage(stage, currentCategory) {
+      // returns background URL string (safe)
+      const [url, setUrl] = useState(BACKGROUNDS[0]);
+      useEffect(() => {
+        let idx = 0;
+        if (stage === 'welcome') idx = 0;
+        else if (stage === 'summary') idx = 1;
+        else if (stage === 'awards' && currentCategory) {
+          const mappedIndex = CATEGORY_BG_MAP[currentCategory.id];
+          idx = mappedIndex !== undefined ? mappedIndex : 0;
+        } else idx = 2;
 
-          return React.createElement(
-            'div',
-            { className: 'min-h-screen bg-black text-white font-sans selection:bg-purple-500 selection:text-white relative' },
-            React.createElement(BackgroundLayer, { stage, currentCategory: CATEGORIES[currentCatIndex] }),
+        let candidate = BACKGROUNDS[idx];
+        // If candidate doesn't look like a url, fallback to index 0
+        if (typeof candidate === 'string' && candidate.startsWith('http')) {
+          setUrl(candidate);
+        } else {
+          // fallback safe gif
+          setUrl(BACKGROUNDS[0]);
+        }
+      }, [stage, currentCategory]);
+      return url;
+    }
 
-            stage === 'welcome' && React.createElement(WelcomeScreen, { onStart: startAwards }),
-            
-            stage === 'awards' && React.createElement(StageView, {
-                category: CATEGORIES[currentCatIndex],
-                nomineesData: dataStage1[CATEGORIES[currentCatIndex].id],
-                finalData: dataStage2[CATEGORIES[currentCatIndex].id],
-                onNext: nextCategory,
-                onPrev: prevCategory,
-                isLast: currentCatIndex === CATEGORIES.length - 1
-            }),
+    const BackgroundLayer = ({ stage, currentCategory }) => {
+      const bg = useBackgroundImage(stage, currentCategory);
+      return (
+        <div className="bg-layer" aria-hidden>
+          <div className="bg-gif" style={{ backgroundImage: `url(${bg})` }} />
+          <div className="bg-overlay" />
+          <div className="bg-pattern" />
+        </div>
+      );
+    };
 
-            stage === 'summary' && React.createElement(SummaryView, { processedData: dataStage2, onRestart: restart })
-          );
-        };
+    const Confetti = ({ isActive }) => {
+      if (!isActive) return null;
+      const particles = Array.from({ length: 40 }).map((_, i) => ({
+        id: i,
+        left: Math.random() * 100,
+        delay: Math.random() * 1.5,
+        duration: 2.5 + Math.random() * 2,
+        color: ['#fbbf24', '#f472b6', '#60a5fa', '#a78bfa'][Math.floor(Math.random()*4)]
+      }));
 
-        // Render the app
-        ReactDOM.render(React.createElement(App), document.getElementById('root'));
-    </script>
+      return (
+        <div className="confetti" aria-hidden>
+          {particles.map(p => (
+            <div
+              key={p.id}
+              className="particle"
+              style={{
+                left: `${p.left}%`,
+                top: `-8%`,
+                backgroundColor: p.color,
+                animationDuration: `${p.duration}s`,
+                animationDelay: `${p.delay}s`
+              }}
+            />
+          ))}
+        </div>
+      );
+    };
+
+    const StageHeader = ({ subtext, isFinal }) => {
+      return (
+        <div className="stage-header" aria-hidden>
+          <div className="panel">
+            <div className="badge">{isFinal ? "FINAL RESULTS" : "NOMINEES (STAGE 1)"}</div>
+            {subtext && <div className="stage-sub">{subtext}</div>}
+          </div>
+        </div>
+      );
+    };
+
+    const IconFA = ({ classes = '', size = 32 }) => {
+      return <i className={classes} style={{ fontSize: size, width:size, height:size, display:'inline-block' }} />;
+    };
+
+    const StageView = ({ category, nomineesData = [], finalData = [], onNext, onPrev, isLast }) => {
+      const [revealed, setRevealed] = useState(false);
+
+      useEffect(() => setRevealed(false), [category.id]);
+
+      const filteredNominees = useMemo(() => getFilteredStage1Data(nomineesData || []), [nomineesData]);
+      const currentData = revealed ? (finalData || []) : (filteredNominees || []);
+
+      const winners = (finalData && finalData.length>0) ? finalData.filter(d => d.count === (finalData[0]?.count||0)) : [];
+      const isTie = winners.length > 1;
+
+      const Icon = ({ cls }) => <IconFA classes={cls} size={40} />;
+
+      return (
+        <div className="stage">
+          <Confetti isActive={revealed} />
+          <StageHeader subtext={category.label} isFinal={revealed} />
+
+          <div className="hero">
+            <div className="icon-circle"><Icon cls={category.icon} /></div>
+            <h2>{category.label}</h2>
+            <h3 className="muted">{category.labelAr}</h3>
+          </div>
+
+          <div className="container">
+            <div className="content-grid">
+              <div className="panel-card">
+                <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:12}}>
+                  <h4 style={{margin:0, fontSize:18, textTransform:'uppercase', letterSpacing:'.12em'}}> {revealed ? "Final Rankings" : "Top Nominees"} </h4>
+                  {revealed && <div style={{background:'rgba(250,204,21,0.12)', padding:'4px 8px', borderRadius:8, fontWeight:800, color:'#f6e79b'}}>Final Stage</div>}
+                </div>
+
+                <div className="nominees-list">
+                  { (currentData && currentData.length>0) ? currentData.map((item, idx) => {
+                    const maxVotes = (currentData[0]?.count) || 1;
+                    const isTop = revealed ? (item.rank === 1) : (item.count === maxVotes && item.count > 0);
+                    return (
+                      <div key={item.name + '-' + idx} className="nominee-row">
+                        <div className="nominee-name" style={{ color: isTop ? 'var(--gold)' : 'inherit' }}>{item.name}</div>
+                        <div className="progress-wrap">
+                          <div className={"bar " + (isTop ? 'top' : '')}>
+                            <div className="fill" style={{ width: `${(item.count/(maxVotes||1))*100}%` }} />
+                          </div>
+                          <div className="mono">{ revealed ? `#${item.rank}` : `${item.count}` }</div>
+                        </div>
+                      </div>
+                    );
+                  }) : (<div className="muted">No data found for this stage.</div>) }
+                </div>
+              </div>
+
+              <div className="panel-card reveal-panel">
+                {!revealed ? (
+                  <button className="reveal-btn" onClick={() => setRevealed(true)} aria-label="Reveal winner">
+                    <strong>Reveal Winner</strong>
+                  </button>
+                ) : (
+                  <div>
+                    <div style={{ fontSize:56, color:'var(--gold)', marginBottom:8, textAlign:'center' }}>
+                      <i className="fa-solid fa-trophy"></i>
+                    </div>
+                    <div style={{ fontSize:20, fontWeight:900, color:'var(--gold)', marginBottom:10 }}>
+                      { isTie ? "It's a Tie!" : "The Winner Is" }
+                    </div>
+
+                    <div style={{ marginBottom:12 }}>
+                      { winners.map((w,i) => (
+                        <div key={i} style={{ marginBottom: (i<winners.length-1)?8:0 }}>
+                          <div style={{ fontSize:28, fontWeight:900 }}>{w.name}</div>
+                          { i < winners.length-1 && <div className="muted" style={{ marginTop:6 }}>and</div> }
+                        </div>
+                      )) }
+                    </div>
+
+                    <div style={{ padding:'8px 16px', borderRadius:10, borderTop:'1px solid rgba(255,255,255,.03)' }}>
+                      <div className="mono">Rank #1</div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="nav" style={{ marginTop:18 }}>
+              <button className="prev" onClick={onPrev} disabled={category.id === 'gameplay'} style={{ opacity: category.id === 'gameplay' ? .4:1, cursor: category.id === 'gameplay' ? 'not-allowed':'pointer' }}>
+                <i className="fa-solid fa-arrow-left" style={{marginRight:8}}></i> Previous
+              </button>
+              <button className="next" onClick={onNext}>
+                { isLast ? "Show Summary" : "Next Category" } <i className="fa-solid fa-arrow-right" style={{marginLeft:8}}></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    const SummaryView = ({ processedData, onRestart }) => {
+      return (
+        <div style={{ paddingTop:50, paddingBottom:60 }}>
+          <StageHeader subtext="Final Results Summary" isFinal={true} />
+          <div style={{ textAlign:'center', marginBottom:30 }}>
+            <h1 style={{ fontSize:48, margin:0, fontWeight:900, color:'var(--gold)' }}>FINAL WINNERS</h1>
+            <p className="muted" style={{ marginTop:8 }}>ملخص الفائزين النهائي</p>
+          </div>
+
+          <div className="summary-grid">
+            {CATEGORIES.map(cat => {
+              const data = processedData[cat.id];
+              if (!data || data.length === 0) return null;
+              const winners = data.filter(d => d.count === (data[0]?.count||0));
+              return (
+                <div key={cat.id} className="summary-card">
+                  <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:8 }}>
+                    <IconFA classes={cat.icon} size={18} />
+                    <div style={{ fontSize:12, color:varOr('muted','#9ca3af'), textTransform:'uppercase', fontWeight:700 }}>{cat.label}</div>
+                  </div>
+                  <div style={{ fontSize:18, fontWeight:900 }}>
+                    {winners.map((w,i) => <span key={i}>{w.name}{i < winners.length-1 ? " / " : ""}</span>)}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <div style={{ display:'flex', justifyContent:'center', marginTop:28 }}>
+            <button className="reveal-btn" onClick={onRestart}><i className="fa-solid fa-play" style={{marginRight:8}}></i> Restart Show</button>
+          </div>
+        </div>
+      );
+    };
+
+    // Small helper for inline color fallback
+    function varOr(name, fallback) {
+      try {
+        const v = getComputedStyle(document.documentElement).getPropertyValue(`--${name}`).trim();
+        return v || fallback;
+      } catch(e){ return fallback; }
+    }
+
+    const WelcomeScreen = ({ onStart }) => {
+      return (
+        <div className="welcome">
+          <div style={{ maxWidth:860 }}>
+            <div style={{ marginBottom:18 }}>
+              <i className="fa-solid fa-trophy" style={{ fontSize:96, color: 'var(--gold)' }}></i>
+            </div>
+            <h1 className="title">GOTY <span style={{ background:'linear-gradient(90deg,#a78bfa,#f472b6)', WebkitBackgroundClip:'text', color:'transparent' }}>2025</span></h1>
+            <div className="subtitle">The Awards Ceremony</div>
+
+            <div style={{ marginTop:28 }}>
+              <button className="start-btn" onClick={onStart}><strong>Start The Show</strong> <i className="fa-solid fa-arrow-right" style={{ marginLeft:10 }} /></button>
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    /* --------------------------
+       Root App
+       -------------------------- */
+    function App() {
+      const [stage, setStage] = useState('welcome'); // welcome | awards | summary
+      const [currentCatIndex, setCurrentCatIndex] = useState(0);
+
+      // Process votes
+      const dataStage1 = useMemo(() => processData(STAGE_1_VOTES, false), []);
+      const dataStage2 = useMemo(() => processData(STAGE_2_VOTES, true), []);
+
+      const nextCategory = () => {
+        if (currentCatIndex < CATEGORIES.length - 1) setCurrentCatIndex(i => i + 1);
+        else setStage('summary');
+      };
+      const prevCategory = () => {
+        if (currentCatIndex > 0) setCurrentCatIndex(i => i - 1);
+      };
+      const startAwards = () => { setStage('awards'); setCurrentCatIndex(0); };
+      const restart = () => { setStage('welcome'); setCurrentCatIndex(0); };
+
+      const currentCategory = CATEGORIES[currentCatIndex];
+
+      return (
+        <div className="app">
+          <BackgroundLayer stage={stage} currentCategory={currentCategory} />
+          <div className="container">
+            {stage === 'welcome' && <WelcomeScreen onStart={startAwards} />}
+
+            {stage === 'awards' && (
+              <StageView
+                category={currentCategory}
+                nomineesData={dataStage1[currentCategory.id] || []}
+                finalData={dataStage2[currentCategory.id] || []}
+                onNext={nextCategory}
+                onPrev={prevCategory}
+                isLast={currentCatIndex === CATEGORIES.length - 1}
+              />
+            )}
+
+            {stage === 'summary' && <SummaryView processedData={dataStage2} onRestart={restart} />}
+          </div>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  })();
+  </script>
 </body>
 </html>

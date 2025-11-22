@@ -89,38 +89,49 @@
             { name: "فراس", goty: "Clair Obscur: Expedition 33", gameplay: "ninja gaiden 4", story: "clair obscure expdetion 33", art: "split fiction", music: "clair obscure expdetion 33", indie: "clair obscure expdetion 33", remaster: "The Elder Scrolls IV: Oblivion Remastered", multi: "Split Fiction", flop: "lost soul aside", anticipated: "stranger of heaven", char: "verso", boss: "Arlecchino, the Blood Artist", song: "Une vie à peindre", honorable: "Bioshock Infinite" }
         ];
 
-        // --- UPDATED VISUALS (GIPHY ONLY) ---
-        // --- UPDATED VISUALS (SMOOTH & ATMOSPHERIC LOOPS) ---
+      // --- VISUALS CONFIGURATION ---
+        // PASTE YOUR GIF LINKS INSIDE THE EMPTY QUOTES "" BELOW
         const BACKGROUNDS = [
-            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExanFwd2JndDRvbTlubmF2eWU4OXk1NTBjd3NwZzVucDN1YjIzdDB0aiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/x4Wq7S6wumoDBoKpml/giphy.gif", // 0: Retro Grid (Welcome/Music - Smooth Synthwave)
-            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZG8wenBsNWppNmE4ZnNybWpjNmM5aGNhZzJvcGxpdnN1eXl3emgzeSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/qs9FriWwyK48q9gJz0/giphy.gif", // 1: Blue Tech/Data Flow (Gameplay - Clean)
-            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDVmaXE0OW9vbmhoOWFrc2h4bHh6MzJhNWVnZXp6aml6d211YmFoaiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/abOKV9FJNuDXrwtWPN/giphy.gif",     // 2: Fantasy Forest/Particles (Story - Calming)
-            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZW05OXAxNXFlbXlyNTlkcDdhOG91MjdmeWxieHhicnFjNTF2OTZyeiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/eTAe7SiQtfoMYVwoeo/giphy.gif", // 3: Ink in Water (Art - Very artistic & slow)
-            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExaXkyanlwOXphZ3FoNjNodnJzaGQwbWRteXJybDJueGEzOTBvdmpiZCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/xZ3OHCx2OKpWc3LUL5/giphy.gif", // 4: Pixel Art Rain (Indie - Aesthetic & Chill)
-            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNms0dDQ5bmMzMTkxZGMwM2pmbTI3djJzOXd0cm0zdmF4anFnY2cyeSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/Ol5RNDAXu057fEbsv1/giphy.gif", // 5: Glitch/VHS (Remaster - Retro vibe)
-            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDRwbGFjaTVsNjRlc3MzeTh2MmN3M3NhNTA5NGdzdW9vZ3lnMnNpNiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/t7RfDzHvOCbjj6jM9G/giphy.gif", // 6: Cyberpunk City (Multiplayer - Busy but distant)
-            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExY2k4dDdpcjY4bnV0cjV4dWZhcGNpY25mZzN3YWR4YXJqdW42ZHp2ZiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/c88cPDzIk9gLIEBOJH/giphy.gif",      // 7: Static/Noise (Flop - Distorted)
-            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExaHIxbm1tNmV2bXZiYzR3NWphZTNhd21rdDBicTI4MzJoZG00c2xtYyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/POVkudGOU3pdTqdJN7/giphy.gif", // 8: Abstract Tunnel (Anticipated - Moving forward)
-            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExd2Npcjk1c2ZxNnVucm1vdmk4cW5rdjZ4Y2V5NGdwaWd6dGFzdHN3cCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/OiN1u11WqWCuGDO8lw/giphy.gif", // 9: Fire/Embers (Boss/Char - Intense but slow)
-            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExaTdiamw2YW5yN2t5cTV2aWE2Nm5ia3Vzc24xcjdvZ29tY29tZW9oYSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/iKJky4zNd6E7TEs5Le/giphy.gif", // 10: Gold Dust/Sparkles (GOTY - Premium)
-            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExaTdiamw2YW5yN2t5cTV2aWE2Nm5ia3Vzc24xcjdvZ29tY29tZW9oYSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/FwHYE1qCfnDwPXvw7V/giphy.gif"  // 11: Summary (Sunset - Ending)
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExanFwd2JndDRvbTlubmF2eWU4OXk1NTBjd3NwZzVucDN1YjIzdDB0aiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/x4Wq7S6wumoDBoKpml/giphy.gif", // 0: WELCOME SCREEN (Synthwave)
+
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZG8wenBsNWppNmE4ZnNybWpjNmM5aGNhZzJvcGxpdnN1eXl3emgzeSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/qs9FriWwyK48q9gJz0/giphy.gif", // 1: Gameplay
+            "", // 2: Story
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZW05OXAxNXFlbXlyNTlkcDdhOG91MjdmeWxieHhicnFjNTF2OTZyeiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/eTAe7SiQtfoMYVwoeo/giphy.gif", // 3: Art Direction
+
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDVmaXE0OW9vbmhoOWFrc2h4bHh6MzJhNWVnZXp6aml6d211YmFoaiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/abOKV9FJNuDXrwtWPN/giphy.gif", // 4: Music Album  <-- PASTE LINK HERE
+            
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZmx6Z3ljYWluNWVrYmxyaXl1OGwwczUwb3dmaDE0cndndTVwem9oeSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/iFqOpuQDLgzEiKiWTi/giphy.gif", // 5: Indie
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExaXkyanlwOXphZ3FoNjNodnJzaGQwbWRteXJybDJueGEzOTBvdmpiZCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/xZ3OHCx2OKpWc3LUL5/giphy.gif", // 6: Remaster
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNms0dDQ5bmMzMTkxZGMwM2pmbTI3djJzOXd0cm0zdmF4anFnY2cyeSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/Ol5RNDAXu057fEbsv1/giphy.gif", // 7: Multiplayer
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDRwbGFjaTVsNjRlc3MzeTh2MmN3M3NhNTA5NGdzdW9vZ3lnMnNpNiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/t7RfDzHvOCbjj6jM9G/giphy.gif", // 8: Flop
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExY2k4dDdpcjY4bnV0cjV4dWZhcGNpY25mZzN3YWR4YXJqdW42ZHp2ZiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/c88cPDzIk9gLIEBOJH/giphy.gif", // 9: Anticipated
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExd2Npcjk1c2ZxNnVucm1vdmk4cW5rdjZ4Y2V5NGdwaWd6dGFzdHN3cCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/OiN1u11WqWCuGDO8lw/giphy.gif", // 10: Character
+
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExaHIxbm1tNmV2bXZiYzR3NWphZTNhd21rdDBicTI4MzJoZG00c2xtYyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/POVkudGOU3pdTqdJN7/giphy.gif", // 11: Boss Fight <-- PASTE LINK HERE (Currently using Char GIF in map below, add unique one here)
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNTgwZzU5dmFvc3A2M3FoYzRla21hNjB0NndiYXJoc3o1cHZicHhseiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/NQPpsdWQUUgKc7SFAH/giphy.gif", // 12: Best Song  <-- PASTE LINK HERE (Currently using Music GIF in map below, add unique one here)
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcGF1bGJubXBqbW1xNnIwODVoYTJscTUwNHI2YXI4N3J3ZnJrdjN0cSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/fRZmMvFEOtDP1pFidt/giphy.gif", // 13: Honorable Mentions <-- PASTE LINK HERE
+            
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExaTdiamw2YW5yN2t5cTV2aWE2Nm5ia3Vzc24xcjdvZ29tY29tZW9oYSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/iKJky4zNd6E7TEs5Le/giphy.gif", // 14: GOTY
+
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExaTdiamw2YW5yN2t5cTV2aWE2Nm5ia3Vzc24xcjdvZ29tY29tZW9oYSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/FwHYE1qCfnDwPXvw7V/giphy.gif"  // 15: SUMMARY SCREEN
         ];
 
+        // This map connects the category ID to the index number in the list above
         const CATEGORY_BG_MAP = {
-            gameplay: 1,      // Blue Tech Flow
-            story: 2,         // Magical Forest
-            art: 3,           // Ink mixing
-            music: 4,         // Synthwave Grid
-            indie: 5,         // Cozy Pixel Rain
-            remaster: 6,      // Retro Glitch
-            multi: 7,         // Neon City
-            flop: 8,          // Static
-            anticipated: 9,   // Warp Tunnel
-            char: 10,          // Fire/Embers
-            boss: 11,          // Fire/Embers
-            song: 12,          // Synthwave Grid
-            honorable: 13,    // Sunset
-            goty: 14          // Gold Sparkles
+            gameplay: 1,
+            story: 2,
+            art: 3,
+            music: 4,    // Uses the new empty slot #4
+            indie: 5,
+            remaster: 6,
+            multi: 7,
+            flop: 8,
+            anticipated: 9,
+            char: 10,
+            boss: 11,    // Uses the new empty slot #11
+            song: 12,    // Uses the new empty slot #12
+            honorable: 13, // Uses the new empty slot #13
+            goty: 14
         };
         
         const CATEGORIES = [

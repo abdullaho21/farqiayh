@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GOTY 2025 Awards</title>
+    <title>حفل جوائز لعبة السنة 2025</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -15,13 +15,13 @@
     <!-- Babel for JSX -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     
-    <!-- Arabic Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: black; color: white; }
-        .font-arabic { font-family: 'Cairo', sans-serif; }
-        /* Custom scrollbar for the nominees list */
+        body { font-family: 'Cairo', sans-serif; background-color: black; color: white; }
+        .font-english { font-family: 'Inter', sans-serif; }
+        /* Custom scrollbar */
         .scrollbar-thin::-webkit-scrollbar { width: 6px; }
         .scrollbar-thin::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); }
         .scrollbar-thin::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 10px; }
@@ -33,13 +33,13 @@
     <script type="text/babel">
         const { useState, useEffect, useMemo } = React;
 
-        // --- ICONS (Inline SVGs to avoid dependency issues) ---
+        // --- ICONS ---
         const IconWrapper = ({ children, className, size = 24 }) => (
             <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>{children}</svg>
         );
         const Trophy = (p) => <IconWrapper {...p}><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></IconWrapper>;
-        const ArrowRight = (p) => <IconWrapper {...p}><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></IconWrapper>;
-        const ArrowLeft = (p) => <IconWrapper {...p}><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></IconWrapper>;
+        const ArrowRight = (p) => <IconWrapper {...p}><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></IconWrapper>; // Actually points Left in RTL
+        const ArrowLeft = (p) => <IconWrapper {...p}><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></IconWrapper>;   // Actually points Right in RTL
         const Music = (p) => <IconWrapper {...p}><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></IconWrapper>;
         const Gamepad2 = (p) => <IconWrapper {...p}><line x1="6" x2="10" y1="12" y2="12"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="15" x2="15.01" y1="13" y2="13"/><line x1="18" x2="18.01" y1="11" y2="11"/><rect width="20" height="12" x="2" y="6" rx="2"/></IconWrapper>;
         const Paintbrush = (p) => <IconWrapper {...p}><path d="M18.37 2.63 14 7l-1.59-1.59a2 2 0 0 0-2.82 0L8 7l9 9 1.59-1.59a2 2 0 0 0 0-2.82L17 10l4.37-4.37a2.12 2.12 0 1 0-3-3Z"/><path d="M9 8c-2 3-4 3.5-7 4l8 10c2-1 6-5 6-7"/><path d="M14.5 17.5 4.5 15"/></IconWrapper>;
@@ -72,7 +72,6 @@
             { name: "فراس", goty: "Kingdom Come: Deliverance II, Clair Obscur: Expedition 33, Hollow Knight: Silksong", gameplay: "ninja gaiden 4, The First Berserker: Khazan", story: "Kingdom Come: Deliverance II, clair obscure expdetion 33, The Alters", art: "hollow knight silksong, death stranding 2, sword of the sea", music: "clair obscure expdetion 33, dynasty warriors origins, death stranding 2", indie: "clair obscure expdetion 33, hollow knight silksong, hades 2", remaster: "The Elder Scrolls IV: Oblivion Remastered, METAL GEAR SOLID Δ: SNAKE EATER", multi: "Split Fiction", flop: "vampire: the masquerade - bloodlines 2, Little Nightmares 3, lost soul aside", anticipated: "stranger of heaven, Marvel's Wolverine, dusk blood", char: "verso, henry, jan", boss: "Arlecchino, the Blood Artist, curator, Fulghor Champion of Nightglow, Enhanced dark dragon", song: "Gestral Village Golgra, The Clear Blue Sky, CAPRICIOUS WIND, Open Your Heart, Last Dive", honorable: "Bioshock Infinite" }
         ];
 
-        // STAGE 2 DATA (Final Vote Phase)
         const STAGE_2_VOTES = [
             { name: "sal", goty: "Kingdom Come: Deliverance II", gameplay: "clair obscure expdetion 33", story: "clair obscure expdetion 33", art: "clair obscure expdetion 33", music: "clair obscure expdetion 33", indie: "clair obscure expdetion 33", remaster: "The Elder Scrolls IV: Oblivion Remastered", multi: "elden ring nightreign", flop: "vampire: the masquerade - bloodlines 2", anticipated: "The Witcher 4", char: "renoir", boss: "Arlecchino, the Blood Artist", song: "Lumière https://youtu.be/zmvsw2ILX5k", honorable: "Bioshock Infinite" },
             { name: "Potato lover", goty: "Hollow Knight: Silksong", gameplay: "hollow knight silksong", story: "clair obscure expdetion 33", art: "clair obscure expdetion 33", music: "death stranding 2", indie: "hollow knight silksong", remaster: "", multi: "elden ring nightreign", flop: "Hunter x Hunter: Nen x Impact", anticipated: "stranger of heaven", char: "verso", boss: "curator", song: "to the wilder https://www.youtube.com/watch?v=BSN1rPPKK9s", honorable: "Bioshock Infinite" },
@@ -114,20 +113,20 @@
         };
 
         const CATEGORIES = [
-            { id: 'gameplay', label: 'Best Gameplay', labelAr: 'افضل جيمبلاي', icon: Gamepad2, color: 'text-blue-400' },
-            { id: 'story', label: 'Best Story', labelAr: 'أفضل قصة', icon: BookOpen, color: 'text-yellow-400' },
-            { id: 'art', label: 'Best Art Direction', labelAr: 'افضل توجه فني', icon: Paintbrush, color: 'text-pink-400' },
-            { id: 'music', label: 'Best Album', labelAr: 'افضل البوم', icon: Music, color: 'text-purple-400' },
-            { id: 'indie', label: 'Best Indie', labelAr: 'أفضل لعبة مستقلة', icon: Ghost, color: 'text-green-400' },
-            { id: 'remaster', label: 'Best Remaster/Remake', labelAr: 'افضل النسخه المحسنه', icon: Sparkles, color: 'text-cyan-400' },
-            { id: 'multi', label: 'Best Multiplayer', labelAr: 'افضل لعبه جماعيه', icon: Users, color: 'text-orange-400' },
-            { id: 'flop', label: 'Flop of the Year', labelAr: 'مقلب سنه', icon: Skull, color: 'text-red-600' },
-            { id: 'anticipated', label: 'Most Anticipated', labelAr: 'اكثر لعبه منتظره', icon: Clock, color: 'text-indigo-400' },
-            { id: 'char', label: 'Best Character', labelAr: 'افضل شخصيه', icon: Star, color: 'text-yellow-200' },
-            { id: 'boss', label: 'Best Boss Fight', labelAr: 'افضل مواجهات', icon: Star, color: 'text-red-400' },
-            { id: 'song', label: 'Best Song', labelAr: 'افضل اغنيه', icon: Mic2, color: 'text-teal-300' },
-            { id: 'honorable', label: 'Honorable Mentions', labelAr: 'العاب تستحق الذكر', icon: Trophy, color: 'text-gray-300' },
-            { id: 'goty', label: 'Game of the Year', labelAr: 'افضل لعبه في السنه', icon: Trophy, color: 'text-amber-500' },
+            { id: 'gameplay', labelAr: 'أفضل جيمبلاي', icon: Gamepad2, color: 'text-blue-400' },
+            { id: 'story', labelAr: 'أفضل قصة', icon: BookOpen, color: 'text-yellow-400' },
+            { id: 'art', labelAr: 'أفضل توجه فني', icon: Paintbrush, color: 'text-pink-400' },
+            { id: 'music', labelAr: 'أفضل ألبوم', icon: Music, color: 'text-purple-400' },
+            { id: 'indie', labelAr: 'أفضل لعبة مستقلة', icon: Ghost, color: 'text-green-400' },
+            { id: 'remaster', labelAr: 'أفضل نسخة محسنة', icon: Sparkles, color: 'text-cyan-400' },
+            { id: 'multi', labelAr: 'أفضل لعبة جماعية', icon: Users, color: 'text-orange-400' },
+            { id: 'flop', labelAr: 'مقلب السنة', icon: Skull, color: 'text-red-600' },
+            { id: 'anticipated', labelAr: 'أكثر لعبة منتظرة', icon: Clock, color: 'text-indigo-400' },
+            { id: 'char', labelAr: 'أفضل شخصية', icon: Star, color: 'text-yellow-200' },
+            { id: 'boss', labelAr: 'أفضل مواجهة', icon: Star, color: 'text-red-400' },
+            { id: 'song', labelAr: 'أفضل أغنية', icon: Mic2, color: 'text-teal-300' },
+            { id: 'honorable', labelAr: 'ألعاب تستحق الذكر', icon: Trophy, color: 'text-gray-300' },
+            { id: 'goty', labelAr: 'لعبة السنة 2025', icon: Trophy, color: 'text-amber-500' },
         ];
 
         const FINAL_CANDIDATES = {
@@ -223,6 +222,28 @@
             if (n.includes("ailne") || n.includes("aline")) return "Ailne";
 
             return normalizeName(rawName);
+        };
+
+        // Get Honorable Mentions as a list of {game, voter}
+        const getHonorableMentionsList = () => {
+            // We check both stages for 'honorable' entries and map them to the voter
+            const allVotes = [...STAGE_1_VOTES, ...STAGE_2_VOTES];
+            const mentions = [];
+            const seen = new Set();
+
+            allVotes.forEach(vote => {
+                if (vote.honorable) {
+                    const game = normalizeName(vote.honorable);
+                    const voter = vote.name;
+                    // Create a unique key to avoid exact duplicates if same person voted twice
+                    const key = `${game}-${voter}`;
+                    if (game && !seen.has(key)) {
+                        seen.add(key);
+                        mentions.push({ game, voter });
+                    }
+                }
+            });
+            return mentions;
         };
 
         const processData = (dataSet, isFinalStage = false) => {
@@ -355,7 +376,7 @@
             <div className="fixed top-0 left-0 right-0 p-4 flex justify-center z-40 bg-gradient-to-b from-black/80 to-transparent pointer-events-none">
                 <div className="flex flex-col items-center">
                     <span className={`px-4 py-1 backdrop-blur-md rounded-full text-xs font-bold tracking-[0.2em] text-white uppercase border transition-colors duration-500 ${isFinal ? 'bg-yellow-500/20 border-yellow-500/50 text-yellow-100' : 'bg-white/10 border-white/20'}`}>
-                        {isFinal ? "FINAL RESULTS" : "NOMINEES (STAGE 1)"}
+                        {isFinal ? "النتائج النهائية" : "المرشحون (المرحلة الأولى)"}
                     </span>
                     {subtext && <span className="text-xs text-gray-400 mt-1">{subtext}</span>}
                 </div>
@@ -367,9 +388,16 @@
             
             useEffect(() => { setRevealed(false); }, [category.id]);
 
+            // Determine data to show
+            const isHonorable = category.id === 'honorable';
+            
+            // Logic for Standard Categories
             const filteredNominees = useMemo(() => getFilteredStage1Data(nomineesData), [nomineesData]);
             const currentData = revealed ? finalData : filteredNominees;
             
+            // Logic for Honorable Mentions (Just a list)
+            const honorableList = useMemo(() => getHonorableMentionsList(), []);
+
             const getWinners = (data) => {
                 if (!data || data.length === 0) return [];
                 const maxVotes = data[0].count;
@@ -382,111 +410,126 @@
 
             return (
                 <div className="flex flex-col items-center justify-center min-h-screen w-full max-w-5xl mx-auto p-6 pt-20 relative z-20">
-                    <Confetti isActive={revealed} />
-                    <StageHeader subtext={category.label} isFinal={revealed} />
+                    <Confetti isActive={revealed && !isHonorable} />
+                    {!isHonorable && <StageHeader subtext={category.labelAr} isFinal={revealed} />}
                     
+                    {/* Header Area */}
                     <div className="mb-8 text-center animate-fade-in">
                         <div className={`inline-flex p-4 rounded-full bg-gray-800/50 backdrop-blur mb-4 ${category.color} shadow-2xl`}>
                             <Icon size={48} />
                         </div>
                         <h2 className="text-4xl md:text-6xl font-black uppercase tracking-wider text-transparent bg-clip-text bg-gradient-to-br from-white to-gray-300 mb-2 drop-shadow-lg">
-                            {category.label}
-                        </h2>
-                        <h3 className="text-2xl md:text-3xl font-bold text-gray-400 font-arabic drop-shadow-md">
                             {category.labelAr}
-                        </h3>
+                        </h2>
                     </div>
 
-                    <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-                        <div className="bg-black/60 border border-white/10 rounded-2xl p-6 backdrop-blur-xl shadow-2xl overflow-hidden relative transition-all duration-500">
-                            <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-purple-500 to-transparent opacity-50 transition-opacity ${revealed ? 'opacity-0' : 'opacity-100'}`}></div>
-                            <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-yellow-500 to-transparent opacity-50 transition-opacity ${revealed ? 'opacity-100' : 'opacity-0'}`}></div>
-                            
-                            <div className="flex justify-between items-center mb-6 border-b border-white/10 pb-2">
-                                <h4 className="text-xl text-gray-200 uppercase tracking-widest font-bold">
-                                    {revealed ? "Final Rankings" : "Top Nominees"}
-                                </h4>
-                                {revealed && <span className="text-xs text-yellow-400 font-bold uppercase px-2 py-1 bg-yellow-500/20 rounded border border-yellow-500/30">Final Stage</span>}
-                            </div>
-                            
-                            <div className="space-y-4 max-h-[50vh] overflow-y-auto pr-2 scrollbar-thin">
-                                {currentData.map((item, idx) => {
-                                    const maxVotes = currentData[0]?.count || 1; 
-                                    const isTop = revealed ? item.rank === 1 : item.count === maxVotes && item.count > 0;
-                                    
-                                    return (
-                                        <div key={idx} className="flex items-center justify-between group hover:bg-white/5 p-2 rounded transition-colors">
-                                            <span className={`text-lg font-medium transition-colors ${isTop ? 'text-yellow-400' : 'text-gray-300 group-hover:text-white'}`}>
-                                                {item.name}
-                                            </span>
-                                            <div className="flex items-center gap-3">
-                                                <div className="h-2 rounded-full bg-gray-700/50 w-24 md:w-32 overflow-hidden">
-                                                    <div 
-                                                        className={`h-full rounded-full transition-all duration-1000 ease-out ${isTop ? 'bg-yellow-400' : 'bg-purple-600'}`}
-                                                        style={{ width: `${(item.count / (maxVotes || 1)) * 100}%` }}
-                                                    ></div>
-                                                </div>
-                                                <span className={`text-sm font-mono w-16 text-right ${revealed ? 'text-yellow-500 font-bold' : 'text-gray-400'}`}>
-                                                    {revealed ? `#${item.rank}` : `${item.count}`}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    )
-                                })}
-                                {currentData.length === 0 && <div className="text-gray-500 italic">No data found for this stage.</div>}
-                            </div>
-                        </div>
-
-                        <div className="flex flex-col items-center justify-center min-h-[300px]">
-                            {!revealed ? (
-                                <button 
-                                    onClick={() => setRevealed(true)}
-                                    className="group relative px-10 py-5 bg-white text-black font-black text-xl uppercase tracking-widest hover:bg-yellow-400 transition-all duration-300 transform hover:scale-105 rounded-lg overflow-hidden shadow-lg"
-                                >
-                                    <span className="relative z-10">Reveal Winner</span>
-                                    <div className="absolute inset-0 border-2 border-white group-hover:border-yellow-400 rounded-lg scale-105 opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
-                                </button>
-                            ) : (
-                                <div className="animate-bounce-in flex flex-col items-center text-center w-full">
-                                    <div className="mb-4 text-yellow-400 animate-bounce">
-                                        <Trophy size={80} />
-                                    </div>
-                                    <div className="text-2xl text-yellow-400 font-bold uppercase tracking-widest mb-4 font-serif italic">
-                                        {isTie ? "It's a Tie!" : "The Winner Is"}
-                                    </div>
-                                    
-                                    <div className="flex flex-col gap-4 items-center mb-6">
-                                        {winners.map((winner, i) => (
-                                            <div key={i} className="relative">
-                                                <h1 className="relative text-4xl md:text-6xl font-black text-white drop-shadow-xl leading-tight">
-                                                    {winner.name}
-                                                </h1>
-                                                {isTie && i < winners.length -1 && <div className="text-gray-400 font-serif italic my-2">and</div>}
-                                            </div>
-                                        ))}
-                                    </div>
-
-                                    <div className="px-8 py-3 bg-gradient-to-r from-transparent via-yellow-500/20 to-transparent border-y border-yellow-500/30 text-yellow-200 font-mono text-xl">
-                                        Rank #1
-                                    </div>
+                    {/* Special View for Honorable Mentions */}
+                    {isHonorable ? (
+                        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 mb-12 max-h-[60vh] overflow-y-auto scrollbar-thin p-2">
+                            {honorableList.map((item, idx) => (
+                                <div key={idx} className="bg-black/60 border border-white/10 p-4 rounded-xl hover:bg-white/5 transition-colors backdrop-blur-md flex flex-col">
+                                    <span className="text-xl font-bold text-yellow-400 font-english">{item.game}</span>
+                                    <span className="text-sm text-gray-400 mt-1">من اختيار: <span className="text-white font-bold">{item.voter}</span></span>
                                 </div>
-                            )}
+                            ))}
                         </div>
-                    </div>
+                    ) : (
+                        /* Standard View for Competitive Categories */
+                        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                            {/* Left Col: List */}
+                            <div className="bg-black/60 border border-white/10 rounded-2xl p-6 backdrop-blur-xl shadow-2xl overflow-hidden relative transition-all duration-500">
+                                <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-purple-500 to-transparent opacity-50 transition-opacity ${revealed ? 'opacity-0' : 'opacity-100'}`}></div>
+                                <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-yellow-500 to-transparent opacity-50 transition-opacity ${revealed ? 'opacity-100' : 'opacity-0'}`}></div>
+                                
+                                <div className="flex justify-between items-center mb-6 border-b border-white/10 pb-2">
+                                    <h4 className="text-xl text-gray-200 uppercase tracking-widest font-bold">
+                                        {revealed ? "الترتيب النهائي" : "أبرز المرشحين"}
+                                    </h4>
+                                    {revealed && <span className="text-xs text-yellow-400 font-bold uppercase px-2 py-1 bg-yellow-500/20 rounded border border-yellow-500/30">المرحلة النهائية</span>}
+                                </div>
+                                
+                                <div className="space-y-4 max-h-[50vh] overflow-y-auto pr-2 scrollbar-thin">
+                                    {currentData.map((item, idx) => {
+                                        const maxVotes = currentData[0]?.count || 1; 
+                                        const isTop = revealed ? item.rank === 1 : item.count === maxVotes && item.count > 0;
+                                        
+                                        return (
+                                            <div key={idx} className="flex items-center justify-between group hover:bg-white/5 p-2 rounded transition-colors">
+                                                <span className={`text-lg font-medium font-english text-left dir-ltr flex-1 transition-colors ${isTop ? 'text-yellow-400' : 'text-gray-300 group-hover:text-white'}`}>
+                                                    {item.name}
+                                                </span>
+                                                <div className="flex items-center gap-3">
+                                                    <div className="h-2 rounded-full bg-gray-700/50 w-24 md:w-32 overflow-hidden">
+                                                        <div 
+                                                            className={`h-full rounded-full transition-all duration-1000 ease-out ${isTop ? 'bg-yellow-400 shadow-[0_0_10px_rgba(250,204,21,0.5)]' : 'bg-purple-600'}`}
+                                                            style={{ width: `${(item.count / (maxVotes || 1)) * 100}%` }}
+                                                        ></div>
+                                                    </div>
+                                                    <span className={`text-sm font-mono w-16 text-right ${revealed ? 'text-yellow-500 font-bold' : 'text-gray-400'}`}>
+                                                        {revealed ? `#${item.rank}` : `${item.count}`}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        )
+                                    })}
+                                    {currentData.length === 0 && <div className="text-gray-500 italic">لا توجد بيانات لهذه المرحلة.</div>}
+                                </div>
+                            </div>
 
-                    <div className="flex gap-4 mt-auto">
+                            {/* Right Col: Reveal Button / Winner Box */}
+                            <div className="flex flex-col items-center justify-center min-h-[300px]">
+                                {!revealed ? (
+                                    <button 
+                                        onClick={() => setRevealed(true)}
+                                        className="group relative px-10 py-5 bg-white text-black font-black text-xl uppercase tracking-widest hover:bg-yellow-400 transition-all duration-300 transform hover:scale-105 rounded-lg overflow-hidden shadow-lg"
+                                    >
+                                        <span className="relative z-10">كشف الفائز</span>
+                                        <div className="absolute inset-0 border-2 border-white group-hover:border-yellow-400 rounded-lg scale-105 opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
+                                    </button>
+                                ) : (
+                                    <div className="animate-bounce-in flex flex-col items-center text-center w-full">
+                                        <div className="mb-4 text-yellow-400 animate-bounce">
+                                            <Trophy size={80} />
+                                        </div>
+                                        <div className="text-2xl text-yellow-400 font-bold uppercase tracking-widest mb-4 font-serif italic">
+                                            {isTie ? "تعادل!" : "الفائز هو"}
+                                        </div>
+                                        
+                                        <div className="flex flex-col gap-4 items-center mb-6">
+                                            {winners.map((winner, i) => (
+                                                <div key={i} className="relative">
+                                                    <h1 className="relative text-4xl md:text-6xl font-black text-white drop-shadow-xl leading-tight font-english">
+                                                        {winner.name}
+                                                    </h1>
+                                                    {isTie && i < winners.length -1 && <div className="text-gray-400 font-serif italic my-2">&</div>}
+                                                </div>
+                                            ))}
+                                        </div>
+
+                                        <div className="px-8 py-3 bg-gradient-to-r from-transparent via-yellow-500/20 to-transparent border-y border-yellow-500/30 text-yellow-200 font-mono text-xl">
+                                            المركز الأول
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Navigation */}
+                    <div className="flex gap-4 mt-auto w-full justify-between">
+                        <button 
+                            onClick={onNext} 
+                            className="px-6 py-3 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-bold flex items-center gap-2 shadow-lg flex-row-reverse"
+                        >
+                            <ArrowRight size={20} className="rotate-180" /> {category.id === 'honorable' ? "عرض الملخص" : "التالي"} 
+                        </button>
+                        
                         <button 
                             onClick={onPrev} 
                             disabled={category.id === 'gameplay'}
-                            className="px-6 py-3 rounded-lg bg-black/50 hover:bg-black/70 text-white disabled:opacity-30 flex items-center gap-2 border border-white/10 backdrop-blur-md"
+                            className="px-6 py-3 rounded-lg bg-black/50 hover:bg-black/70 text-white disabled:opacity-30 flex items-center gap-2 border border-white/10 backdrop-blur-md flex-row-reverse"
                         >
-                            <ArrowLeft size={20} /> Previous
-                        </button>
-                        <button 
-                            onClick={onNext} 
-                            className="px-6 py-3 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-bold flex items-center gap-2 shadow-lg"
-                        >
-                            Next Category <ArrowRight size={20} />
+                             السابق <ArrowLeft size={20} className="rotate-180" />
                         </button>
                     </div>
                 </div>
@@ -494,13 +537,15 @@
         };
 
         const SummaryView = ({ processedData, onRestart }) => {
-            const CATEGORIES_LIST = CATEGORIES; 
+            // Filter out honorable from summary grid usually, or keep it?
+            const CATEGORIES_LIST = CATEGORIES.filter(c => c.id !== 'honorable'); 
+            
             return (
                 <div className="min-h-screen w-full max-w-6xl mx-auto p-8 py-12 relative z-20">
-                    <StageHeader subtext="Final Results Summary" isFinal={true} />
+                    <StageHeader subtext="ملخص النتائج النهائية" isFinal={true} />
                     <div className="text-center mb-16 mt-12">
-                        <h1 className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 to-yellow-600 mb-4 drop-shadow-lg">FINAL WINNERS</h1>
-                        <p className="text-2xl text-gray-300 font-arabic">ملخص الفائزين النهائي</p>
+                        <h1 className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 to-yellow-600 mb-4 drop-shadow-lg">الفائزون</h1>
+                        <p className="text-2xl text-gray-300">ملخص الفائزين في حفل 2025</p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -513,11 +558,11 @@
 
                             return (
                                 <div key={cat.id} className="bg-black/60 border border-white/10 p-6 rounded-xl hover:border-purple-500/50 transition-colors group backdrop-blur-md">
-                                    <div className="flex items-center gap-3 mb-4">
+                                    <div className="flex items-center gap-3 mb-4 flex-row-reverse justify-end">
+                                        <span className="text-sm text-gray-400 uppercase tracking-wider font-bold">{cat.labelAr}</span>
                                         <Icon size={24} className={cat.color} />
-                                        <span className="text-sm text-gray-400 uppercase tracking-wider font-bold">{cat.label}</span>
                                     </div>
-                                    <div className="text-xl font-bold text-white group-hover:text-yellow-400 transition-colors">
+                                    <div className="text-xl font-bold text-white group-hover:text-yellow-400 transition-colors text-left font-english" dir="ltr">
                                         {winners.map((w, i) => (
                                             <span key={i}>
                                                 {w.name}
@@ -532,7 +577,7 @@
                     
                     <div className="flex justify-center mt-16">
                         <button onClick={onRestart} className="px-8 py-3 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition-colors flex items-center gap-2 shadow-lg">
-                            <Play size={20} /> Restart Show
+                            <Play size={20} /> إعادة العرض
                         </button>
                     </div>
                 </div>
@@ -546,17 +591,17 @@
                         <Trophy size={100} className="text-yellow-500" />
                     </div>
                     <h1 className="text-7xl md:text-9xl font-black text-white mb-2 tracking-tighter drop-shadow-2xl">
-                        GOTY <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">2025</span>
+                        لعبة السنة <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">2025</span>
                     </h1>
-                    <h2 className="text-2xl md:text-4xl text-gray-300 font-light mb-12 tracking-[0.5em] uppercase border-t border-b border-white/20 py-4 backdrop-blur-sm">
-                        The Awards Ceremony
+                    <h2 className="text-2xl md:text-4xl text-gray-300 font-light mb-12 tracking-[0.2em] uppercase border-t border-b border-white/20 py-4 backdrop-blur-sm">
+                        حفل توزيع الجوائز
                     </h2>
                     <button 
                         onClick={onStart}
                         className="group relative px-12 py-6 bg-white text-black font-black text-2xl uppercase tracking-widest hover:bg-purple-600 hover:text-white transition-all duration-500 rounded-lg overflow-hidden shadow-xl"
                     >
-                        <span className="relative z-10 flex items-center gap-4">
-                            Start The Show <ArrowRight className="group-hover:translate-x-2 transition-transform"/>
+                        <span className="relative z-10 flex items-center gap-4 flex-row-reverse">
+                            ابدأ العرض <ArrowLeft size={24} className="group-hover:-translate-x-2 transition-transform"/>
                         </span>
                     </button>
                 </div>

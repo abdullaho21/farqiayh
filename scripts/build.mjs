@@ -66,7 +66,7 @@ const assets = [
   ...details.imports.filter(item => item.kind === 'import-statement').map(item => '<link rel="modulepreload" href="' + relative(item.path) + '">'),
   '<script type="module" src="' + relative(entry) + '"></script>',
 ].join('\n    ');
-const template = await readFile('index.html', 'utf8');
+const template = await readFile('src/index.template.html', 'utf8');
 await writeFile('dist/index.html', template.replace('<!--app-assets-->', assets).replace('<!--app-html-->', renderWelcome()));
 await writeFile('.cache/build-meta.json', JSON.stringify(client.metafile, null, 2));
 console.log('Built a static, prerendered ceremony in dist/.');

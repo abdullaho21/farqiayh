@@ -57,6 +57,19 @@ assert.ok(totalBytes([...eager]) < 180_000, 'Initial JavaScript budget: 180 kB u
 assert.ok(totalBytes(scripts) < 215_000, 'Total JavaScript budget: 215 kB uncompressed.');
 assert.ok(totalBytes(css) < 25_000, 'CSS budget: 25 kB uncompressed.');
 assert.ok(readdirSync('dist').every(name => !['src', 'tests', '.github', 'node_modules'].includes(name)), 'Ship only public artifacts.');
+
+// GitHub Pages is configured to publish the repository root. Keep that copy
+// identical to the artifact deployed by Actions so either Pages source works.
+for (const file of ['index.html', 'favicon.svg', 'FONT-LICENSE.txt', '.nojekyll']) {
+  assert.ok(existsSync(file), 'Missing root Pages file: ' + file);
+  assert.deepEqual(readFileSync(file), readFileSync('dist/' + file), 'Root Pages file is stale: ' + file);
+}
+const rootAssets = readdirSync('assets').sort();
+const distAssets = readdirSync('dist/assets').sort();
+assert.deepEqual(rootAssets, distAssets, 'Root Pages assets are stale. Run npm run publish:root.');
+for (const file of distAssets) {
+  assert.deepEqual(readFileSync('assets/' + file), readFileSync('dist/assets/' + file), 'Root Pages asset is stale: ' + file);
+}
 console.log(JSON.stringify({
   initialJavaScript: { bytes: totalBytes([...eager]), gzipBytes: gzipBytes([...eager]) },
   totalJavaScript: { bytes: totalBytes(scripts), gzipBytes: gzipBytes(scripts) },

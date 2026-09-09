@@ -13,7 +13,10 @@ npm run check
 ```
 
 The deployable site is generated in `dist/`. Serve that directory with a static
-HTTP server. The root `index.html` is a build template.
+HTTP server. GitHub Pages is currently configured to publish the repository
+root, so run `npm run publish:root` after source changes and commit the generated
+root `index.html`, `assets/`, font license, favicon and `.nojekyll` file. The HTML
+build template is `src/index.template.html`.
 
 ## Source
 

@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build.mjs",
+    "publish:root": "npm run build && node scripts/publish-root.mjs",
     "test": "node --test",
     "check": "npm test && npm run build && node scripts/check-build.mjs"
   },

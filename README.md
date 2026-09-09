@@ -53,6 +53,10 @@ and these uncompressed budgets: initial JavaScript <180 kB, all JavaScript
 <215 kB, CSS <25 kB. It also reports gzip sizes; these are bundle measurements,
 not Lighthouse scores or measured network load times.
 
+The verified production build uses 49.9 kB of initial JavaScript (gzip), 4.3 kB
+of CSS (gzip), 4.7 kB of prerendered HTML and a 166 kB WOFF2 Arabic font. The
+on-demand awards chunk adds about 4.4 kB of JavaScript (gzip).
+
 Before release, visually review the welcome, nomination, reveal, tied winner,
 honorable mention and summary screens at desktop and mobile widths, with
 keyboard navigation, 200% text enlargement and reduced motion.

@@ -24,10 +24,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "22"
+          cache: npm
       - name: Install dependencies
-        run: npm install
-      - name: Capture resolved dependency lockfile
-        run: node --input-type=module -e "import { readFileSync } from 'node:fs'; console.log('LOCKFILE_BASE64:' + readFileSync('package-lock.json').toString('base64'))"
+        run: npm ci
       - name: Verify voting and ceremony behavior
         run: npm test
       - name: Build static site

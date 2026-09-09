@@ -1,0 +1,1488 @@
+{
+  "nominations": {
+    "gameplay": [
+      {
+        "name": "Clair Obscur: Expedition 33",
+        "count": 6,
+        "rank": 1
+      },
+      {
+        "name": "Hollow Knight: Silksong",
+        "count": 5,
+        "rank": 2
+      },
+      {
+        "name": "Ninja Gaiden 4",
+        "count": 5,
+        "rank": 2
+      },
+      {
+        "name": "The First Berserker: Khazan",
+        "count": 2,
+        "rank": 4
+      },
+      {
+        "name": "Monster Hunter Wilds",
+        "count": 1,
+        "rank": 5
+      },
+      {
+        "name": "Kingdom Come: Deliverance II",
+        "count": 1,
+        "rank": 5
+      },
+      {
+        "name": "Doom: The Dark Ages",
+        "count": 1,
+        "rank": 5
+      },
+      {
+        "name": "Dying Light The Beast",
+        "count": 1,
+        "rank": 5
+      }
+    ],
+    "story": [
+      {
+        "name": "Clair Obscur: Expedition 33",
+        "count": 13,
+        "rank": 1
+      },
+      {
+        "name": "Kingdom Come: Deliverance II",
+        "count": 3,
+        "rank": 2
+      },
+      {
+        "name": "The Alters",
+        "count": 2,
+        "rank": 3
+      },
+      {
+        "name": "Hollow Knight: Silksong",
+        "count": 2,
+        "rank": 3
+      },
+      {
+        "name": "Death Stranding 2",
+        "count": 1,
+        "rank": 5
+      },
+      {
+        "name": "South Of Midnight",
+        "count": 1,
+        "rank": 5
+      }
+    ],
+    "art": [
+      {
+        "name": "Clair Obscur: Expedition 33",
+        "count": 10,
+        "rank": 1
+      },
+      {
+        "name": "Hollow Knight: Silksong",
+        "count": 6,
+        "rank": 2
+      },
+      {
+        "name": "Ghost of Yotei",
+        "count": 5,
+        "rank": 3
+      },
+      {
+        "name": "Death Stranding 2",
+        "count": 4,
+        "rank": 4
+      },
+      {
+        "name": "Split Fiction",
+        "count": 3,
+        "rank": 5
+      },
+      {
+        "name": "Sword Of The Sea",
+        "count": 2,
+        "rank": 6
+      },
+      {
+        "name": "No",
+        "count": 1,
+        "rank": 7
+      },
+      {
+        "name": "I'M Not A Human",
+        "count": 1,
+        "rank": 7
+      },
+      {
+        "name": "Hades 2",
+        "count": 1,
+        "rank": 7
+      },
+      {
+        "name": "Shinobi: Art Of Vengeance",
+        "count": 1,
+        "rank": 7
+      },
+      {
+        "name": "Bye Sweet Carole",
+        "count": 1,
+        "rank": 7
+      },
+      {
+        "name": "Dispatch",
+        "count": 1,
+        "rank": 7
+      }
+    ],
+    "music": [
+      {
+        "name": "Clair Obscur: Expedition 33",
+        "count": 11,
+        "rank": 1
+      },
+      {
+        "name": "Death Stranding 2",
+        "count": 4,
+        "rank": 2
+      },
+      {
+        "name": "Dynasty Warriors Origins",
+        "count": 3,
+        "rank": 3
+      },
+      {
+        "name": "South Of Midnight",
+        "count": 2,
+        "rank": 4
+      },
+      {
+        "name": "Hollow Knight: Silksong",
+        "count": 2,
+        "rank": 4
+      },
+      {
+        "name": "Hades 2",
+        "count": 1,
+        "rank": 6
+      }
+    ],
+    "indie": [
+      {
+        "name": "Clair Obscur: Expedition 33",
+        "count": 11,
+        "rank": 1
+      },
+      {
+        "name": "Hollow Knight: Silksong",
+        "count": 5,
+        "rank": 2
+      },
+      {
+        "name": "Haste",
+        "count": 3,
+        "rank": 3
+      },
+      {
+        "name": "Pistrello And The Cursed Yoyo",
+        "count": 1,
+        "rank": 4
+      },
+      {
+        "name": "Advent Neon",
+        "count": 1,
+        "rank": 4
+      },
+      {
+        "name": "Hades 2",
+        "count": 1,
+        "rank": 4
+      },
+      {
+        "name": "Dispatch",
+        "count": 1,
+        "rank": 4
+      }
+    ],
+    "remaster": [
+      {
+        "name": "MGS Delta: Snake Eater",
+        "count": 5,
+        "rank": 1
+      },
+      {
+        "name": "The Elder Scrolls IV: Oblivion Remastered",
+        "count": 4,
+        "rank": 2
+      },
+      {
+        "name": "Ninja Gaiden 2 Black",
+        "count": 2,
+        "rank": 3
+      },
+      {
+        "name": "Xenoblade Chronicles X",
+        "count": 1,
+        "rank": 4
+      },
+      {
+        "name": "اي حاجة غير نينجا قايدن وميتل خرا",
+        "count": 1,
+        "rank": 4
+      },
+      {
+        "name": "Trails in the Sky 1st Chapter",
+        "count": 1,
+        "rank": 4
+      }
+    ],
+    "multi": [
+      {
+        "name": "Split Fiction",
+        "count": 5,
+        "rank": 1
+      },
+      {
+        "name": "Dying Light The Beast",
+        "count": 4,
+        "rank": 2
+      },
+      {
+        "name": "Battlefield 6",
+        "count": 4,
+        "rank": 2
+      },
+      {
+        "name": "Rv There Yet",
+        "count": 3,
+        "rank": 4
+      },
+      {
+        "name": "Mario Kart World",
+        "count": 2,
+        "rank": 5
+      },
+      {
+        "name": "Elden Ring: Nightreign",
+        "count": 2,
+        "rank": 5
+      },
+      {
+        "name": "Peak",
+        "count": 2,
+        "rank": 5
+      },
+      {
+        "name": "Mage Arena",
+        "count": 1,
+        "rank": 8
+      },
+      {
+        "name": "R.E.P.O.",
+        "count": 1,
+        "rank": 8
+      },
+      {
+        "name": "Arc Raiders",
+        "count": 1,
+        "rank": 8
+      },
+      {
+        "name": "Sonic Racing: CrossWorlds",
+        "count": 1,
+        "rank": 8
+      }
+    ],
+    "flop": [
+      {
+        "name": "Lost Soul Aside",
+        "count": 6,
+        "rank": 1
+      },
+      {
+        "name": "Vampire: The Masquerade - Bloodlines 2",
+        "count": 5,
+        "rank": 2
+      },
+      {
+        "name": "Little Nightmares 3",
+        "count": 3,
+        "rank": 3
+      },
+      {
+        "name": "Hunter x Hunter: Nen x Impact",
+        "count": 3,
+        "rank": 3
+      },
+      {
+        "name": "Bleach Rebirth Of Souls",
+        "count": 2,
+        "rank": 5
+      },
+      {
+        "name": "Dispatch",
+        "count": 1,
+        "rank": 6
+      },
+      {
+        "name": "Split Fiction",
+        "count": 1,
+        "rank": 6
+      },
+      {
+        "name": "Elden Ring: Nightreign",
+        "count": 1,
+        "rank": 6
+      },
+      {
+        "name": "Fortnite",
+        "count": 1,
+        "rank": 6
+      }
+    ],
+    "anticipated": [
+      {
+        "name": "The Witcher 4",
+        "count": 8,
+        "rank": 1
+      },
+      {
+        "name": "Resident Evil 9",
+        "count": 4,
+        "rank": 2
+      },
+      {
+        "name": "Stranger of Heaven",
+        "count": 4,
+        "rank": 2
+      },
+      {
+        "name": "Judas",
+        "count": 3,
+        "rank": 4
+      },
+      {
+        "name": "Dusk Blood",
+        "count": 3,
+        "rank": 4
+      },
+      {
+        "name": "Marvel'S Wolverine",
+        "count": 3,
+        "rank": 4
+      },
+      {
+        "name": "Crimson Desert",
+        "count": 2,
+        "rank": 7
+      },
+      {
+        "name": "Gta 6",
+        "count": 2,
+        "rank": 7
+      },
+      {
+        "name": "Lego Batman",
+        "count": 1,
+        "rank": 9
+      },
+      {
+        "name": "Marvel Tokon: Fighting Souls",
+        "count": 1,
+        "rank": 9
+      },
+      {
+        "name": "Onimusha Way Of The Sword",
+        "count": 1,
+        "rank": 9
+      },
+      {
+        "name": "Phantom Blade Zero",
+        "count": 1,
+        "rank": 9
+      },
+      {
+        "name": "Tides Of Annihilation",
+        "count": 1,
+        "rank": 9
+      }
+    ],
+    "char": [
+      {
+        "name": "Verso",
+        "count": 10,
+        "rank": 1
+      },
+      {
+        "name": "Renoir",
+        "count": 4,
+        "rank": 2
+      },
+      {
+        "name": "Gustave",
+        "count": 3,
+        "rank": 3
+      },
+      {
+        "name": "Maelle",
+        "count": 3,
+        "rank": 3
+      },
+      {
+        "name": "Jan",
+        "count": 2,
+        "rank": 5
+      },
+      {
+        "name": "Henry",
+        "count": 2,
+        "rank": 5
+      },
+      {
+        "name": "Hornet",
+        "count": 2,
+        "rank": 5
+      },
+      {
+        "name": "Jeff The Shark (Mr)",
+        "count": 1,
+        "rank": 8
+      },
+      {
+        "name": "Revenant (Er)",
+        "count": 1,
+        "rank": 8
+      },
+      {
+        "name": "Duchess (Er)",
+        "count": 1,
+        "rank": 8
+      },
+      {
+        "name": "Robert Robertson The Third",
+        "count": 1,
+        "rank": 8
+      }
+    ],
+    "boss": [
+      {
+        "name": "Curator",
+        "count": 6,
+        "rank": 1
+      },
+      {
+        "name": "Enhanced Dark Dragon",
+        "count": 4,
+        "rank": 2
+      },
+      {
+        "name": "Arlecchino",
+        "count": 4,
+        "rank": 2
+      },
+      {
+        "name": "Fulghor Champion of Nightglow",
+        "count": 4,
+        "rank": 2
+      },
+      {
+        "name": "Simon",
+        "count": 4,
+        "rank": 2
+      },
+      {
+        "name": "Zoh Shia",
+        "count": 2,
+        "rank": 6
+      },
+      {
+        "name": "Visages",
+        "count": 2,
+        "rank": 6
+      },
+      {
+        "name": "The Dragon Everhood 2",
+        "count": 1,
+        "rank": 8
+      },
+      {
+        "name": "King K. Rool",
+        "count": 1,
+        "rank": 8
+      },
+      {
+        "name": "Tormented Trobbio",
+        "count": 1,
+        "rank": 8
+      },
+      {
+        "name": "Maluka",
+        "count": 1,
+        "rank": 8
+      },
+      {
+        "name": "Ryu Hayabusa",
+        "count": 1,
+        "rank": 8
+      },
+      {
+        "name": "The Wylder Remembrance Ending Cutscene",
+        "count": 1,
+        "rank": 8
+      },
+      {
+        "name": "Sirene",
+        "count": 1,
+        "rank": 8
+      },
+      {
+        "name": "Renoir",
+        "count": 1,
+        "rank": 8
+      },
+      {
+        "name": "Scar Singer",
+        "count": 1,
+        "rank": 8
+      }
+    ],
+    "song": [
+      {
+        "name": "Une vie à t'aimer",
+        "count": 9,
+        "rank": 1
+      },
+      {
+        "name": "Lumière",
+        "count": 7,
+        "rank": 2
+      },
+      {
+        "name": "CAPRICIOUS WIND",
+        "count": 3,
+        "rank": 3
+      },
+      {
+        "name": "The Clear Blue Sky",
+        "count": 3,
+        "rank": 3
+      },
+      {
+        "name": "To the Wilder",
+        "count": 3,
+        "rank": 3
+      },
+      {
+        "name": "Story of Rainy",
+        "count": 3,
+        "rank": 3
+      },
+      {
+        "name": "Lisrim Golden",
+        "count": 2,
+        "rank": 7
+      },
+      {
+        "name": "Skarrsinger Karmelita",
+        "count": 2,
+        "rank": 7
+      },
+      {
+        "name": "Gestral Village Golgra",
+        "count": 2,
+        "rank": 7
+      },
+      {
+        "name": "Open Your Heart",
+        "count": 2,
+        "rank": 7
+      },
+      {
+        "name": "Last Dive",
+        "count": 2,
+        "rank": 7
+      },
+      {
+        "name": "Horizon Dreamer",
+        "count": 1,
+        "rank": 12
+      },
+      {
+        "name": "Rougarou",
+        "count": 1,
+        "rank": 12
+      },
+      {
+        "name": "Alicia",
+        "count": 1,
+        "rank": 12
+      },
+      {
+        "name": "Phantom",
+        "count": 1,
+        "rank": 12
+      },
+      {
+        "name": "Ailne",
+        "count": 1,
+        "rank": 12
+      },
+      {
+        "name": "Caligo",
+        "count": 1,
+        "rank": 12
+      },
+      {
+        "name": "Miasma Of Night",
+        "count": 1,
+        "rank": 12
+      },
+      {
+        "name": "Cherie Tree",
+        "count": 1,
+        "rank": 12
+      }
+    ],
+    "honorable": [
+      {
+        "name": "Bioshock Infinite",
+        "count": 2,
+        "rank": 1
+      },
+      {
+        "name": "Trepang2",
+        "count": 1,
+        "rank": 2
+      },
+      {
+        "name": "Ai Baby Gif",
+        "count": 1,
+        "rank": 2
+      },
+      {
+        "name": "Psychonauts",
+        "count": 1,
+        "rank": 2
+      },
+      {
+        "name": "Balatro",
+        "count": 1,
+        "rank": 2
+      },
+      {
+        "name": "Hearthstone",
+        "count": 1,
+        "rank": 2
+      },
+      {
+        "name": "Prince Of Persia The Lost Crown",
+        "count": 1,
+        "rank": 2
+      },
+      {
+        "name": "Hollow Kbight",
+        "count": 1,
+        "rank": 2
+      }
+    ],
+    "goty": [
+      {
+        "name": "Clair Obscur: Expedition 33",
+        "count": 10,
+        "rank": 1
+      },
+      {
+        "name": "Hollow Knight: Silksong",
+        "count": 5,
+        "rank": 2
+      },
+      {
+        "name": "Monster Hunter Wilds",
+        "count": 2,
+        "rank": 3
+      },
+      {
+        "name": "Doom: The Dark Ages",
+        "count": 2,
+        "rank": 3
+      },
+      {
+        "name": "Kingdom Come: Deliverance II",
+        "count": 2,
+        "rank": 3
+      },
+      {
+        "name": "Ninja Gaiden 4",
+        "count": 1,
+        "rank": 6
+      }
+    ]
+  },
+  "final": {
+    "gameplay": [
+      {
+        "name": "Clair Obscur: Expedition 33",
+        "count": 4,
+        "rank": 1
+      },
+      {
+        "name": "Ninja Gaiden 4",
+        "count": 3,
+        "rank": 2
+      },
+      {
+        "name": "Hollow Knight: Silksong",
+        "count": 2,
+        "rank": 3
+      },
+      {
+        "name": "The First Berserker: Khazan",
+        "count": 0,
+        "rank": 4
+      }
+    ],
+    "story": [
+      {
+        "name": "Clair Obscur: Expedition 33",
+        "count": 8,
+        "rank": 1
+      },
+      {
+        "name": "Kingdom Come: Deliverance II",
+        "count": 0,
+        "rank": 2
+      },
+      {
+        "name": "Hollow Knight: Silksong",
+        "count": 0,
+        "rank": 2
+      },
+      {
+        "name": "The Alters",
+        "count": 0,
+        "rank": 2
+      },
+      {
+        "name": "Death Stranding 2",
+        "count": 0,
+        "rank": 2
+      }
+    ],
+    "art": [
+      {
+        "name": "Clair Obscur: Expedition 33",
+        "count": 4,
+        "rank": 1
+      },
+      {
+        "name": "Split Fiction",
+        "count": 3,
+        "rank": 2
+      },
+      {
+        "name": "Hollow Knight: Silksong",
+        "count": 1,
+        "rank": 3
+      },
+      {
+        "name": "Ghost of Yotei",
+        "count": 0,
+        "rank": 4
+      },
+      {
+        "name": "Death Stranding 2",
+        "count": 0,
+        "rank": 4
+      }
+    ],
+    "music": [
+      {
+        "name": "Clair Obscur: Expedition 33",
+        "count": 5,
+        "rank": 1
+      },
+      {
+        "name": "Death Stranding 2",
+        "count": 2,
+        "rank": 2
+      },
+      {
+        "name": "Dynasty Warriors Origins",
+        "count": 1,
+        "rank": 3
+      },
+      {
+        "name": "Hollow Knight: Silksong",
+        "count": 0,
+        "rank": 4
+      }
+    ],
+    "indie": [
+      {
+        "name": "Clair Obscur: Expedition 33",
+        "count": 7,
+        "rank": 1
+      },
+      {
+        "name": "Hollow Knight: Silksong",
+        "count": 1,
+        "rank": 2
+      },
+      {
+        "name": "Haste",
+        "count": 0,
+        "rank": 3
+      },
+      {
+        "name": "Hades 2",
+        "count": 0,
+        "rank": 3
+      }
+    ],
+    "remaster": [
+      {
+        "name": "The Elder Scrolls IV: Oblivion Remastered",
+        "count": 3,
+        "rank": 1
+      },
+      {
+        "name": "Trails in the Sky 1st Chapter",
+        "count": 2,
+        "rank": 2
+      },
+      {
+        "name": "Xenoblade Chronicles X",
+        "count": 1,
+        "rank": 3
+      },
+      {
+        "name": "MGS Delta: Snake Eater",
+        "count": 0,
+        "rank": 4
+      },
+      {
+        "name": "Ninja Gaiden 2 Black",
+        "count": 0,
+        "rank": 4
+      }
+    ],
+    "multi": [
+      {
+        "name": "Split Fiction",
+        "count": 4,
+        "rank": 1
+      },
+      {
+        "name": "Elden Ring: Nightreign",
+        "count": 2,
+        "rank": 2
+      },
+      {
+        "name": "Dying Light The Beast",
+        "count": 1,
+        "rank": 3
+      },
+      {
+        "name": "Battlefield 6",
+        "count": 1,
+        "rank": 3
+      }
+    ],
+    "flop": [
+      {
+        "name": "Lost Soul Aside",
+        "count": 6,
+        "rank": 1
+      },
+      {
+        "name": "Vampire: The Masquerade - Bloodlines 2",
+        "count": 1,
+        "rank": 2
+      },
+      {
+        "name": "Hunter x Hunter: Nen x Impact",
+        "count": 1,
+        "rank": 2
+      },
+      {
+        "name": "Little Nightmares 3",
+        "count": 0,
+        "rank": 4
+      }
+    ],
+    "anticipated": [
+      {
+        "name": "The Witcher 4",
+        "count": 4,
+        "rank": 1
+      },
+      {
+        "name": "Stranger of Heaven",
+        "count": 4,
+        "rank": 1
+      },
+      {
+        "name": "Resident Evil 9",
+        "count": 1,
+        "rank": 3
+      }
+    ],
+    "char": [
+      {
+        "name": "Verso",
+        "count": 7,
+        "rank": 1
+      },
+      {
+        "name": "Renoir",
+        "count": 1,
+        "rank": 2
+      },
+      {
+        "name": "Gustave",
+        "count": 0,
+        "rank": 3
+      },
+      {
+        "name": "Maelle",
+        "count": 0,
+        "rank": 3
+      },
+      {
+        "name": "Henry",
+        "count": 0,
+        "rank": 3
+      },
+      {
+        "name": "Jan",
+        "count": 0,
+        "rank": 3
+      }
+    ],
+    "boss": [
+      {
+        "name": "Curator",
+        "count": 4,
+        "rank": 1
+      },
+      {
+        "name": "Enhanced Dark Dragon",
+        "count": 2,
+        "rank": 2
+      },
+      {
+        "name": "Arlecchino",
+        "count": 2,
+        "rank": 2
+      },
+      {
+        "name": "Simon",
+        "count": 0,
+        "rank": 4
+      },
+      {
+        "name": "Fulghor Champion of Nightglow",
+        "count": 0,
+        "rank": 4
+      },
+      {
+        "name": "Zoh Shia",
+        "count": 0,
+        "rank": 4
+      }
+    ],
+    "song": [
+      {
+        "name": "Une vie à peindre",
+        "count": 4,
+        "rank": 1
+      },
+      {
+        "name": "Une vie à t'aimer",
+        "count": 2,
+        "rank": 2
+      },
+      {
+        "name": "Lumière",
+        "count": 1,
+        "rank": 3
+      },
+      {
+        "name": "To the Wilder",
+        "count": 1,
+        "rank": 3
+      },
+      {
+        "name": "Story of Rainy",
+        "count": 0,
+        "rank": 5
+      },
+      {
+        "name": "Alicia",
+        "count": 0,
+        "rank": 5
+      },
+      {
+        "name": "Lisrim Golden",
+        "count": 0,
+        "rank": 5
+      },
+      {
+        "name": "The Clear Blue Sky",
+        "count": 0,
+        "rank": 5
+      },
+      {
+        "name": "Skarrsinger Karmelita",
+        "count": 0,
+        "rank": 5
+      },
+      {
+        "name": "CAPRICIOUS WIND",
+        "count": 0,
+        "rank": 5
+      },
+      {
+        "name": "Ailne",
+        "count": 0,
+        "rank": 5
+      },
+      {
+        "name": "Horizon Dreamer",
+        "count": 0,
+        "rank": 5
+      }
+    ],
+    "honorable": [],
+    "goty": [
+      {
+        "name": "Clair Obscur: Expedition 33",
+        "count": 6,
+        "rank": 1
+      },
+      {
+        "name": "Kingdom Come: Deliverance II",
+        "count": 1,
+        "rank": 2
+      },
+      {
+        "name": "Hollow Knight: Silksong",
+        "count": 1,
+        "rank": 2
+      },
+      {
+        "name": "Doom: The Dark Ages",
+        "count": 0,
+        "rank": 4
+      },
+      {
+        "name": "Monster Hunter Wilds",
+        "count": 0,
+        "rank": 4
+      }
+    ]
+  },
+  "honorable": [
+    {
+      "game": "Hearthstone / Balatro",
+      "voter": "PXL"
+    },
+    {
+      "game": "Trepang2",
+      "voter": "NbTuN"
+    },
+    {
+      "game": "Bioshock Infinite",
+      "voter": "Feras"
+    },
+    {
+      "game": "Prince of Persia: The Lost Crown",
+      "voter": "Silver"
+    },
+    {
+      "game": "Psychonauts",
+      "voter": "Majid"
+    }
+  ],
+  "ballots": [
+    [
+      {
+        "name": "NbTuN",
+        "goty": "Clair Obscur: Expedition 33, Monster Hunter Wilds, Doom: The Dark Ages",
+        "gameplay": "clair obscure expdetion 33, monster hunter wilds",
+        "story": "Kingdom Come: Deliverance II, clair obscure expdetion 33, The Alters",
+        "art": "clair obscure expdetion 33, No, I'm Not a Human, hades 2",
+        "music": "clair obscure expdetion 33, dynasty warriors origins, south of midnight",
+        "indie": "pistrello and the cursed yoyo, clair obscure expdetion 33, Advent NEON, Haste",
+        "remaster": "The Elder Scrolls IV: Oblivion Remastered, Ninja Gaiden 2 Black",
+        "multi": "dying light the beast, Mario Kart World, Split Fiction",
+        "flop": "vampire: the masquerade - bloodlines 2, Little Nightmares 3, lost soul aside",
+        "anticipated": "The Witcher 4, resdient evil 9, judas",
+        "char": "verso, gustave, jan",
+        "boss": "curator, Zoh Shia, the dragon everhood 2, Enhanced dark dragon",
+        "song": "Horizon Dreamer https://youtu.be/DJq0jJhPSjg, Une vie à t'aimer, lisrim golden, CAPRICIOUS WIND, rougarou",
+        "honorable": "Trepang2"
+      },
+      {
+        "name": "sal",
+        "goty": "Kingdom Come: Deliverance II",
+        "gameplay": "clair obscure expdetion 33, kingdom come deliverance2",
+        "story": "Kingdom Come: Deliverance II, clair obscure expdetion 33, death stranding 2",
+        "art": "clair obscure expdetion 33, ghost of yotei",
+        "music": "clair obscure expdetion 33, dynasty warriors origins",
+        "indie": "clair obscure expdetion 33",
+        "remaster": "The Elder Scrolls IV: Oblivion Remastered, METAL GEAR SOLID Δ: SNAKE EATER",
+        "multi": "dying light the beast, battlefield 6",
+        "flop": "vampire: the masquerade - bloodlines 2",
+        "anticipated": "The Witcher 4, crimson Desert, lego batman",
+        "char": "verso, Maelle, henry",
+        "boss": "Visages, Arlecchino",
+        "song": "Une vie à t'aimer, Lumière, Alicia, The Clear Blue Sky",
+        "honorable": ""
+      },
+      {
+        "name": "القوت",
+        "goty": "Clair Obscur: Expedition 33",
+        "gameplay": "clair obscure expdetion 33",
+        "story": "clair obscure expdetion 33",
+        "art": "clair obscure expdetion 33, death stranding 2, ghost of yotei",
+        "music": "clair obscure expdetion 33, death stranding 2",
+        "indie": "clair obscure expdetion 33",
+        "remaster": "",
+        "multi": "Mario Kart World, battlefield 6, rv there yet",
+        "flop": "dispatch",
+        "anticipated": "The Witcher 4, judas, gta 6",
+        "char": "verso",
+        "boss": "King K. Rool, Fulghor Champion of Nightglow, Arlecchino",
+        "song": "to the wilder, Une vie à t'aimer, Lumière",
+        "honorable": "Ai Baby gif"
+      },
+      {
+        "name": "Omar",
+        "goty": "Hollow Knight: Silksong",
+        "gameplay": "hollow knight silksong",
+        "story": "hollow knight silksong",
+        "art": "hollow knight silksong",
+        "music": "hollow knight silksong",
+        "indie": "hollow knight silksong",
+        "remaster": "",
+        "multi": "",
+        "flop": "Hunter x Hunter: Nen x Impact, Bleach Rebirth of Souls",
+        "anticipated": "",
+        "char": "hornet",
+        "boss": "tormented trobbio",
+        "song": "",
+        "honorable": ""
+      },
+      {
+        "name": "Potato Lover",
+        "goty": "Clair Obscur: Expedition 33, Hollow Knight: Silksong",
+        "gameplay": "hollow knight silksong",
+        "story": "clair obscure expdetion 33",
+        "art": "clair obscure expdetion 33, hollow knight silksong, death stranding 2",
+        "music": "clair obscure expdetion 33, death stranding 2",
+        "indie": "clair obscure expdetion 33, hollow knight silksong",
+        "remaster": "",
+        "multi": "elden ring nightreign",
+        "flop": "Hunter x Hunter: Nen x Impact, lost soul aside",
+        "anticipated": "MARVEL Tokon: Fighting Souls, stranger of heaven, dusk blood",
+        "char": "verso",
+        "boss": "curator",
+        "song": "to the wilder, story of rainy, Une vie à t'aimer, Lumière, Skarrsinger Karmelita",
+        "honorable": ""
+      },
+      {
+        "name": "ماجد",
+        "goty": "Clair Obscur: Expedition 33",
+        "gameplay": "ninja gaiden 4",
+        "story": "clair obscure expdetion 33",
+        "art": "clair obscure expdetion 33, hollow knight silksong, death stranding 2",
+        "music": "clair obscure expdetion 33, death stranding 2",
+        "indie": "clair obscure expdetion 33, hollow knight silksong",
+        "remaster": "The Elder Scrolls IV: Oblivion Remastered, Xenoblade chronicles x definitive edition",
+        "multi": "battlefield 6",
+        "flop": "vampire: the masquerade - bloodlines 2",
+        "anticipated": "The Witcher 4, judas",
+        "char": "verso",
+        "boss": "simon, Zoh Shia, Enhanced dark dragon",
+        "song": "to the wilder, Lumière, phantom",
+        "honorable": "Psychonauts"
+      },
+      {
+        "name": "اللواء جيري",
+        "goty": "Clair Obscur: Expedition 33",
+        "gameplay": "Doom: The Dark Ages, ninja gaiden 4, Khazan",
+        "story": "clair obscure expdetion 33",
+        "art": "clair obscure expdetion 33, ghost of yotei, Split Fiction",
+        "music": "clair obscure expdetion 33",
+        "indie": "clair obscure expdetion 33",
+        "remaster": "اي حاجة غير نينجا قايدن وميتل خرا",
+        "multi": "Split Fiction",
+        "flop": "lost soul aside",
+        "anticipated": "onimusha way of the sword, stranger of heaven, resdient evil 9",
+        "char": "renoir, verso, Maelle",
+        "boss": "simon, curator, maluka, Ryu Hayabusa",
+        "song": "Une vie à t'aimer, aline ost and renoir final boss phase 2",
+        "honorable": ""
+      },
+      {
+        "name": "PXL",
+        "goty": "Clair Obscur: Expedition 33, Monster Hunter Wilds",
+        "gameplay": "clair obscure expdetion 33",
+        "story": "clair obscure expdetion 33",
+        "art": "hollow knight silksong, ghost of yotei, Split Fiction",
+        "music": "clair obscure expdetion 33, hollow knight silksong",
+        "indie": "clair obscure expdetion 33, Haste",
+        "remaster": "METAL GEAR SOLID Δ: SNAKE EATER",
+        "multi": "Split Fiction, mage arena, Elden Ring Nightrain",
+        "flop": "Hunter x Hunter: Nen x Impact, Bleach Rebirth of Souls",
+        "anticipated": "phantom blade zero, The Witcher 4",
+        "char": "gustave, Jeff The Shark (MR), Revenant (ER), Duchess (ER)",
+        "boss": "Fulghor Champion of Nightglow, The wylder remembrance ending cutscene",
+        "song": "story of rainy, Une vie à t'aimer, Caligo, Miasma Of Night",
+        "honorable": "Balatro, Hearthstone"
+      },
+      {
+        "name": "silver",
+        "goty": "Clair Obscur: Expedition 33, ninja gaiden 4",
+        "gameplay": "clair obscure expdetion 33, ninja gaiden 4",
+        "story": "clair obscure expdetion 33, south of midnight",
+        "art": "clair obscure expdetion 33, Shinobi: Art of Vengeance, Bye Sweet Carole",
+        "music": "clair obscure expdetion 33, south of midnight, hades 2",
+        "indie": "clair obscure expdetion 33, Haste",
+        "remaster": "",
+        "multi": "dying light the beast, battlefield 6, rv there yet",
+        "flop": "vampire: the masquerade - bloodlines 2, lost soul aside, Split Fiction",
+        "anticipated": "stranger of heaven, The Witcher 4, crimson Desert",
+        "char": "renoir, verso, Maelle",
+        "boss": "Visages, Sirene, curator, Enhanced dark dragon",
+        "song": "story of rainy, Une vie à t'aimer, Lumière, lisrim golden, cherie tree",
+        "honorable": "prince of persia the lost crown"
+      },
+      {
+        "name": "معوذي",
+        "goty": "Clair Obscur: Expedition 33",
+        "gameplay": "hollow knight silksong, ninja gaiden 4, The First Berserker: Khazan",
+        "story": "Kingdom Come: Deliverance II, clair obscure expdetion 33, The Alters",
+        "art": "hollow knight silksong, death stranding 2, sword of the sea",
+        "music": "clair obscure expdetion 33, dynasty warriors origins, death stranding 2",
+        "indie": "clair obscure expdetion 33, hollow knight silksong, hades 2",
+        "remaster": "The Elder Scrolls IV: Oblivion Remastered, METAL GEAR SOLID Δ: SNAKE EATER",
+        "multi": "rv there yet, peak, R.E.P.O.",
+        "flop": "vampire: the masquerade - bloodlines 2, Little Nightmares 3, lost soul aside",
+        "anticipated": "stranger of heaven, Marvel's Wolverine, dusk blood",
+        "char": "verso, henry, jan",
+        "boss": "curator, Fulghor Champion of Nightglow, Enhanced dark dragon, Arlecchino",
+        "song": "Gestral Village Golgra, The Clear Blue Sky, CAPRICIOUS WIND, Open Your Heart, Last Dive",
+        "honorable": "Bioshock Infinite"
+      },
+      {
+        "name": "K-Tap",
+        "goty": "Hollow Knight: Silksong",
+        "gameplay": "hollow knight silksong",
+        "story": "clair obscure expdetion 33",
+        "art": "clair obscure expdetion 33, ghost of yotei, Dispatch",
+        "music": "",
+        "indie": "Dispatch",
+        "remaster": "METAL GEAR SOLID Δ: SNAKE EATER",
+        "multi": "ARC Raiders, peak",
+        "flop": "",
+        "anticipated": "Marvel's Wolverine, resdient evil 9, gta 6",
+        "char": "hornet, Robert robertson the third",
+        "boss": "",
+        "song": "",
+        "honorable": "Hollow kbight"
+      },
+      {
+        "name": "عزوز",
+        "goty": "Doom: The Dark Ages",
+        "gameplay": "dying light the beast",
+        "story": "clair obscure expdetion 33",
+        "art": "clair obscure expdetion 33",
+        "music": "",
+        "indie": "clair obscure expdetion 33",
+        "remaster": "METAL GEAR SOLID Δ: SNAKE EATER",
+        "multi": "Sonic Racing: CrossWorlds",
+        "flop": "elden ring nightreign, Fortnite",
+        "anticipated": "The Witcher 4",
+        "char": "",
+        "boss": "",
+        "song": "",
+        "honorable": ""
+      },
+      {
+        "name": "yuki",
+        "goty": "Clair Obscur: Expedition 33, Hollow Knight: Silksong",
+        "gameplay": "clair obscure expdetion 33, hollow knight silksong",
+        "story": "clair obscure expdetion 33, hollow knight silksong",
+        "art": "clair obscure expdetion 33, hollow knight silksong, Split Fiction",
+        "music": "clair obscure expdetion 33",
+        "indie": "hollow knight silksong",
+        "remaster": "trails in the sky 1st chapter",
+        "multi": "dying light the beast, Split Fiction",
+        "flop": "lost soul aside",
+        "anticipated": "The Witcher 4, resdient evil 9, tides of annihilation",
+        "char": "renoir, verso, gustave",
+        "boss": "renoir secoend fight, simon, scar singer",
+        "song": "Une vie à t'aimer, Lumière, Skarrsinger Karmelita",
+        "honorable": ""
+      },
+      {
+        "name": "فراس",
+        "goty": "Kingdom Come: Deliverance II, Clair Obscur: Expedition 33, Hollow Knight: Silksong",
+        "gameplay": "ninja gaiden 4",
+        "story": "clair obscure expdetion 33",
+        "art": "sword of the sea",
+        "music": "clair obscure expdetion 33",
+        "indie": "clair obscure expdetion 33",
+        "remaster": "Ninja Gaiden 2 Black",
+        "multi": "Split Fiction",
+        "flop": "Little Nightmares 3",
+        "anticipated": "Marvel's Wolverine, dusk blood",
+        "char": "verso, renoir",
+        "boss": "curator, Fulghor Champion of Nightglow, simon, Arlecchino",
+        "song": "Gestral Village Golgra, The Clear Blue Sky, CAPRICIOUS WIND, Open Your Heart, Last Dive, Une vie à t'aimer, Lumière",
+        "honorable": "Bioshock Infinite"
+      }
+    ],
+    [
+      {
+        "name": "sal",
+        "goty": "Kingdom Come: Deliverance II",
+        "gameplay": "clair obscure expdetion 33",
+        "story": "clair obscure expdetion 33",
+        "art": "clair obscure expdetion 33",
+        "music": "clair obscure expdetion 33",
+        "indie": "clair obscure expdetion 33",
+        "remaster": "The Elder Scrolls IV: Oblivion Remastered",
+        "multi": "elden ring nightreign",
+        "flop": "vampire: the masquerade - bloodlines 2",
+        "anticipated": "The Witcher 4",
+        "char": "renoir",
+        "boss": "Arlecchino",
+        "song": "Lumière https://youtu.be/zmvsw2ILX5k",
+        "honorable": "Bioshock Infinite"
+      },
+      {
+        "name": "Potato lover",
+        "goty": "Hollow Knight: Silksong",
+        "gameplay": "hollow knight silksong",
+        "story": "clair obscure expdetion 33",
+        "art": "clair obscure expdetion 33",
+        "music": "death stranding 2",
+        "indie": "hollow knight silksong",
+        "remaster": "",
+        "multi": "elden ring nightreign",
+        "flop": "Hunter x Hunter: Nen x Impact",
+        "anticipated": "stranger of heaven",
+        "char": "verso",
+        "boss": "curator",
+        "song": "to the wilder https://www.youtube.com/watch?v=BSN1rPPKK9s",
+        "honorable": "Bioshock Infinite"
+      },
+      {
+        "name": "ماجد",
+        "goty": "Clair Obscur: Expedition 33",
+        "gameplay": "ninja gaiden 4",
+        "story": "clair obscure expdetion 33",
+        "art": "hollow knight silksong",
+        "music": "death stranding 2",
+        "indie": "clair obscure expdetion 33",
+        "remaster": "Xenoblade Chronicles X",
+        "multi": "battlefield 6",
+        "flop": "lost soul aside",
+        "anticipated": "The Witcher 4",
+        "char": "verso",
+        "boss": "Enhanced dark dragon",
+        "song": "Une vie à peindre https://www.youtube.com/watch?v=-i_nT9d-mK8",
+        "honorable": "Psychonauts"
+      },
+      {
+        "name": "yuki",
+        "goty": "Clair Obscur: Expedition 33",
+        "gameplay": "hollow knight silksong, clair obscure expdetion 33",
+        "story": "clair obscure expdetion 33",
+        "art": "split fiction",
+        "music": "clair obscure expdetion 33",
+        "indie": "clair obscure expdetion 33",
+        "remaster": "trails in the sky 1st chapter",
+        "multi": "Split Fiction",
+        "flop": "lost soul aside",
+        "anticipated": "resdient evil 9, The Witcher 4",
+        "char": "verso",
+        "boss": "curator",
+        "song": "Une vie à t'aimer https://www.youtube.com/watch?v=3kMbTzomh94",
+        "honorable": "prince of persia the lost crown"
+      },
+      {
+        "name": "NbTuN",
+        "goty": "Clair Obscur: Expedition 33",
+        "gameplay": "clair obscure expdetion 33",
+        "story": "clair obscure expdetion 33",
+        "art": "clair obscure expdetion 33",
+        "music": "dynasty warriors origins",
+        "indie": "clair obscure expdetion 33",
+        "remaster": "The Elder Scrolls IV: Oblivion Remastered",
+        "multi": "Split Fiction",
+        "flop": "lost soul aside",
+        "anticipated": "The Witcher 4",
+        "char": "verso",
+        "boss": "Enhanced dark dragon",
+        "song": "Une vie à peindre https://www.youtube.com/watch?v=-i_nT9d-mK8",
+        "honorable": "Trepang2"
+      },
+      {
+        "name": "silver",
+        "goty": "Clair Obscur: Expedition 33",
+        "gameplay": "clair obscure expdetion 33",
+        "story": "clair obscure expdetion 33",
+        "art": "clair obscure expdetion 33",
+        "music": "clair obscure expdetion 33",
+        "indie": "clair obscure expdetion 33",
+        "remaster": "",
+        "multi": "dying light the beast",
+        "flop": "lost soul aside",
+        "anticipated": "stranger of heaven",
+        "char": "verso",
+        "boss": "curator",
+        "song": "Une vie à peindre https://www.youtube.com/watch?v=-i_nT9d-mK8",
+        "honorable": "prince of persia the lost crown"
+      },
+      {
+        "name": "اللواء جيري",
+        "goty": "Clair Obscur: Expedition 33",
+        "gameplay": "ninja gaiden 4",
+        "story": "clair obscure expdetion 33",
+        "art": "split fiction",
+        "music": "clair obscure expdetion 33",
+        "indie": "clair obscure expdetion 33",
+        "remaster": "trails in the sky 1st chapter",
+        "multi": "Split Fiction",
+        "flop": "lost soul aside",
+        "anticipated": "stranger of heaven",
+        "char": "verso",
+        "boss": "curator",
+        "song": "Une vie à t'aimer",
+        "honorable": "Bioshock Infinite"
+      },
+      {
+        "name": "فراس",
+        "goty": "Clair Obscur: Expedition 33",
+        "gameplay": "ninja gaiden 4",
+        "story": "clair obscure expdetion 33",
+        "art": "split fiction",
+        "music": "clair obscure expdetion 33",
+        "indie": "clair obscure expdetion 33",
+        "remaster": "The Elder Scrolls IV: Oblivion Remastered",
+        "multi": "Split Fiction",
+        "flop": "lost soul aside",
+        "anticipated": "stranger of heaven",
+        "char": "verso",
+        "boss": "Arlecchino",
+        "song": "Une vie à peindre",
+        "honorable": "Bioshock Infinite"
+      }
+    ]
+  ]
+}

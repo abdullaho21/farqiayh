@@ -1,0 +1,47 @@
+name: Farqiah 2026 full-stack checks
+on:
+  push:
+    paths: ['apps/farqiah-2026/**', '.github/workflows/farqiah-2026.yml']
+  pull_request:
+    paths: ['apps/farqiah-2026/**', '.github/workflows/farqiah-2026.yml']
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/farqiah-2026
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: farqiah
+          POSTGRES_PASSWORD: farqiah
+          POSTGRES_DB: farqiah_test
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U farqiah"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+    env:
+      DATABASE_URL: postgresql://farqiah:farqiah@localhost:5432/farqiah_test?schema=public
+      APP_URL: http://localhost:3000
+      APP_SECRET: ci-only-secret-never-use-in-a-live-deployment
+      DEMO_MODE: 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: apps/farqiah-2026/package-lock.json
+      - run: npm ci
+      - run: npm run db:generate
+      - run: npm run db:migrate
+      - run: npm run db:seed
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run test:integration
+      - run: npm run build

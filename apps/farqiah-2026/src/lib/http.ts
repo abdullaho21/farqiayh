@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Prisma } from "@prisma/client";
 import { ZodError, type ZodType } from "zod";
+import { appOrigin } from "./config";
 export class HttpError extends Error {
   constructor(
     public status: number,
@@ -48,8 +49,7 @@ export async function json<T>(
 }
 export function sameOrigin(req: Request) {
   const origin = req.headers.get("origin");
-  const expected = new URL(process.env.APP_URL || "http://localhost:3000")
-    .origin;
+  const expected = appOrigin();
   assert(origin === expected, "Request origin is not allowed.", 403);
 }
 export function route(fn: (req: NextRequest) => Promise<Response>) {

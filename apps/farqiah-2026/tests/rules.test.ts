@@ -3,6 +3,31 @@ import assert from "node:assert/strict";
 import { pollInput, voteInput, mediaUrl } from "../src/lib/validation";
 import { hashPassword, verifyPassword } from "../src/lib/password";
 import { detectImage } from "../src/lib/media";
+import { appOrigin } from "../src/lib/config";
+test("hosted origins use deployment configuration and never localhost in production", () => {
+  const keys = ["APP_URL", "RENDER_EXTERNAL_URL", "NODE_ENV"];
+  const saved = Object.fromEntries(keys.map((key) => [key, process.env[key]]));
+  try {
+    delete process.env.APP_URL;
+    Object.assign(process.env, {
+      NODE_ENV: "production",
+      RENDER_EXTERNAL_URL: "https://farqiah.example.com",
+    });
+    assert.equal(appOrigin(), "https://farqiah.example.com");
+    process.env.APP_URL = "https://polls.example.com/";
+    assert.equal(appOrigin(), "https://polls.example.com");
+    process.env.APP_URL = "https://user:password@example.com";
+    assert.throws(appOrigin, /without credentials/);
+    delete process.env.APP_URL;
+    delete process.env.RENDER_EXTERNAL_URL;
+    assert.throws(appOrigin, /Set APP_URL/);
+  } finally {
+    for (const key of keys) {
+      if (saved[key] === undefined) delete process.env[key];
+      else process.env[key] = saved[key];
+    }
+  }
+});
 const question = {
   title: "Choose",
   type: "MULTIPLE",

@@ -7,6 +7,7 @@ import {
 import type { NextRequest, NextResponse } from "next/server";
 import { db } from "./db";
 import { assert } from "./http";
+import { appOrigin } from "./config";
 export const ADMIN_COOKIE = "fq_admin";
 export const GUEST_COOKIE = "fq_guest";
 export const digest = (value: string) =>
@@ -51,9 +52,7 @@ export function establishGuest(req: NextRequest, res: NextResponse) {
 export function cookieOptions(maxAge: number) {
   return {
     httpOnly: true,
-    secure:
-      new URL(process.env.APP_URL || "http://localhost:3000").protocol ===
-      "https:",
+    secure: new URL(appOrigin()).protocol === "https:",
     sameSite: "lax" as const,
     path: "/",
     maxAge,

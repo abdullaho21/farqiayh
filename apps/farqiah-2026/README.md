@@ -113,9 +113,11 @@ The upload body is capped at 3 MB to stay below typical serverless request limit
 
 ### Render
 
-Use the included `render.yaml` as a Blueprint file, selecting `apps/farqiah-2026/render.yaml` if prompted. It defines a Node service and PostgreSQL database, build and migration/seed steps, and `/api/health`. Set `APP_URL` to the service’s exact HTTPS URL and provide `ADMIN_PASSWORD_HASH`. Review the service/database plan in your Render account before provisioning. `TRUST_PROXY=true` assumes Render is the only public ingress.
+Use the included `render.yaml` as a Blueprint file, selecting `apps/farqiah-2026/render.yaml` if prompted. It defines a Node service and PostgreSQL database, build and migration/seed steps, and `/api/health`. Provide `ADMIN_PASSWORD_HASH`. Render supplies the public URL automatically through `RENDER_EXTERNAL_URL`; omit `APP_URL` to use it. Set `APP_URL` only when overriding it with a custom domain. Production fails explicitly if neither origin is configured. Review the service/database plan in your Render account before provisioning. `TRUST_PROXY=true` assumes Render is the only public ingress.
 
-Alternatively create a Node service manually with the same root directory, `npm ci && npm run build`, pre-deploy `npm run db:migrate && npm run db:seed`, and start command `npm start`.
+Alternatively create a Node service manually with the same root directory, `npm ci --include=dev && npm run build`, pre-deploy `npm run db:migrate && npm run db:seed`, and start command `npm start`. If the creation interface does not expose a root directory, use `cd apps/farqiah-2026 && npm ci --include=dev && npm run build` as the build command and prefix the start command with the same `cd`.
+
+For a free service without a pre-deploy hook, use `cd apps/farqiah-2026 && npm run db:migrate && npm run db:seed && npm start` as the start command. This runs the idempotent migrations and seed before accepting requests. Render’s free web service sleeps after inactivity and its free database expires after 30 days; use a persistent paid database before relying on it for long-term voting. The checked-in Blueprint uses a paid database and does not create resources until deployed.
 
 ### Fly.io or another Docker host
 

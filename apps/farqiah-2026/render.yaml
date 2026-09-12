@@ -2,13 +2,13 @@ databases:
   - name: farqiah-db
     databaseName: farqiah
     user: farqiah
-    plan: basic-256mb
+    plan: 0.1c-256mb
 services:
   - type: web
     name: farqiah-2026
     runtime: node
     rootDir: apps/farqiah-2026
-    buildCommand: npm ci && npm run build
+    buildCommand: npm ci --include=dev && npm run build
     preDeployCommand: npm run db:migrate && npm run db:seed
     startCommand: npm start
     healthCheckPath: /api/health
@@ -17,8 +17,6 @@ services:
         value: 22
       - key: DATABASE_URL
         fromDatabase: { name: farqiah-db, property: connectionString }
-      - key: APP_URL
-        sync: false
       - key: APP_SECRET
         generateValue: true
       - key: DEMO_MODE

@@ -1,10 +1,12 @@
 "use client";
 import Link from "next/link";
+import { useState } from "react";
 import {
   ArrowUpRight,
   BarChart3,
   Plus,
   ShieldCheck,
+  Search,
   Users,
   Vote,
 } from "lucide-react";
@@ -29,8 +31,12 @@ export function AdminGate({ children }: { children: React.ReactNode }) {
 }
 function Dashboard() {
   const { data: polls, error } = useRemote<PollCard[]>("/api/polls");
+  const [search, setSearch] = useState("");
   if (error) return <ErrorState error={error} />;
   if (!polls) return <Loading />;
+  const visible = polls.filter((poll) =>
+    poll.title.toLowerCase().includes(search.trim().toLowerCase()),
+  );
   return (
     <>
       <div className="page-eyebrow">CONTROL ROOM</div>
@@ -73,13 +79,22 @@ function Dashboard() {
           <strong>{polls.reduce((n, p) => n + p.participants, 0)}</strong>
         </div>
       </div>
-      <div className="section-label">
+      <div className="section-label admin-list-heading">
         <h2>Your polls</h2>
-        <span className="muted">Updates appear automatically</span>
+        <label className="search-field">
+          <Search size={17} />
+          <span className="sr-only">Search your polls</span>
+          <input
+            type="search"
+            placeholder="Find a poll…"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </label>
       </div>
       {polls.length ? (
         <div className="admin-poll-list">
-          {polls.map((p) => (
+          {visible.map((p) => (
             <Link className="admin-poll-row" key={p.id} href={`/admin/${p.id}`}>
               <div className="admin-poll-icon">
                 <BarChart3 />
@@ -95,6 +110,15 @@ function Dashboard() {
               <ArrowUpRight size={20} />
             </Link>
           ))}
+          {!visible.length && (
+            <div className="empty-state">
+              <Search size={28} />
+              <h3>No matching polls</h3>
+              <Button variant="outline" onClick={() => setSearch("")}>
+                Clear search
+              </Button>
+            </div>
+          )}
         </div>
       ) : (
         <div className="empty-state">

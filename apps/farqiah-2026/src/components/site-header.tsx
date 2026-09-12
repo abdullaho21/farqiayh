@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import {
   ArrowUpRight,
@@ -97,6 +98,7 @@ export function LoginButton() {
   );
 }
 export function SiteHeader() {
+  const pathname = usePathname();
   const { admin, live, session } = useApp();
   const [busy, setBusy] = useState(false);
   async function logout() {
@@ -123,6 +125,13 @@ export function SiteHeader() {
           </span>
         </Link>
         <nav aria-label="Main navigation">
+          <Link
+            href="/"
+            className="header-home"
+            aria-current={pathname === "/" ? "page" : undefined}
+          >
+            Explore polls
+          </Link>
           <span
             className={`connection ${live ? "connected" : ""}`}
             title={

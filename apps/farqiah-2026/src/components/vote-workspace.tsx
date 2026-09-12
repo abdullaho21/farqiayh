@@ -18,6 +18,7 @@ import { api, useApp, useRemote } from "./app-provider";
 import { ErrorState, InlineError, Loading, Media, StatusBadge } from "./common";
 import { Button } from "./ui/button";
 import { QuestionResults, RoundResults } from "./results";
+import { SharePoll } from "./share-poll";
 function QuestionVote({
   question: q,
   pollId,
@@ -192,7 +193,9 @@ function QuestionVote({
             <BarChart3 size={18} />
             Live results
           </h3>
-          <span className="eyebrow">THIS QUESTION</span>
+          <span className="results-live-label">
+            <span className="live-dot" /> THIS QUESTION
+          </span>
         </div>
         <QuestionResults question={q} />
         <div className="privacy-note">
@@ -244,12 +247,15 @@ export function VoteWorkspace({ id }: { id: string }) {
           <h1>{poll.title}</h1>
           <p className="page-description">{poll.description}</p>
         </div>
-        <div className="participant-stat">
-          <strong>{round.participants}</strong>
-          <span>
-            <Users size={16} />
-            people voted
-          </span>
+        <div className="poll-heading-tools">
+          <SharePoll title={poll.title} />
+          <div className="participant-stat">
+            <strong>{round.participants}</strong>
+            <span>
+              <Users size={16} />
+              people voted
+            </span>
+          </div>
         </div>
       </div>
       {poll.status === "FINAL" && (
@@ -323,15 +329,22 @@ export function VoteWorkspace({ id }: { id: string }) {
             ))}
           </div>
           {canVote && completed < round.questions.length && (
-            <label className="display-name">
-              Display name <span>(optional)</span>
-              <input
-                value={displayName}
-                onChange={(e) => setName(e.target.value)}
-                maxLength={60}
-                placeholder="Stay anonymous, or add a name"
-              />
-            </label>
+            <details className="voter-details">
+              <summary>
+                {displayName
+                  ? `Voting as ${displayName}`
+                  : "Voting anonymously · Add a name?"}
+              </summary>
+              <label className="display-name">
+                Display name <span>(optional)</span>
+                <input
+                  value={displayName}
+                  onChange={(e) => setName(e.target.value)}
+                  maxLength={60}
+                  placeholder="Stay anonymous, or add a name"
+                />
+              </label>
+            </details>
           )}
           <div className="question-progress">
             <span>
@@ -346,6 +359,20 @@ export function VoteWorkspace({ id }: { id: string }) {
             <span className="muted">
               {completed} of {round.questions.length} answered
             </span>
+          </div>
+          <div
+            className="progress-track"
+            role="progressbar"
+            aria-label="Questions answered"
+            aria-valuemin={0}
+            aria-valuemax={round.questions.length}
+            aria-valuenow={completed}
+          >
+            <span
+              style={{
+                width: `${(completed / round.questions.length) * 100}%`,
+              }}
+            />
           </div>
           <QuestionVote
             key={q.id}

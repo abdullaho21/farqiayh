@@ -2,6 +2,8 @@
 
 A complete guest-first polling application: live voting, an admin control room, images and GIFs, safe live editing, vote migration, and a separate final round.
 
+The interface uses ivory surfaces, charcoal, and lime accents, with responsive illustrated poll cards and searchable public/admin directories. On phones, text-only ballot choices become full-width rows; question navigation scrolls horizontally and progress remains visible above the ballot. The optional display name is tucked into an expandable field. **Share poll** opens the device share sheet where supported, with a copyable-link dialog as the fallback. Decorative artwork is CSS and icons, so the homepage needs no external image downloads.
+
 This application lives in `apps/farqiah-2026` in the existing Farqiayh repository. The existing static site at the repository root remains independently runnable. Deploy **this folder** as a Next.js application. GitHub Pages cannot execute its server or database routes.
 
 ## Run locally

@@ -33,7 +33,14 @@ export function QuestionResults({
               </span>
               <strong>{o.percentage}%</strong>
             </div>
-            <div className="result-track">
+            <div
+              className="result-track"
+              role="meter"
+              aria-label={`${o.label}: ${o.votes} votes`}
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-valuenow={o.percentage}
+            >
               <div style={{ width: `${o.percentage}%` }} />
             </div>
             <span className="result-votes">

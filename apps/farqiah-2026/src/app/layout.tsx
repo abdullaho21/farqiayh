@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { AppProvider } from "@/components/app-provider";
 import { SiteHeader } from "@/components/site-header";
 import "./globals.css";
+import { Vote } from "lucide-react";
 export const metadata: Metadata = {
   title: {
     default: "Farqiah 2026 — Make your vote count",
@@ -28,8 +29,8 @@ export default function RootLayout({
             {children}
           </main>
           <footer className="site-footer">
-            <span>
-              Farqiah <strong>2026</strong>
+            <span className="footer-brand">
+              <Vote size={17} /> Farqiah <strong>2026</strong>
             </span>
             <span>Good choices start with everyone.</span>
           </footer>

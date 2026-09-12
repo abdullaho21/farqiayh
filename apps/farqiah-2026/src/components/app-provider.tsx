@@ -86,7 +86,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       value={{ admin, ready, live, epoch, refresh, session, sessionError }}
     >
       {children}
-      <Toaster theme="dark" richColors position="bottom-right" />
+      <Toaster theme="light" richColors position="bottom-right" />
     </Context.Provider>
   );
 }

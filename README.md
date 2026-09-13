@@ -1,5 +1,11 @@
 # FARQIAYH · Game Awards 2025
 
+The new **Farqiah 2026** live polling app is in
+[`apps/farqiah-2026`](apps/farqiah-2026/README.md). It includes a Next.js frontend,
+PostgreSQL backend, guest voting, admin editing, media uploads, final rounds,
+and deployment instructions. Use that folder as the application root when
+deploying to Vercel, Render, or a Docker host.
+
 An Arabic, right-to-left awards ceremony with nominations, winner reveals,
 honorable mentions and a final winners summary.
 

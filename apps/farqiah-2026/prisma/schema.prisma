@@ -1,0 +1,142 @@
+generator client {
+  provider = "prisma-client-js"
+}
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+enum PollStatus {
+  DRAFT
+  LIVE
+  CLOSED
+  FINAL
+  PUBLISHED
+}
+enum RoundStatus {
+  DRAFT
+  LIVE
+  CLOSED
+  PUBLISHED
+}
+enum QuestionType {
+  SINGLE
+  MULTIPLE
+}
+model Admin {
+  id String @id @default(cuid())
+  username String @unique
+  passwordHash String
+  sessions AdminSession[]
+}
+model AdminSession {
+  tokenHash String @id
+  adminId String
+  admin Admin @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  @@index([expiresAt])
+}
+model Poll {
+  id String @id @default(cuid())
+  title String
+  description String @default("")
+  status PollStatus @default(DRAFT)
+  currentRound Int @default(1)
+  revision Int @default(1)
+  eventRevision Int @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  rounds Round[]
+  audit Audit[]
+  @@index([deletedAt, status, createdAt])
+}
+model Round {
+  id String @id @default(cuid())
+  pollId String
+  poll Poll @relation(fields: [pollId], references: [id], onDelete: Restrict)
+  number Int
+  status RoundStatus @default(DRAFT)
+  createdAt DateTime @default(now())
+  questions Question[]
+  @@unique([pollId, number])
+}
+model Question {
+  id String @id @default(cuid())
+  roundId String
+  round Round @relation(fields: [roundId], references: [id], onDelete: Restrict)
+  title String
+  mediaUrl String?
+  type QuestionType @default(SINGLE)
+  maxSelections Int @default(1)
+  position Int @default(0)
+  sourceId String?
+  options Option[]
+  ballots Ballot[]
+  @@index([roundId, position])
+}
+model Option {
+  id String @id @default(cuid())
+  questionId String
+  question Question @relation(fields: [questionId], references: [id], onDelete: Restrict)
+  label String
+  mediaUrl String?
+  isText Boolean @default(false)
+  position Int @default(0)
+  archived Boolean @default(false)
+  sourceId String?
+  votes Vote[]
+  textAnswers TextAnswer[]
+  @@index([questionId, archived, position])
+}
+model Ballot {
+  id String @id @default(cuid())
+  questionId String
+  question Question @relation(fields: [questionId], references: [id], onDelete: Restrict)
+  guestHash String
+  displayName String?
+  createdAt DateTime @default(now())
+  votes Vote[]
+  textAnswers TextAnswer[]
+  @@unique([questionId, guestHash])
+}
+model Vote {
+  id String @id @default(cuid())
+  ballotId String
+  ballot Ballot @relation(fields: [ballotId], references: [id], onDelete: Restrict)
+  optionId String
+  option Option @relation(fields: [optionId], references: [id], onDelete: Restrict)
+  @@unique([ballotId, optionId])
+  @@index([optionId])
+}
+model TextAnswer {
+  id String @id @default(cuid())
+  ballotId String
+  ballot Ballot @relation(fields: [ballotId], references: [id], onDelete: Restrict)
+  optionId String
+  option Option @relation(fields: [optionId], references: [id], onDelete: Restrict)
+  text String
+  createdAt DateTime @default(now())
+  @@index([optionId])
+}
+model Media {
+  id String @id @default(cuid())
+  name String
+  mime String
+  data Bytes
+  createdAt DateTime @default(now())
+}
+model Audit {
+  id String @id @default(cuid())
+  pollId String
+  poll Poll @relation(fields: [pollId], references: [id], onDelete: Restrict)
+  action String
+  detail Json
+  createdAt DateTime @default(now())
+  @@index([pollId, createdAt])
+}
+model RateLimit {
+  key String @id
+  count Int @default(1)
+  resetAt DateTime
+  @@index([resetAt])
+}

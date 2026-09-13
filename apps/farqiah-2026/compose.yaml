@@ -1,0 +1,34 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: farqiah
+      POSTGRES_PASSWORD: farqiah
+      POSTGRES_DB: farqiah
+    ports: ["127.0.0.1:5432:5432"]
+    volumes: ["postgres_data:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U farqiah"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+  setup:
+    profiles: ["full"]
+    build: { context: ., target: build }
+    environment:
+      DATABASE_URL: postgresql://farqiah:farqiah@db:5432/farqiah?schema=public
+      DEMO_MODE: "true"
+    command: sh -c "npm run db:migrate && npm run db:seed"
+    depends_on:
+      db: { condition: service_healthy }
+  app:
+    profiles: ["full"]
+    build: { context: ., target: runner }
+    ports: ["3000:3000"]
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://farqiah:farqiah@db:5432/farqiah?schema=public
+    depends_on:
+      setup: { condition: service_completed_successfully }
+volumes:
+  postgres_data:

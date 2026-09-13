@@ -14,12 +14,15 @@ export function SharePoll({ title }: { title: string }) {
   const [url, setUrl] = useState("");
   const [copied, setCopied] = useState(false);
   const [copyError, setCopyError] = useState(false);
+  const [sharing, setSharing] = useState(false);
   async function share() {
+    if (sharing) return;
     const link = `${window.location.origin}${window.location.pathname}`;
     setUrl(link);
     setCopied(false);
     setCopyError(false);
     if (navigator.share) {
+      setSharing(true);
       try {
         await navigator.share({
           title,
@@ -29,6 +32,8 @@ export function SharePoll({ title }: { title: string }) {
         return;
       } catch (error) {
         if (error instanceof Error && error.name === "AbortError") return;
+      } finally {
+        setSharing(false);
       }
     }
     setOpen(true);
@@ -44,7 +49,7 @@ export function SharePoll({ title }: { title: string }) {
   }
   return (
     <>
-      <Button variant="outline" onClick={share}>
+      <Button variant="outline" onClick={share} disabled={sharing}>
         <Share2 size={16} /> Share poll
       </Button>
       <Dialog open={open} onOpenChange={setOpen}>

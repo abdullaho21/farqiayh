@@ -156,6 +156,7 @@ export function PollDirectory() {
             {visible.map((p, index) => (
               <Link
                 className={`poll-card card-tone-${index % 3}`}
+                style={{ animationDelay: `${Math.min(index, 5) * 45}ms` }}
                 key={p.id}
                 href={`/polls/${p.id}`}
               >

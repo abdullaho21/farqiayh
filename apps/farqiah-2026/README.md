@@ -4,6 +4,8 @@ A complete guest-first polling application: live voting, an admin control room, 
 
 The interface uses ivory surfaces, charcoal, and lime accents, with responsive illustrated poll cards and searchable public/admin directories. On phones, text-only ballot choices become full-width rows; question navigation scrolls horizontally and progress remains visible above the ballot. The optional display name is tucked into an expandable field. **Share poll** opens the device share sheet where supported, with a copyable-link dialog as the fallback. Decorative artwork is CSS and icons, so the homepage needs no external image downloads.
 
+Unsubmitted selections and written answers stay in memory when switching questions or opening results, until the page reloads or the active round changes. Previous/Next controls move keyboard focus to the question heading. Successful submissions immediately update progress while live counts refresh from the server. Phone layouts have larger controls, bottom-sheet dialogs, and a sticky submit area that returns to normal flow while a written answer has focus. Loading skeletons, selection feedback, and entrance animations respect reduced-motion preferences. The admin login includes an accessible password visibility toggle.
+
 This application lives in `apps/farqiah-2026` in the existing Farqiayh repository. The existing static site at the repository root remains independently runnable. Deploy **this folder** as a Next.js application. GitHub Pages cannot execute its server or database routes.
 
 ## Run locally
@@ -130,11 +132,14 @@ Build the included Dockerfile from the app folder. The final image runs as the u
 ```bash
 npm run typecheck
 npm test
+npm run test:ui
 npm run test:embedded
 npm run build
 ```
 
 `test:embedded` executes the SQL migration and integration suite using an ephemeral in-process PostgreSQL engine (PGlite). It opens no network ports and does not use your configured database. The production app always uses PostgreSQL through `DATABASE_URL`; the embedded adapter is a development-only test harness.
+
+`test:ui` renders the actual React components in JSDOM with an isolated in-memory API fixture. It checks ballot draft retention, selection limits and live changes, immediate submission feedback, keyboard focus, search, native-share cancellation, clipboard fallback, media recovery, and login controls. It never contacts the live service or submits real votes. To export static layout fixtures for a separate browser review, run `UI_SNAPSHOT_DIR=/tmp/farqiah-ui-preview npm run test:ui`. These HTML files contain demonstration state and compiled styles; they are not an interactive app or a substitute for device testing.
 
 To exercise the workflows against a normal PostgreSQL server, export `DATABASE_URL` pointing to a **dedicated test database**, migrate it, and run:
 
@@ -145,7 +150,7 @@ npm run test:integration
 
 Tests cover anonymous cookies, server authorization, login/logout, media byte validation and retrieval, double submissions, max selections, cross-question option injection, text privacy, stable IDs during rename/reorder/add, stale admin edits, vote migration and overlap, final-round re-voting, published-result locking, soft deletion, and streamed edit events. The GitHub Actions workflow provisions PostgreSQL 16 and runs the same checks. The integration suite cleans up only its own polls and media. It must still run on a test database because rate-limit buckets and test admin accounts are exercised.
 
-Suggested browser checks before public launch: desktop and 390 px mobile layouts; keyboard-only login, ballot selection and dialogs; guest and admin in separate browser contexts; lost/reconnected network; a broken GIF URL; and two admin tabs editing the same poll. The automated tests exercise API handlers and database logic; they do not substitute for browser or production load testing.
+Suggested browser checks before public launch: desktop and 320/390/768 px layouts; keyboard-only login, ballot selection and dialogs; guest and admin in separate browser contexts; lost/reconnected network; a broken GIF URL; reduced-motion settings; and two admin tabs editing the same poll. The automated tests exercise React interactions, API handlers, and database logic; they do not substitute for browser, physical-device, or production load testing.
 
 ## V1 assumptions and limits
 

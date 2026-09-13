@@ -8,6 +8,8 @@ import {
   LogOut,
   Radio,
   ShieldCheck,
+  Eye,
+  EyeOff,
 } from "lucide-react";
 import { toast } from "sonner";
 import { api, useApp } from "./app-provider";
@@ -22,6 +24,7 @@ export function LoginButton() {
   const [open, setOpen] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const { session } = useApp();
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -48,6 +51,7 @@ export function LoginButton() {
         variant="outline"
         onClick={() => {
           setError("");
+          setShowPassword(false);
           setOpen(true);
         }}
       >
@@ -68,21 +72,33 @@ export function LoginButton() {
               <input
                 name="username"
                 autoComplete="username"
+                autoCapitalize="none"
+                spellCheck={false}
                 required
                 autoFocus
                 maxLength={80}
               />
             </label>
-            <label>
-              Password
+            <div className="password-field">
+              <label htmlFor="admin-password">Password</label>
               <input
+                id="admin-password"
                 name="password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 autoComplete="current-password"
                 required
                 maxLength={256}
               />
-            </label>
+              <button
+                type="button"
+                className="password-toggle"
+                onClick={() => setShowPassword((show) => !show)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                aria-pressed={showPassword}
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            </div>
             {error && (
               <p role="alert" className="error-message">
                 {error}
@@ -114,7 +130,7 @@ export function SiteHeader() {
     }
   }
   return (
-    <header className="site-header">
+    <header className={`site-header ${admin ? "is-admin" : ""}`}>
       <div className="header-inner">
         <Link href="/" className="brand" aria-label="Farqiah 2026 home">
           <span className="brand-mark">
@@ -146,7 +162,15 @@ export function SiteHeader() {
           {admin ? (
             <>
               <Button variant="ghost" asChild>
-                <Link href="/admin">Admin Dashboard</Link>
+                <Link
+                  className="admin-nav-link"
+                  href="/admin"
+                  aria-current={
+                    pathname.startsWith("/admin") ? "page" : undefined
+                  }
+                >
+                  <ShieldCheck size={16} /> Admin Dashboard
+                </Link>
               </Button>
               <Button variant="outline" onClick={logout} disabled={busy}>
                 <LogOut size={16} />

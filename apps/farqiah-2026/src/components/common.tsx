@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { AlertCircle, ImageOff, Loader2, Radio, Trophy } from "lucide-react";
+import { AlertCircle, ImageOff, Radio, Trophy } from "lucide-react";
 import { useApp } from "./app-provider";
 import { Button } from "./ui/button";
 import type { Status } from "@/lib/types";
@@ -40,7 +40,7 @@ export function Media({
     <div
       className={`media-fallback ${className}`}
       role="img"
-      aria-label={`${alt}: image unavailable`}
+      aria-label={alt ? `${alt}: image unavailable` : "Image unavailable"}
     >
       <ImageOff size={24} />
       <span>Image unavailable</span>
@@ -67,9 +67,29 @@ export function Loading() {
       <Button onClick={() => void session()}>Try again</Button>
     </div>
   ) : (
-    <div className="loading-state" role="status">
-      <Loader2 className="spin" />
-      <span>Loading your polls…</span>
+    <div
+      className="loading-skeleton"
+      role="status"
+      aria-label="Loading your polls"
+    >
+      <div className="skeleton-heading" aria-hidden="true">
+        <span className="skeleton skeleton-eyebrow" />
+        <span className="skeleton skeleton-title" />
+        <span className="skeleton skeleton-subtitle" />
+      </div>
+      <div className="skeleton-grid" aria-hidden="true">
+        {[0, 1, 2].map((i) => (
+          <div className="skeleton-card" key={i}>
+            <div className="skeleton skeleton-art" />
+            <div className="skeleton-card-copy">
+              <span className="skeleton skeleton-eyebrow" />
+              <span className="skeleton skeleton-title" />
+              <span className="skeleton skeleton-subtitle" />
+            </div>
+          </div>
+        ))}
+      </div>
+      <span className="loading-caption">Getting the conversation ready…</span>
     </div>
   );
 }

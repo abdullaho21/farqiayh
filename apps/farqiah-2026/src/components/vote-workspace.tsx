@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -9,6 +9,7 @@ import {
   CheckCircle2,
   ChevronRight,
   LockKeyhole,
+  Loader2,
   Users,
   Vote,
 } from "lucide-react";
@@ -19,38 +20,59 @@ import { ErrorState, InlineError, Loading, Media, StatusBadge } from "./common";
 import { Button } from "./ui/button";
 import { QuestionResults, RoundResults } from "./results";
 import { SharePoll } from "./share-poll";
+type BallotDraft = { selected: string[]; text: string };
+const emptyDraft: BallotDraft = { selected: [], text: "" };
 function QuestionVote({
   question: q,
   pollId,
   canVote,
   displayName,
   next,
+  draft,
+  onDraftChange,
+  onSubmitted,
+  showResults,
+  focusOnMount,
 }: {
   question: QuestionView;
   pollId: string;
   canVote: boolean;
   displayName: string;
   next?: () => void;
+  draft: BallotDraft;
+  onDraftChange: (draft: BallotDraft) => void;
+  onSubmitted: (ids: string[]) => void;
+  showResults: () => void;
+  focusOnMount: boolean;
 }) {
-  const [selected, setSelected] = useState<string[]>([]);
-  const [text, setText] = useState("");
+  const selected = draft.selected
+    .filter((id) => q.options.some((option) => option.id === id))
+    .slice(0, q.type === "SINGLE" ? 1 : q.maxSelections);
+  const { text } = draft;
+  const heading = useRef<HTMLHeadingElement>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const { refresh } = useApp();
-  const [received, setReceived] = useState(false);
-  const voted = q.myVote.length > 0 || received;
+  const voted = q.myVote.length > 0;
   useEffect(() => {
-    setSelected((ids) =>
-      ids.filter((id) => q.options.some((o) => o.id === id)),
-    );
-  }, [q.options]);
+    if (focusOnMount) {
+      heading.current?.focus({ preventScroll: true });
+      heading.current?.scrollIntoView({
+        block: "start",
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "instant"
+          : "smooth",
+      });
+    }
+  }, [focusOnMount]);
   function choose(id: string) {
     if (!canVote || voted || busy) return;
     setError("");
-    if (q.type === "SINGLE") setSelected([id]);
+    if (q.type === "SINGLE") onDraftChange({ ...draft, selected: [id] });
     else if (selected.includes(id))
-      setSelected(selected.filter((v) => v !== id));
-    else if (selected.length < q.maxSelections) setSelected([...selected, id]);
+      onDraftChange({ ...draft, selected: selected.filter((v) => v !== id) });
+    else if (selected.length < q.maxSelections)
+      onDraftChange({ ...draft, selected: [...selected, id] });
     else
       setError(
         `You can choose up to ${q.maxSelections} options. Uncheck one to choose another.`,
@@ -68,7 +90,7 @@ function QuestionVote({
         text,
         displayName,
       });
-      setReceived(true);
+      onSubmitted(selected);
       refresh();
       toast.success("Your vote is in. Thanks for having a say.");
     } catch (e) {
@@ -80,7 +102,10 @@ function QuestionVote({
   }
   return (
     <div className="voting-columns">
-      <section className="panel ballot-panel">
+      <section
+        className="panel ballot-panel"
+        aria-labelledby={`question-${q.id}`}
+      >
         <div className="question-mode">
           <Vote size={16} />
           <span>
@@ -89,25 +114,34 @@ function QuestionVote({
               : `Choose up to ${q.maxSelections}`}
           </span>
           {voted && (
-            <span className="vote-recorded">
+            <span className="vote-recorded" role="status">
               <CheckCircle2 size={15} />
               Vote recorded
             </span>
           )}
         </div>
-        <h2 className="question-title">{q.title}</h2>
+        <h2
+          className="question-title"
+          ref={heading}
+          tabIndex={-1}
+          id={`question-${q.id}`}
+        >
+          {q.title}
+        </h2>
         <Media src={q.mediaUrl} alt={q.title} className="question-media" />
-        <form onSubmit={submit}>
+        <form onSubmit={submit} aria-busy={busy}>
           <fieldset disabled={!canVote || voted || busy}>
             <legend className="sr-only">{q.title}</legend>
-            <div className="option-grid">
+            <div
+              className={`option-grid ${q.options.some((o) => o.mediaUrl) ? "has-media" : ""}`}
+            >
               {q.options.map((o, i) => {
                 const checked = voted
-                  ? q.myVote.includes(o.id) || selected.includes(o.id)
+                  ? q.myVote.includes(o.id)
                   : selected.includes(o.id);
                 return (
                   <label
-                    className={`vote-option ${checked ? "is-selected" : ""} ${voted ? "is-recorded" : ""}`}
+                    className={`vote-option ${o.mediaUrl ? "has-media" : ""} ${checked ? "is-selected" : ""} ${voted ? "is-recorded" : ""}`}
                     key={o.id}
                   >
                     <input
@@ -117,7 +151,7 @@ function QuestionVote({
                       checked={checked}
                       onChange={() => choose(o.id)}
                     />
-                    <div className="option-heading">
+                    <div className="option-heading" aria-hidden="true">
                       <span className="option-letter">
                         {String.fromCharCode(65 + i)}
                       </span>
@@ -127,11 +161,7 @@ function QuestionVote({
                         {checked && <Check size={14} />}
                       </span>
                     </div>
-                    <Media
-                      src={o.mediaUrl}
-                      alt={o.label}
-                      className="option-media"
-                    />
+                    <Media src={o.mediaUrl} alt="" className="option-media" />
                     <span className="option-label">{o.label}</span>
                     {o.isText && (
                       <span className="option-hint">Write your answer</span>
@@ -148,7 +178,9 @@ function QuestionVote({
                     maxLength={1000}
                     required
                     value={text}
-                    onChange={(e) => setText(e.target.value)}
+                    onChange={(e) =>
+                      onDraftChange({ ...draft, text: e.target.value })
+                    }
                     placeholder="Tell us what you have in mind…"
                   />
                 </label>
@@ -162,20 +194,31 @@ function QuestionVote({
                   <CheckCircle2 size={17} />
                   Your opinion counts.
                 </span>
-                {next && (
-                  <Button onClick={next} type="button">
-                    Next question <ArrowRight size={17} />
-                  </Button>
-                )}
+                <Button onClick={next || showResults} type="button">
+                  {next ? "Next question" : "See all results"}{" "}
+                  <ArrowRight size={17} />
+                </Button>
               </>
             ) : canVote ? (
               <>
-                <span className="muted">
+                <span
+                  className="muted"
+                  role="status"
+                  aria-live="polite"
+                  aria-atomic="true"
+                >
                   {selected.length} / {q.maxSelections} selected
                 </span>
                 <Button type="submit" disabled={busy || !selected.length}>
-                  {busy ? "Submitting…" : "Submit vote"}
-                  <ArrowRight size={17} />
+                  {busy ? (
+                    <>
+                      <Loader2 size={17} className="spin" /> Submitting…
+                    </>
+                  ) : (
+                    <>
+                      Submit vote <ArrowRight size={17} />
+                    </>
+                  )}
                 </Button>
               </>
             ) : (
@@ -216,22 +259,34 @@ export function VoteWorkspace({ id }: { id: string }) {
   const [view, setView] = useState<"vote" | "results">("vote");
   const [displayName, setName] = useState("");
   const [roundNumber, setRoundNumber] = useState<number | null>(null);
+  const [drafts, setDrafts] = useState<Record<string, BallotDraft>>({});
+  const [recorded, setRecorded] = useState<Record<string, string[]>>({});
+  const [focusBallot, setFocusBallot] = useState(false);
+  function goToQuestion(index: number) {
+    setFocusBallot(true);
+    setQuestionIndex(index);
+  }
   useEffect(() => {
     setQuestionIndex(0);
     setRoundNumber(null);
     setView("vote");
+    setFocusBallot(false);
+    setDrafts({});
+    setRecorded({});
   }, [poll?.currentRound]);
   if (error) return <ErrorState error={error} />;
   if (!poll) return <Loading />;
   const round = poll.rounds.find(
     (r) => r.number === (roundNumber || poll.currentRound),
   )!;
-  const q =
-    round.questions[Math.min(questionIndex, round.questions.length - 1)];
+  const activeIndex = Math.min(questionIndex, round.questions.length - 1);
+  const q = round.questions[activeIndex];
   const canVote =
     round.number === poll.currentRound &&
     ["LIVE", "FINAL"].includes(poll.status);
-  const completed = round.questions.filter((q) => q.myVote.length).length;
+  const completed = round.questions.filter(
+    (q) => q.myVote.length || recorded[q.id]?.length,
+  ).length;
   return (
     <div className="poll-workspace">
       <Link className="back-link" href="/">
@@ -313,11 +368,11 @@ export function VoteWorkspace({ id }: { id: string }) {
             {round.questions.map((item, i) => (
               <button
                 key={item.id}
-                onClick={() => setQuestionIndex(i)}
+                onClick={() => goToQuestion(i)}
                 aria-current={item.id === q.id ? "step" : undefined}
               >
                 <span>
-                  {item.myVote.length ? (
+                  {item.myVote.length || recorded[item.id]?.length ? (
                     <Check size={15} />
                   ) : (
                     String(i + 1).padStart(2, "0")
@@ -376,16 +431,48 @@ export function VoteWorkspace({ id }: { id: string }) {
           </div>
           <QuestionVote
             key={q.id}
-            question={q}
+            question={{
+              ...q,
+              myVote: q.myVote.length ? q.myVote : recorded[q.id] || [],
+            }}
             pollId={id}
             canVote={canVote}
             displayName={displayName}
+            draft={drafts[q.id] || emptyDraft}
+            onDraftChange={(draft) =>
+              setDrafts((current) => ({ ...current, [q.id]: draft }))
+            }
+            onSubmitted={(ids) => {
+              setRecorded((current) => ({ ...current, [q.id]: ids }));
+              setDrafts((current) => ({ ...current, [q.id]: emptyDraft }));
+            }}
+            focusOnMount={focusBallot}
+            showResults={() => setView("results")}
             next={
-              questionIndex < round.questions.length - 1
-                ? () => setQuestionIndex((i) => i + 1)
+              activeIndex < round.questions.length - 1
+                ? () => goToQuestion(activeIndex + 1)
                 : undefined
             }
           />
+          <nav className="ballot-pager" aria-label="Move between questions">
+            <Button
+              variant="ghost"
+              disabled={activeIndex === 0}
+              onClick={() => goToQuestion(activeIndex - 1)}
+            >
+              <ArrowLeft size={16} /> Previous
+            </Button>
+            <span>
+              {activeIndex + 1} of {round.questions.length}
+            </span>
+            <Button
+              variant="ghost"
+              disabled={activeIndex >= round.questions.length - 1}
+              onClick={() => goToQuestion(activeIndex + 1)}
+            >
+              Next <ArrowRight size={16} />
+            </Button>
+          </nav>
           {completed === round.questions.length && canVote && (
             <div className="completion">
               <CheckCircle2 />

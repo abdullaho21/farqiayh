@@ -19,7 +19,7 @@ export function assert(
 }
 export async function json<T>(
   req: Request,
-  schema: ZodType<T, any, any>,
+  schema: ZodType<T>,
 ): Promise<T> {
   assert(
     Number(req.headers.get("content-length") || 0) <= 256_000,

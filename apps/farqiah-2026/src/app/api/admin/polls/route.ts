@@ -33,7 +33,7 @@ const input = z.discriminatedUnion("action", [
     action: z.literal("final"),
     id: z.string(),
     revision: z.number().int(),
-    selections: z.record(z.array(z.string()).min(2).max(50)),
+    selections: z.record(z.string(), z.array(z.string()).min(2).max(50)),
   }),
 ]);
 export const POST = route(async (req) => {

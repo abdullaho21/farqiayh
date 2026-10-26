@@ -24,6 +24,16 @@ import { GET as media } from "../../src/app/api/media/[id]/route";
 import { GET as events } from "../../src/app/api/events/route";
 import type { PollInput } from "../../src/lib/validation";
 import type { PollView } from "../../src/lib/types";
+test("raw SQL uses the same database schema as Prisma models", async () => {
+  const expected = process.env.DATABASE_URL
+    ? (new URL(process.env.DATABASE_URL).searchParams.get("schema") ?? "public")
+    : "public";
+  const [row] = await db.$queryRaw<
+    { schema: string }[]
+  >`SELECT current_schema() AS schema`;
+  assert.equal(row.schema, expected);
+});
+
 // Run only against a dedicated test DB. Cleanup is limited to records created by this suite.
 process.env.APP_URL ||= "http://localhost:3000";
 process.env.APP_SECRET ||=

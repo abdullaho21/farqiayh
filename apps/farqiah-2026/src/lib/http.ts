@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Prisma } from "@prisma/client";
+import { Prisma } from "../generated/prisma/client";
 import { ZodError, type ZodType } from "zod";
 import { appOrigin } from "./config";
 export class HttpError extends Error {
@@ -19,7 +19,7 @@ export function assert(
 }
 export async function json<T>(
   req: Request,
-  schema: ZodType<T, any, any>,
+  schema: ZodType<T>,
 ): Promise<T> {
   assert(
     Number(req.headers.get("content-length") || 0) <= 256_000,

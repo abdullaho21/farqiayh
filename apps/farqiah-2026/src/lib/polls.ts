@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { Prisma } from "../generated/prisma/client";
 import { db } from "./db";
 import { assert, HttpError } from "./http";
 import { pollInput, type PollInput, type voteInput } from "./validation";

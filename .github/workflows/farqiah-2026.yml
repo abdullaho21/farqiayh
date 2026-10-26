@@ -26,7 +26,7 @@ jobs:
           --health-timeout 5s
           --health-retries 20
     env:
-      DATABASE_URL: postgresql://farqiah:farqiah@localhost:5432/farqiah_test?schema=public
+      DATABASE_URL: postgresql://farqiah:farqiah@localhost:5432/farqiah_test?schema=farqiah_ci
       APP_URL: http://localhost:3000
       APP_SECRET: ci-only-secret-never-use-in-a-live-deployment
       DEMO_MODE: 'true'
@@ -38,6 +38,7 @@ jobs:
           cache: npm
           cache-dependency-path: apps/farqiah-2026/package-lock.json
       - run: npm ci
+      - run: npm audit --audit-level=moderate
       - run: npm run db:generate
       - run: npm run db:migrate
       - run: npm run db:seed

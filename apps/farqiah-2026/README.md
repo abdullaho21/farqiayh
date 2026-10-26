@@ -10,7 +10,7 @@ This application lives in `apps/farqiah-2026` in the existing Farqiayh repositor
 
 ## Run locally
 
-Requirements: Node.js 22 or newer, npm, and PostgreSQL 16 or newer. Docker is optional.
+Requirements: Node.js 22.12 or newer, npm, and PostgreSQL 16 or newer. Docker is optional.
 
 ```bash
 cd apps/farqiah-2026
@@ -62,7 +62,7 @@ Duplicating a poll copies the current round into a new draft with fresh IDs and 
 ## Stack and layout
 
 - Next.js 15 App Router, React 19, TypeScript, Tailwind CSS 4, shadcn-style Radix dialog/button primitives, Lucide, Sonner.
-- PostgreSQL and Prisma 6, with checked-in SQL migrations and an idempotent seed.
+- PostgreSQL and Prisma 7, with checked-in SQL migrations and an idempotent seed.
 - Server-Sent Events (SSE), with a shared database event counter and a 15-second client fallback refresh.
 - Media is stored in PostgreSQL `bytea` for a self-contained v1. No local upload directory or object-storage account is required.
 
@@ -80,6 +80,8 @@ Duplicating a poll copies the current round into a new draft with fresh IDs and 
 | `tests/`                | Validation tests and database/API workflow integration tests       |
 
 The model separates **Poll → Round → Question → Option**, with one **Ballot** per anonymous guest per question, **Vote** selections pointing at stable option IDs, and optional **TextAnswer** records. Admin sessions, uploaded media, migration audits, and rate limits are persistent database records.
+
+Prisma generates its client into the ignored `src/generated/prisma/` folder. Run `npm run db:generate` after installing dependencies and before tests. CLI schema, migration, seed, and database URL configuration lives in `prisma.config.ts`; `.env` is loaded explicitly there. Generation and builds do not need database credentials. Production queries use the PostgreSQL driver adapter, with a five-second connection timeout, a five-minute idle timeout, and the driver’s default pool limit of ten connections. The `schema` URL parameter is respected; use the driver configuration in `src/lib/db.ts` to tune pools for your host. TLS certificates are validated by the PostgreSQL driver; configure trusted certificates for your provider instead of disabling verification.
 
 ## Environment variables
 

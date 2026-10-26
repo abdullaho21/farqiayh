@@ -2,8 +2,10 @@
 import { readFile } from "node:fs/promises";
 import { PGlite } from "@electric-sql/pglite";
 import { PrismaPGlite } from "pglite-prisma-adapter";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "../src/generated/prisma/client.ts";
 
+// The embedded database always uses public, regardless of local deployment settings.
+delete process.env.DATABASE_URL;
 const client = new PGlite();
 await client.exec(
   await readFile(

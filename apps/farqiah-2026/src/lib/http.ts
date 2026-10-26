@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Prisma } from "@prisma/client";
+import { Prisma } from "../generated/prisma/client";
 import { ZodError, type ZodType } from "zod";
 import { appOrigin } from "./config";
 export class HttpError extends Error {
